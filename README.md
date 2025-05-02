@@ -317,7 +317,7 @@ Seront évalués :
 
 Veillez :
 
-- à respecter les [P21 Guidelines](https://moodle.unistra.fr/pluginfile.php/2390971/mod_resource/content/2/p21_guidelines.pdf)
+- à respecter les [P21 Guidelines](https://git.unistra.fr/p21/p21/-/blob/main/guidelines.pdf?ref_type=heads)
 - à la bonne conception du code : il doit être lisible et facile à corriger, à réutiliser, à modifier et à étendre.
 
 ## Quelques conseils
