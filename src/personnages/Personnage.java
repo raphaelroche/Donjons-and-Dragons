@@ -3,7 +3,7 @@ package personnages;
 import personnages.races.*;
 import des.Des;
 
-public abstract class Personnage {
+public class Personnage {
     private String m_nom;
 
     private Race m_race;
@@ -72,13 +72,6 @@ public abstract class Personnage {
     }
 
     // Setters
-    public void setNom(String nom) {
-        this.m_nom = nom;
-    }
-
-    public void setRace(Race race) {
-        this.m_race = race;
-    }
 
     public void setPv(int pv) {
         this.m_pv = pv;
@@ -99,4 +92,25 @@ public abstract class Personnage {
     public void setInitiative(int initiative) {
         this.m_initiative = initiative;
     }
+
+    public void ajouterPv(int valeur) {
+        this.m_pv += valeur;
+    }
+
+    public void ajouterForce(int valeur) {
+        this.m_force += valeur;
+    }
+
+    public void ajouterDexterite(int valeur) {
+        this.m_dexterite += valeur;
+    }
+
+    public void ajouterVitesse(int valeur) {
+        this.m_vitesse += valeur;
+    }
+
+    public void ajouterInitiative(int valeur) {
+        this.m_initiative += valeur;
+    }
+
 }

@@ -1,4 +1,4 @@
-package personnages.classe;
+package personnages.classes;
 
 public abstract class Classe {
 }

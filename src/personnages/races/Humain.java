@@ -6,10 +6,10 @@ public class Humain extends Race {
 
     @Override
     public void ajusterStat(Personnage p) {
-        p.setPv(p.getPv() + 2);
-        p.setForce(p.getForce() + 2);
-        p.setDexterite(p.getDexterite() + 2);
-        p.setVitesse(p.getVitesse() + 2);
-        p.setInitiative(p.getInitiative() + 2);
+        p.ajouterPv(2);
+        p.ajouterForce(2);
+        p.ajouterDexterite(2);
+        p.ajouterVitesse(2);
+        p.ajouterInitiative(2);
     }
 }
