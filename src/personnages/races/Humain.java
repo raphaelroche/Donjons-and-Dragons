@@ -4,10 +4,10 @@ import personnages.Personnage;
 
 public class Humain extends Race {
     public Humain(Personnage p) {
-        p.ajouterPv(2);
-        p.ajouterForce(2);
-        p.ajouterDexterite(2);
-        p.ajouterVitesse(2);
-        p.ajouterInitiative(2);
+        p.ajusterPv(2);
+        p.ajusterForce(2);
+        p.ajusterDexterite(2);
+        p.ajusterVitesse(2);
+        p.ajusterInitiative(2);
     }
 }

@@ -1,8 +1,14 @@
 package personnages;
 
+import equipements.Equipement;
+import equipements.armes.*;
+import equipements.armures.CotteDeMailles;
+import equipements.armures.Ecailles;
 import personnages.classes.*;
 import personnages.races.*;
 import des.Des;
+
+import java.util.ArrayList;
 
 public class Personnage {
     private String m_nom;
@@ -16,76 +22,91 @@ public class Personnage {
     private int m_vitesse;
     private int m_initiative;
 
+    private ArrayList<Equipement> m_inventaire;
+
     public Personnage(String nom, int race, int classe) {
-        m_nom = nom;
-        switch(race) {
+        this.m_nom = nom;
+        this.m_inventaire = new ArrayList<Equipement>();
+        attribuerRaceClasse(race, classe); //utilise un int pour désigner
+        Des des = new Des();
+        this.m_force = 3 + des.lancerDes(4,4);
+        this.m_dexterite = 3 + des.lancerDes(4,4);
+        this.m_vitesse = 3 + des.lancerDes(4,4);
+        this.m_initiative = 3 + des.lancerDes(4,4);
+    }
+
+    public void attribuerRaceClasse(int race, int classe) {
+        switch(race) {      //attribue la race
             case 1:
-                m_race = new Humain(this);
+                this.m_race = new Humain(this);
                 break;
             case 2:
-                m_race = new Nain(this);
+                this.m_race = new Nain(this);
                 break;
             case 3:
-                m_race = new Elfe(this);
+                this.m_race = new Elfe(this);
                 break;
             case 4:
-                m_race = new Halfelin(this);
-                break;
-            //default:
-        }
-        switch(classe){
-            case 1:
-                m_classe = new Clerc(this);
-                break;
-            case 2:
-                m_classe = new Guerrier(this);
-                break;
-            case 3:
-                m_classe = new Magicien(this);
-                break;
-            case 4:
-                m_classe = new Roublard(this);
+                this.m_race = new Halfelin(this);
                 break;
             default:
                 break;
         }
-
-        Des des = new Des();
-        m_force = 3 + des.lancerDes(4,4);
-        m_dexterite = 3 + des.lancerDes(4,4);
-        m_vitesse = 3 + des.lancerDes(4,4);
-        m_initiative = 3 + des.lancerDes(4,4);
-
-
+        switch(classe) {      //attribue la classe, et ajoute ses objets dans l'inventaire
+            case 1:
+                this.m_classe = new Clerc(this);
+                this.m_inventaire.add(new Masse());
+                this.m_inventaire.add(new Ecailles());
+                this.m_inventaire.add(new Arbalete());
+                break;
+            case 2:
+                this.m_classe = new Guerrier(this);
+                this.m_inventaire.add(new CotteDeMailles());
+                this.m_inventaire.add(new EpeeLongue());
+                this.m_inventaire.add(new Arbalete());
+                break;
+            case 3:
+                this.m_classe = new Magicien(this);
+                this.m_inventaire.add(new Baton());
+                this.m_inventaire.add(new Fronde());
+                break;
+            case 4:
+                this.m_classe = new Roublard(this);
+                this.m_inventaire.add(new Rapiere());
+                this.m_inventaire.add(new Arc());
+                break;
+            default:
+                break;
+        }
     }
 
     // Getters
     public String getNom() {
-        return m_nom;
+        return this.m_nom;
     }
 
     public Race getRace() {
-        return m_race;
+        return this.m_race;
     }
 
     public int getPv() {
-        return m_pv;
+        return this.m_pv;
     }
 
     public int getForce() {
-        return m_force;
+        return this.m_force;
     }
 
     public int getDexterite() {
-        return m_dexterite;
+        return this.m_dexterite;
     }
 
     public int getVitesse() {
-        return m_vitesse;
+        return this.m_vitesse;
     }
 
     public int getInitiative() {
-        return m_initiative;
+        return this.m_initiative;
     }
 
     // Setters
@@ -110,36 +131,67 @@ public class Personnage {
         this.m_initiative = initiative;
     }
 
-    public void ajouterPv(int valeur) {
+    //fonctions pour ajuster stat : à chaque ajustement, vérifie si positif, sinon met à 0
+
+    public void ajusterPv(int valeur) {
         this.m_pv += valeur;
+        if (this.m_pv < 0) {
+            this.m_pv = 0;
+        }
     }
 
-    public void ajouterForce(int valeur) {
+
+    public void ajusterForce(int valeur) {
         this.m_force += valeur;
+        if (this.m_force < 0) {
+            this.m_force = 0;
+        }
     }
 
-    public void ajouterDexterite(int valeur) {
+    public void ajusterDexterite(int valeur) {
         this.m_dexterite += valeur;
+        if (this.m_dexterite < 0) {
+            this.m_dexterite = 0;
+        }
     }
 
-    public void ajouterVitesse(int valeur) {
+    public void ajusterVitesse(int valeur) {
         this.m_vitesse += valeur;
+        if (this.m_vitesse < 0) {
+            this.m_vitesse = 0;
+        }
     }
 
-    public void ajouterInitiative(int valeur) {
+    public void ajusterInitiative(int valeur) {
         this.m_initiative += valeur;
+        if (this.m_initiative < 0) {
+            this.m_initiative = 0;
+        }
     }
+
+    public String afficherInventaire() {
+        if (this.m_inventaire.isEmpty()) {
+            return "La liste est vide.";
+        }
+
+        StringBuilder contenu = new StringBuilder();
+        for (int i = 0; i < this.m_inventaire.size(); i++) {
+            contenu.append((i + 1)).append(" - ").append(this.m_inventaire.get(i).getNomEquipement()).append("\n");
+        }
+        return contenu.toString();
+    }
+
 
     @Override
     public String toString() {
-        return "Nom : " + m_nom +
-                ", Race : " + (m_race != null ? m_race.getClass().getSimpleName() : "Aucune") +
-                ", Classe : " + (m_classe != null ? m_classe.getClass().getSimpleName() : "Aucune") +
-                ", PV : " + m_pv +
-                ", Force : " + m_force +
-                ", Dextérité : " + m_dexterite +
-                ", Vitesse : " + m_vitesse +
-                ", Initiative : " + m_initiative;
+        return "Nom : " + this.m_nom +
+                ", Race : " + (this.m_race != null ? this.m_race.getClass().getSimpleName() : "Aucune") +
+                ", Classe : " + (this.m_classe != null ? this.m_classe.getClass().getSimpleName() : "Aucune") +
+                ", PV : " + this.m_pv +
+                ", Force : " + this.m_force +
+                ", Dextérité : " + this.m_dexterite +
+                ", Vitesse : " + this.m_vitesse +
+                ", Initiative : " + this.m_initiative;
     }
 
 }

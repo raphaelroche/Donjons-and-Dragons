@@ -1,0 +1,7 @@
+package equipements.armes;
+
+public abstract class Courantes extends CAC{
+    public Courantes() {
+        this.m_degats = des.lancerDes(1, 6);
+    }
+}

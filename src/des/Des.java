@@ -8,8 +8,8 @@ public class Des {
         int m_somme = 0;
         Random des = new Random();
         if (nbDes > 0 && nbFaces > 0) {
-            for (int i = 0; i < nbFaces; i++) {
-                m_somme += des.nextInt(0,nbFaces);
+            for (int i = 0; i < nbDes; i++) {
+                m_somme += des.nextInt(1,nbFaces+1);
             }
         }
         return m_somme;

@@ -1,4 +1,5 @@
 import des.Des;
+import equipements.armures.*;
 import personnages.Personnage;
 
 import java.util.Scanner;
@@ -6,20 +7,20 @@ import java.util.Scanner;
 public class Main {
     public static void main(String args[]){
         System.out.println("Bienvenue dans DOOnjon et Dragons");
-
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Entrez votre nom : ");
+        System.out.println("Choisissez un nom :");
         String nom = scanner.nextLine();
 
-        System.out.print("Choisissez votre race : ");
-        int race = Integer.parseInt(scanner.nextLine());
+        int race = Utils.demanderChoix(scanner,
+                "Choisissez une race :\n1 - Humain\n2 - Nain\n3 - Elfe\n4 - Halfelin", 1, 4);
 
-        System.out.print("Choisissez votre classe : ");
-        int classe = Integer.parseInt(scanner.nextLine());
+        int classe = Utils.demanderChoix(scanner,
+                "Choisissez une classe :\n1 - Clerc\n2 - Guerrier\n3 - Magicien\n4 - Roublard", 1, 4);
+
 
         Personnage p1 = new Personnage(nom, race, classe);
-
-        System.out.print(p1.toString());
+        System.out.println(p1.toString());
+        System.out.println(p1.afficherInventaire());
     }
 }
