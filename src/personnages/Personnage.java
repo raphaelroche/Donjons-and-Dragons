@@ -1,5 +1,6 @@
 package personnages;
 
+import personnages.classes.*;
 import personnages.races.*;
 import des.Des;
 
@@ -7,6 +8,7 @@ public class Personnage {
     private String m_nom;
 
     private Race m_race;
+    private Classe m_classe;
 
     private int m_pv;
     private int m_force;
@@ -14,32 +16,47 @@ public class Personnage {
     private int m_vitesse;
     private int m_initiative;
 
-    public Personnage(String nom, int race) {
+    public Personnage(String nom, int race, int classe) {
         m_nom = nom;
         switch(race) {
             case 1:
-                m_race = new Humain();
+                m_race = new Humain(this);
                 break;
             case 2:
-                m_race = new Nain();
+                m_race = new Nain(this);
                 break;
             case 3:
-                m_race = new Elfe();
+                m_race = new Elfe(this);
                 break;
             case 4:
-                m_race = new Halfelin();
+                m_race = new Halfelin(this);
                 break;
             //default:
         }
+        switch(classe){
+            case 1:
+                m_classe = new Clerc(this);
+                break;
+            case 2:
+                m_classe = new Guerrier(this);
+                break;
+            case 3:
+                m_classe = new Magicien(this);
+                break;
+            case 4:
+                m_classe = new Roublard(this);
+                break;
+            default:
+                break;
+        }
 
         Des des = new Des();
-        m_pv = 3 + des.lancerDes(4,4);
         m_force = 3 + des.lancerDes(4,4);
         m_dexterite = 3 + des.lancerDes(4,4);
         m_vitesse = 3 + des.lancerDes(4,4);
         m_initiative = 3 + des.lancerDes(4,4);
 
-        m_race.ajusterStat(this);
+
     }
 
     // Getters

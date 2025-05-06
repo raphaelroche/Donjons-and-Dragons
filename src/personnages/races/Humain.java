@@ -3,9 +3,7 @@ package personnages.races;
 import personnages.Personnage;
 
 public class Humain extends Race {
-
-    @Override
-    public void ajusterStat(Personnage p) {
+    public Humain(Personnage p) {
         p.ajouterPv(2);
         p.ajouterForce(2);
         p.ajouterDexterite(2);
