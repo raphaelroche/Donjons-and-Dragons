@@ -130,4 +130,16 @@ public class Personnage {
         this.m_initiative += valeur;
     }
 
+    @Override
+    public String toString() {
+        return "Nom : " + m_nom +
+                ", Race : " + (m_race != null ? m_race.getClass().getSimpleName() : "Aucune") +
+                ", Classe : " + (m_classe != null ? m_classe.getClass().getSimpleName() : "Aucune") +
+                ", PV : " + m_pv +
+                ", Force : " + m_force +
+                ", Dextérité : " + m_dexterite +
+                ", Vitesse : " + m_vitesse +
+                ", Initiative : " + m_initiative;
+    }
+
 }
