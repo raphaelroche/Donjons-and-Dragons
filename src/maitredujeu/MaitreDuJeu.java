@@ -20,7 +20,6 @@ public class MaitreDuJeu {
             for(int j = 0; j<largeur; j++){
                 carte[i][j] = ".";
             }
-
         }
         return carte;
     }
