@@ -17,6 +17,7 @@ public class Personnage {
     private Classe m_classe;
 
     private int m_pv;
+    private int m_pvMax;
     private int m_force;
     private int m_dexterite;
     private int m_vitesse;
@@ -112,7 +113,7 @@ public class Personnage {
     // Setters
 
     public void setPv(int pv) {
-        this.m_pv = pv;
+        this.m_pv = pv; this.m_pvMax = pv;
     }
 
     public void setForce(int force) {
