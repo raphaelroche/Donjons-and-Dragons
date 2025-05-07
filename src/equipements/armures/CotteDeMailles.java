@@ -1,7 +1,5 @@
 package equipements.armures;
 
-import personnages.Personnage;
-
 public class CotteDeMailles extends Lourdes{
     public CotteDeMailles() {
         super(11);

@@ -1,6 +1,4 @@
-import des.Des;
-import equipements.armures.*;
-import personnages.Personnage;
+import entites.personnages.Personnage;
 
 import java.util.Scanner;
 

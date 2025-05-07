@@ -1,6 +1,6 @@
-package personnages.races;
+package entites.personnages.races;
 
-import personnages.Personnage;
+import entites.personnages.Personnage;
 
 public class Elfe extends Race{
     public Elfe(Personnage p) {

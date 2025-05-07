@@ -1,6 +1,6 @@
-package personnages.races;
+package entites.personnages.races;
 
-import personnages.Personnage;
+import entites.personnages.Personnage;
 
 public class Nain extends Race{
     public Nain(Personnage p) {

@@ -1,6 +1,6 @@
-package personnages.classes;
+package entites.personnages.classes;
 
-import personnages.Personnage;
+import entites.personnages.Personnage;
 
 public class Guerrier extends Classe {
     public Guerrier(Personnage p) {

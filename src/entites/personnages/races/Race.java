@@ -1,6 +1,4 @@
-package personnages.races;
-
-import personnages.Personnage;
+package entites.personnages.races;
 
 public abstract class Race {
 }

@@ -1,7 +1,7 @@
-package personnages.classes;
+package entites.personnages.classes;
 
 
-import personnages.Personnage;
+import entites.personnages.Personnage;
 
 public class Clerc extends Classe{
     public Clerc(Personnage p) {
