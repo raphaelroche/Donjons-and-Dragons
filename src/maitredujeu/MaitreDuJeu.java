@@ -1,17 +1,23 @@
 package maitredujeu;
 
+import donjons.Donjon;
+
 public class MaitreDuJeu {
+    private String[][] m_carte;
     public MaitreDuJeu(){
 
     }
 
     public void creerDonjon(int longueur, int largeur){
-        String[][] carte = creerCarte(longueur, largeur);
+
+        m_carte = creerCarte(longueur, largeur);
         positionnerObstacle();
         creerMonstres();
         positionnerJoueurs();
         positionnerEquipements();
         presenterContexte();
+        Donjon donjon = new Donjon(m_carte);
+        donjon.afficherDonjon();
     }
 
     public String[][] creerCarte(int longueur, int largeur) {

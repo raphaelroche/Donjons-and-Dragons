@@ -75,6 +75,15 @@ public class Personnage extends Entite {
         }
     }
 
+    public void sEquiper(){
+
+    }
+
+    public void ramasserEquipement(Equipement e){
+        this.m_inventaire.add(e);
+    }
+
+
     // Getters
     public String getNom() {
         return this.m_nom;

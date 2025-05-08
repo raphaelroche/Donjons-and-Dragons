@@ -1,11 +1,22 @@
 package entites;
 
+import maitredujeu.*;
+
 public abstract class Entite {
     protected int m_pv;
     protected int m_pvMax;
     protected int m_force;
     protected int m_dexterite;
     protected int m_initiative;
+
+    public void seDeplacer(){
+
+    }
+
+    public void attaquer(){
+
+    }
+
 
     public int getPv() {
         return this.m_pv;
