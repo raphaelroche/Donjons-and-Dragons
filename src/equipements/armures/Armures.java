@@ -7,4 +7,8 @@ public abstract class Armures extends Equipement {
     public Armures(int classe) {
         this.m_classe = classe;
     }
+
+    public int getClasseArmure() {
+        return this.m_classe;
+    }
 }

@@ -2,6 +2,11 @@ package equipements.armes;
 
 public abstract class Guerre extends CAC{
     public Guerre() {
-        this.m_degats = des.lancerDes(1, 6);
+        this.m_degats = 0;
+    }
+
+    @Override
+    public void determinerDegat(){
+        this.m_degats = des.lancerDes(1, 8);
     }
 }

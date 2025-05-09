@@ -12,4 +12,14 @@ public abstract class Armes extends Equipement {
         this.m_portee = portee;
         this.des = new Des();
     }
+
+    public int getPortee() {
+        return this.m_portee;
+    }
+
+    public abstract void determinerDegat();
+
+    public int getDegats() {
+        return this.m_degats;
+    }
 }

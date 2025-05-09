@@ -2,6 +2,7 @@ package entites.personnages;
 
 import donjons.Donjon;
 import entites.Entite;
+import entites.monstres.Monstre;
 import equipements.Equipement;
 import equipements.armes.*;
 import equipements.armures.Armures;
@@ -18,18 +19,19 @@ public class Personnage extends Entite {
     private Race m_race;
     private Classe m_classe;
     private int m_vitesse;
+    private Des des;
 
     private ArrayList<Equipement> m_inventaire;
-    private ArrayList<Armes> m_armeEquipee;
-    private ArrayList<Armures> m_armureEquipee;
+    private Armes[] m_armeEquipee;
+    private Armures[] m_armureEquipee;
 
     public Personnage(String nom, int race, int classe) {
         this.m_nom = nom;
         this.m_inventaire = new ArrayList<Equipement>();
-        this.m_armeEquipee = new ArrayList<>();
-        this.m_armureEquipee = new ArrayList<>();
+        this.m_armeEquipee = new Armes[1];
+        this.m_armureEquipee = new Armures[1];
         attribuerRaceClasse(race, classe); //utilise un int pour désigner
-        Des des = new Des();
+        des = new Des();
         this.m_force = 3 + des.lancerDes(4,4);
         this.m_dexterite = 3 + des.lancerDes(4,4);
         this.m_vitesse = 3 + des.lancerDes(4,4);
@@ -83,15 +85,49 @@ public class Personnage extends Entite {
 
     public void sEquiperArme(Armes a){
 
-        this.m_armeEquipee.add(a);
+        this.m_armeEquipee[0] = a;
 
     }
     public Armes getArmeEquipee(){
-        return m_armeEquipee.get(0);
+        return m_armeEquipee[0];
+    }
+
+    @Override
+    public void seDeplacer(){
+
+    }
+
+    public int getClasseArmure(){
+        return this.m_armureEquipee[0].getClasseArmure();
+    }
+
+    public boolean attaquer(Monstre cible, String[][] carte){
+        int distanceJoueurCible = 0;
+
+
+        //verifier la distance entre le joueur le monstre grace a la carte
+
+
+        if(this.m_armeEquipee[0].getPortee() <= distanceJoueurCible){
+            int degat = des.lancerDes(1, 20);
+            if(this.m_armeEquipee[0].getPortee() == 1){
+                degat += this.m_force;
+            }
+            else{
+                degat += this.m_dexterite;
+            }
+            if(degat > cible.getclasseArmure()){
+                this.m_armeEquipee[0].determinerDegat();
+                cible.perdrePV(this.m_armeEquipee[0].getDegats());
+                return true;
+            }
+        }
+        return false;
+
     }
 
     public void sEquiperArmure(Armures a){
-        this.m_armureEquipee.add(a);
+        this.m_armureEquipee[0] = a;
     }
 
     public void ramasserEquipement(Equipement e, Donjon d){
@@ -117,6 +153,10 @@ public class Personnage extends Entite {
     // Setters
     public void setVitesse(int vitesse) {
         this.m_vitesse = vitesse;
+    }
+
+    public void perdrePV(int degats){
+        this.m_pv -= degats;
     }
 
     public void ajusterVitesse(int valeur) {

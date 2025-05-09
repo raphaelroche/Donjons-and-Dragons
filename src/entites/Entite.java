@@ -11,26 +11,7 @@ public abstract class Entite {
     protected int m_dexterite;
     protected int m_initiative;
 
-    public String[][] seDeplacer(Donjon d, String direction){
-        String[][] carte = d.getCarte();
-
-
-
-
-
-
-        return carte;
-
-    }
-
-    public void attaquer(Donjon d, Entite cible){
-        String[][] carte = d.getCarte();
-
-       
-
-
-
-    }
+    public abstract void seDeplacer();
 
 
     public int getPv() {
