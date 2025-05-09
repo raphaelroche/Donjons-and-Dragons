@@ -1,6 +1,7 @@
 package entites;
 
 import donjons.Donjon;
+import entites.personnages.Personnage;
 import maitredujeu.*;
 
 public abstract class Entite {
@@ -10,7 +11,7 @@ public abstract class Entite {
     protected int m_dexterite;
     protected int m_initiative;
 
-    public String[][] seDeplacer(Donjon d){
+    public String[][] seDeplacer(Donjon d, String direction){
         String[][] carte = d.getCarte();
 
 
@@ -22,7 +23,12 @@ public abstract class Entite {
 
     }
 
-    public void attaquer(){
+    public void attaquer(Donjon d, Entite cible){
+        String[][] carte = d.getCarte();
+
+       
+
+
 
     }
 

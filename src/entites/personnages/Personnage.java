@@ -4,6 +4,7 @@ import donjons.Donjon;
 import entites.Entite;
 import equipements.Equipement;
 import equipements.armes.*;
+import equipements.armures.Armures;
 import equipements.armures.CotteDeMailles;
 import equipements.armures.Ecailles;
 import entites.personnages.classes.*;
@@ -19,10 +20,14 @@ public class Personnage extends Entite {
     private int m_vitesse;
 
     private ArrayList<Equipement> m_inventaire;
+    private ArrayList<Armes> m_armeEquipee;
+    private ArrayList<Armures> m_armureEquipee;
 
     public Personnage(String nom, int race, int classe) {
         this.m_nom = nom;
         this.m_inventaire = new ArrayList<Equipement>();
+        this.m_armeEquipee = new ArrayList<>();
+        this.m_armureEquipee = new ArrayList<>();
         attribuerRaceClasse(race, classe); //utilise un int pour désigner
         Des des = new Des();
         this.m_force = 3 + des.lancerDes(4,4);
@@ -76,11 +81,21 @@ public class Personnage extends Entite {
         }
     }
 
-    public void sEquiper(){
+    public void sEquiperArme(Armes a){
 
+        this.m_armeEquipee.add(a);
+
+    }
+    public Armes getArmeEquipee(){
+        return m_armeEquipee.get(0);
+    }
+
+    public void sEquiperArmure(Armures a){
+        this.m_armureEquipee.add(a);
     }
 
     public void ramasserEquipement(Equipement e, Donjon d){
+
         this.m_inventaire.add(e);
     }
 
