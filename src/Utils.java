@@ -18,6 +18,4 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
         }
         return choix;
     }
-
-
 }
