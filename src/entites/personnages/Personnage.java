@@ -1,5 +1,6 @@
 package entites.personnages;
 
+import donjons.Donjon;
 import entites.Entite;
 import equipements.Equipement;
 import equipements.armes.*;
@@ -79,7 +80,7 @@ public class Personnage extends Entite {
 
     }
 
-    public void ramasserEquipement(Equipement e){
+    public void ramasserEquipement(Equipement e, Donjon d){
         this.m_inventaire.add(e);
     }
 

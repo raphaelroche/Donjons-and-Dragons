@@ -1,5 +1,6 @@
 package entites;
 
+import donjons.Donjon;
 import maitredujeu.*;
 
 public abstract class Entite {
@@ -9,7 +10,15 @@ public abstract class Entite {
     protected int m_dexterite;
     protected int m_initiative;
 
-    public void seDeplacer(){
+    public String[][] seDeplacer(Donjon d){
+        String[][] carte = d.getCarte();
+
+
+
+
+
+
+        return carte;
 
     }
 

@@ -11,4 +11,8 @@ public class Donjon {
     public void afficherDonjon(){
 
     }
+
+    public String[][] getCarte(){
+        return this.m_carte;
+    }
 }
