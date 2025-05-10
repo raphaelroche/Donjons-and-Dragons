@@ -23,10 +23,15 @@ public class Monstre extends Entite {
         this.m_pv -= degats;
     }
 
-    @Override
-    public void seDeplacer(){
-
+    public int getX(){
+        return this.m_positionX;
     }
+
+    public  int getY(){
+        return this.m_positionY;
+    }
+
+
 
 
     public boolean attaquer(Personnage cible, String[][] carte){

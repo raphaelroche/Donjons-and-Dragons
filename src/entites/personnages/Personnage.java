@@ -18,15 +18,16 @@ public class Personnage extends Entite {
     protected String m_nom;
     private Race m_race;
     private Classe m_classe;
-    private int m_vitesse;
     private Des des;
 
     private ArrayList<Equipement> m_inventaire;
     private Armes[] m_armeEquipee;
     private Armures[] m_armureEquipee;
 
-    public Personnage(String nom, int race, int classe) {
+    public Personnage(String nom, int race, int classe, int x, int y) {
         this.m_nom = nom;
+        this.m_positionX = x;
+        this.m_positionY = y;
         this.m_inventaire = new ArrayList<Equipement>();
         this.m_armeEquipee = new Armes[1];
         this.m_armureEquipee = new Armures[1];
@@ -83,29 +84,26 @@ public class Personnage extends Entite {
         }
     }
 
-    public void sEquiperArme(Armes a){
 
-        this.m_armeEquipee[0] = a;
-
-    }
     public Armes getArmeEquipee(){
         return m_armeEquipee[0];
     }
 
-    @Override
-    public void seDeplacer(){
 
-    }
+
 
     public int getClasseArmure(){
         return this.m_armureEquipee[0].getClasseArmure();
     }
 
-    public boolean attaquer(Monstre cible, String[][] carte){
-        int distanceJoueurCible = 0;
+    public boolean attaquer(Monstre cible){
 
 
-        //verifier la distance entre le joueur le monstre grace a la carte
+
+        int dX = this.m_positionX - cible.getX();
+        int dY = this.m_positionY - cible.getY();
+
+        double distanceJoueurCible = Math.sqrt(dX * dX + dY * dY);
 
 
         if(this.m_armeEquipee[0].getPortee() <= distanceJoueurCible){
@@ -127,12 +125,44 @@ public class Personnage extends Entite {
     }
 
     public void sEquiperArmure(Armures a){
+        if(this.m_armureEquipee[0] != null){
+            this.m_inventaire.add(this.m_armureEquipee[0]);
+            this.m_armureEquipee[0] = null;
+        }
         this.m_armureEquipee[0] = a;
+        this.m_inventaire.remove(this.m_armureEquipee[0]);
+    }
+    public void sEquiperArme(Armes a){
+
+        if(this.m_armeEquipee[0] != null){
+            this.m_inventaire.add(this.m_armeEquipee[0]);
+            this.m_armeEquipee[0] = null;
+        }
+        this.m_armeEquipee[0] = a;
+        this.m_inventaire.remove(this.m_armeEquipee[0]);
+
     }
 
-    public void ramasserEquipement(Equipement e, Donjon d){
+    public boolean ramasserEquipement(Equipement e, String[][] carte){
+        boolean estSurUneCaseEquipement = false;
 
-        this.m_inventaire.add(e);
+        for(int i = 0; i< carte.length; i++){
+            for(int j = 0; j < carte[0].length; j++){
+                String caseActuelle = carte[i][j];
+                if(caseActuelle.contains(this.m_nom.substring(0,3))&& caseActuelle.contains("*")){
+                    estSurUneCaseEquipement = true;
+                    carte[i][j] = this.m_nom.substring(0,3);
+                    //on enleve l'etoile pour montrer que l'equipement a disparu
+                    break;
+                }
+            }
+        }
+
+        if(estSurUneCaseEquipement){
+            this.m_inventaire.add(e);
+            return true;
+        }
+        return false;
     }
 
 
@@ -140,6 +170,8 @@ public class Personnage extends Entite {
     public String getNom() {
         return this.m_nom;
     }
+
+
 
     public Race getRace() {
         return this.m_race;

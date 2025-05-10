@@ -12,6 +12,10 @@ public class Donjon {
 
     }
 
+    public void positionnerElementCarte(){
+
+    }
+
     public String[][] getCarte(){
         return this.m_carte;
     }

@@ -10,8 +10,36 @@ public abstract class Entite {
     protected int m_force;
     protected int m_dexterite;
     protected int m_initiative;
+    protected int m_positionX;
+    protected int m_positionY;
+    protected int m_vitesse;
 
-    public abstract void seDeplacer();
+
+
+    public void seDeplacer(int direction, Donjon d){
+        int distance = this.m_vitesse / 3;
+        switch(direction){
+            case 1:
+                //en haut
+                this.m_positionY -= distance;
+                break;
+            case 2:
+                //en bas
+                this.m_positionY += distance;
+                break;
+            case 3:
+                //gauche
+                this.m_positionX -= distance;
+                break;
+            case 4:
+                //droite
+                this.m_positionX += distance;
+                break;
+        }
+        //mettre a jour la carte du donjon
+        d.positionnerElementCarte();
+
+    }
 
 
     public int getPv() {
