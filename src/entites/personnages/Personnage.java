@@ -131,6 +131,10 @@ public class Personnage extends Entite {
         }
         this.m_armureEquipee[0] = a;
         this.m_inventaire.remove(this.m_armureEquipee[0]);
+
+        if(m_armureEquipee[0].getClasseArmure > 10){
+            this.m_vitesse -= 4;
+        }
     }
     public void sEquiperArme(Armes a){
 
