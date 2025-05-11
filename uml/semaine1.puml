@@ -1,6 +1,5 @@
 @startuml
-'https://plantuml.com/class-diagram
-scale 2
+scale 1
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 skinparam defaultFontSize 15
@@ -8,13 +7,167 @@ skinparam style strictuml
 hide empty members
 left to right direction
 
-' classe dé
-class Des
-'classe donjon
-class Donjon
+package des {
+    class Des {
+        + lancerDes(nbDes: int, nbFaces: int) : int
+    }
+}
 
-'classes entité
-abstract class Entite
-class Monstre --|> Entite
+package donjons {
+    class Donjon {
+        + <<create>> Donjon(carte: String[][])
+        + afficherDonjon()
+        + positionnerElementCarte()
+        + getCarte() : String[][]
+    }
+}
+
+package entites {
+    abstract class Entite {
+        + getX() : int
+        + getY() : int
+        + perdrePV(degats: int)
+    }
+
+    package monstres {
+        class Monstre {
+            + getClasseArmure() : int
+            + perdrePV(degats: int)
+            + attaquer(cible: Personnage, carte: String[][]) : boolean
+            + <<create>> Monstre()
+        }
+        Monstre --|> Entite
+    }
+
+    package personnages {
+        class Personnage {
+            + <<create>> Personnage(nom: String, race: int, classe: int, x: int, y: int)
+            + attribuerRaceClasse(race: int, classe: int)
+            + getArmeEquipee() : Armes
+            + getClasseArmure() : int
+            + attaquer(cible: Monstre) : boolean
+            + sEquiperArmure(a: Armures)
+            + sEquiperArme(a: Armes)
+            + ramasserEquipement(e: Equipement, carte: String[][]) : boolean
+            + getNom() : String
+            + getRace() : Race
+            + getVitesse() : int
+            + setVitesse(vitesse: int)
+            + perdrePV(degats: int)
+            + ajusterVitesse(valeur: int)
+            + afficherInventaire() : String
+            + toString() : String
+        }
+        Personnage --|> Entite
+
+        package classes {
+            abstract class Classe
+            class Clerc
+            class Guerrier
+            class Magicien
+            class Roublard
+
+            Clerc --|> Classe
+            Guerrier --|> Classe
+            Magicien --|> Classe
+            Roublard --|> Classe
+        }
+
+        package races {
+            abstract class Race
+            class Elfe
+            class Halfelin
+            class Humain
+            class Nain
+
+            Elfe --|> Race
+            Halfelin --|> Race
+            Humain --|> Race
+            Nain --|> Race
+        }
+    }
+}
+
+package equipements {
+    abstract class Equipement
+
+    package armes {
+        class Armes {
+            + determinerDegat() : int
+        }
+        Armes --|> Equipement
+
+        class CAC
+        class Distance
+        CAC --|> Armes
+        Distance --|> Armes
+
+        class EpeeLongue
+        class Rapiere
+        class Masse
+        class Baton
+        class Arbalete
+        class Arc
+        class Fronde
+        class Guerre
+        class Courantes
+
+        EpeeLongue --|> CAC
+        Rapiere --|> CAC
+        Masse --|> CAC
+        Baton --|> CAC
+
+        Arbalete --|> Distance
+        Arc --|> Distance
+        Fronde --|> Distance
+        Guerre --|> Distance
+        Courantes --|> Distance
+    }
+
+    package armures {
+        class Armures {
+            + determinerProtection() : int
+        }
+        Armures --|> Equipement
+
+        class Legeres
+        class Lourdes
+        Legeres --|> Armures
+        Lourdes --|> Armures
+
+        class CotteDeMailles
+        class DemiPlatte
+        class Ecailles
+        class Harnois
+
+        CotteDeMailles --|> Lourdes
+        DemiPlatte --|> Lourdes
+        Ecailles --|> Lourdes
+        Harnois --|> Lourdes
+    }
+}
+
+package maitredujeu {
+    class MaitreDuJeu {
+        + <<create>> MaitreDuJeu()
+        + creerDonjon(longueur: int, largeur: int)
+        + creerCarte(longueur: int, largeur: int) : String[][]
+        + positionnerObstacle()
+        + creerMonstres()
+        + positionnerJoueurs()
+        + positionnerEquipements()
+        + presenterContexte()
+    }
+}
+
+package global {
+    class Main {
+        + {static} main(args: String[])
+    }
+
+    class Utils {
+        + demanderChoix(scanner: Scanner, message: String, min: int, max: int) : int
+    }
+}
 
 @enduml
