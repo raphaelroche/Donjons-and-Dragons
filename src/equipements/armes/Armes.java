@@ -7,6 +7,7 @@ public abstract class Armes extends Equipement {
     protected int m_degats;
     protected int m_portee;
     protected Des des;
+    protected boolean m_changeStat;
 
     public Armes(int portee) {
         this.m_portee = portee;
@@ -21,5 +22,8 @@ public abstract class Armes extends Equipement {
 
     public int getDegats() {
         return this.m_degats;
+    }
+    public boolean getChangeStat() {
+        return this.m_changeStat;
     }
 }

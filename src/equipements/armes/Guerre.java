@@ -2,7 +2,9 @@ package equipements.armes;
 
 public abstract class Guerre extends CAC{
     public Guerre() {
+
         this.m_degats = 0;
+        this.m_changeStat = true;
     }
 
     @Override

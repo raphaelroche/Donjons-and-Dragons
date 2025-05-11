@@ -2,7 +2,9 @@ package equipements.armes;
 
 public abstract class Courantes extends CAC{
     public Courantes() {
+
         this.m_degats = 0;
+        this.m_changeStat = false;
     }
 
     @Override
