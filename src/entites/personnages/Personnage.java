@@ -155,16 +155,10 @@ public class Personnage extends Entite {
     public boolean ramasserEquipement(Equipement e, String[][] carte){
         boolean estSurUneCaseEquipement = false;
 
-        for(int i = 0; i< carte.length; i++){
-            for(int j = 0; j < carte[0].length; j++){
-                String caseActuelle = carte[i][j];
-                if(caseActuelle.contains(this.m_nom.substring(0,3))&& caseActuelle.contains("*")){
-                    estSurUneCaseEquipement = true;
-                    carte[i][j] = this.m_nom.substring(0,3);
-                    //on enleve l'etoile pour montrer que l'equipement a disparu
-                    break;
-                }
-            }
+        if(this.m_positionX == e.getPositionX() && this.m_positionY == e.getPositionY()){
+
+            estSurUneCaseEquipement = true;
+            carte[this.m_positionX][this.m_positionY] = this.m_nom.substring(0,3);
         }
 
         if(estSurUneCaseEquipement){

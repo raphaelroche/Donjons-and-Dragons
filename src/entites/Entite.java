@@ -1,10 +1,10 @@
 package entites;
 
 import donjons.Donjon;
-import entites.personnages.Personnage;
-import maitredujeu.*;
+import placable.Placable;
 
-public abstract class Entite {
+
+public abstract class Entite implements Placable {
     protected int m_pv;
     protected int m_pvMax;
     protected int m_force;
@@ -15,6 +15,16 @@ public abstract class Entite {
     protected int m_vitesse;
 
 
+
+    @Override
+    public int getPositionX(){
+        return m_positionX;
+    }
+
+    @Override
+    public int getPositionY(){
+        return m_positionY;
+    }
 
     public void seDeplacer(int direction, Donjon d){
         int distance = this.m_vitesse / 3;
