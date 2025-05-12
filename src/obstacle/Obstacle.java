@@ -7,22 +7,28 @@ import placable.Placable;
 public class Obstacle implements Placable {
     private int m_positionX;
     private int m_positionY;
-    private String m_look;
+    private String m_nomAffiche;
     private Des des;
 
+
     public Obstacle(int x, int y){
-        this.m_look = "[ ]";
+        this.m_nomAffiche = "[ ]";
         this.m_positionX = x;
         this.m_positionY = y;
     }
 
     public Obstacle(Donjon d){
         this.des = new Des();
-        this.m_look = "[ ]";
-        this.m_positionX = des.lancerDes(1, );
-
-
+        this.m_nomAffiche = "[ ]";
+        this.m_positionX = des.lancerDes(1, d.getLargeur());
+        this.m_positionY = des.lancerDes(1, d.getHauteur());
     }
+
+    @Override
+    public String getNomAffiche(){
+        return this.m_nomAffiche;
+    }
+
     @Override
     public int getPositionX(){
         return m_positionX;

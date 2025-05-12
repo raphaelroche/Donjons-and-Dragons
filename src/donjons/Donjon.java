@@ -1,5 +1,7 @@
 package donjons;
 
+import placable.Placable;
+
 public class Donjon {
     private String[] m_alphabet;
     private final String[][] m_carte;
@@ -59,8 +61,8 @@ public class Donjon {
         System.out.println("\t* Equipement\t|\t[ ] Obstacle");
     }
 
-    public void positionnerElementCarte(){
-
+    public void positionnerElementCarte(Placable p){
+        this.m_carte[p.getPositionX()][p.getPositionY()] = p.getNomAffiche();
     }
 
     public String[][] getCarte(){

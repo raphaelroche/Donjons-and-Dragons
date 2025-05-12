@@ -13,7 +13,7 @@ public abstract class Entite implements Placable {
     protected int m_positionX;
     protected int m_positionY;
     protected int m_vitesse;
-    protected String m_nameAffiche;
+    protected String m_nomAffiche;
 
 
 
@@ -48,8 +48,12 @@ public abstract class Entite implements Placable {
                 break;
         }
         //mettre a jour la carte du donjon
-        d.positionnerElementCarte();
+        d.positionnerElementCarte(this);
 
+    }
+    @Override
+    public String getNomAffiche(){
+        return this.m_nomAffiche;
     }
 
 

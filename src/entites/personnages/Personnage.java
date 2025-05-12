@@ -1,6 +1,5 @@
 package entites.personnages;
 
-import donjons.Donjon;
 import entites.Entite;
 import entites.monstres.Monstre;
 import equipements.Equipement;
@@ -31,7 +30,7 @@ public class Personnage extends Entite {
         this.m_inventaire = new ArrayList<Equipement>();
         this.m_armeEquipee = new Armes[1];
         this.m_armureEquipee = new Armures[1];
-        this.m_nameAffiche = this.m_nom.substring(0,3);
+        this.m_nomAffiche = this.m_nom.substring(0,3);
         attribuerRaceClasse(race, classe); //utilise un int pour désigner
         des = new Des();
         this.m_force = 3 + des.lancerDes(4,4);

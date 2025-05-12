@@ -1,5 +1,7 @@
 package entites.monstres;
 
+import des.Des;
+import donjons.Donjon;
 import entites.Entite;
 import entites.personnages.Personnage;
 
@@ -12,6 +14,7 @@ public class Monstre extends Entite {
     private int m_portee;
     private int m_degats;
     private int m_classeArmure;
+    private Des des;
 
     private static ArrayList<Monstre> monstres;
 
@@ -48,9 +51,15 @@ public class Monstre extends Entite {
         return false;
     }
 
-    public Monstre() {
+
+    //par default
+    public Monstre(Donjon d) {
         this.m_espece = "dragon";
-        this.m_nameAffiche = ;
+        this.des = new Des();
+        monstres.add(this);
+        this.m_nomAffiche = "D" + monstres.indexOf(this);
+        this.m_positionX = des.lancerDes(1, d.getLargeur());
+        this.m_positionY = des.lancerDes(1, d.getHauteur());
 
     }
 
