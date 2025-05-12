@@ -1,12 +1,17 @@
 package donjons;
 
 public class Donjon {
-    String[][] m_carte;
-    public Donjon(String[][] carte ){
-        this.m_carte = carte;
+    private final String[][] m_carte;
+    private int m_hauteur;
+    private int m_largeur;
 
+    public Donjon(){
+        this(15, 15);
     }
 
+    public Donjon(int m_hauteur, int m_largeur){
+        this.m_carte = new String[m_hauteur][m_largeur];
+    }
 
     public void afficherDonjon(){
 

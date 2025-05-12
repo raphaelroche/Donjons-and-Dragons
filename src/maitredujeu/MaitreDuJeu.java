@@ -9,14 +9,13 @@ public class MaitreDuJeu {
     }
 
     public void creerDonjon(int longueur, int largeur){
-
         m_carte = creerCarte(longueur, largeur);
         positionnerObstacle();
         creerMonstres();
         positionnerJoueurs();
         positionnerEquipements();
         presenterContexte();
-        Donjon donjon = new Donjon(m_carte);
+        Donjon donjon = new Donjon();
         donjon.afficherDonjon();
     }
 
