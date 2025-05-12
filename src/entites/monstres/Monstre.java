@@ -48,13 +48,13 @@ public class Monstre extends Entite {
         return false;
     }
 
-    /*public Monstre() {
+    public Monstre() {
         this.m_espece = "dragon";
+        this.m_nameAffiche = ;
 
     }
 
-    public Monstre();
-     */
+
 }
 
 

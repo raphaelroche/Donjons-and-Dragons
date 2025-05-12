@@ -13,6 +13,7 @@ public abstract class Entite implements Placable {
     protected int m_positionX;
     protected int m_positionY;
     protected int m_vitesse;
+    protected String m_nameAffiche;
 
 
 
