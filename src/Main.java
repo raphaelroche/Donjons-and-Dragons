@@ -11,10 +11,10 @@ public class Main {
         System.out.println("Choisissez un nom :");
         String nom = scanner.nextLine();
 
-        int race = Utils.demanderChoix(scanner,
+        int race = utils.Utils.demanderChoix(scanner,
                 "Choisissez une race :\n1 - Humain\n2 - Nain\n3 - Elfe\n4 - Halfelin", 1, 4);
 
-        int classe = Utils.demanderChoix(scanner,
+        int classe = utils.Utils.demanderChoix(scanner,
                 "Choisissez une classe :\n1 - Clerc\n2 - Guerrier\n3 - Magicien\n4 - Roublard", 1, 4);
 
 

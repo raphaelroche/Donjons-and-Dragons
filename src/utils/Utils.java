@@ -1,3 +1,5 @@
+package utils;
+
 import java.util.Scanner;
 
 public class Utils {        //vérifie qu'on donne un entier compris entre min et max
