@@ -1,10 +1,11 @@
+import donjons.Donjon;
 import entites.personnages.Personnage;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String args[]){
-        System.out.println("Bienvenue dans DOOnjon et Dragons");
+     /*   System.out.println("Bienvenue dans DOOnjon et Dragons");
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Choisissez un nom :");
@@ -17,8 +18,12 @@ public class Main {
                 "Choisissez une classe :\n1 - Clerc\n2 - Guerrier\n3 - Magicien\n4 - Roublard", 1, 4);
 
 
-        Personnage p1 = new Personnage(nom, race, classe);
-        System.out.println(p1.toString());
-        System.out.println(p1.afficherInventaire());
+       Personnage p1 = new Personnage(nom, race, classe, 5, 5);
+      System.out.println(p1.toString());
+      System.out.println(p1.afficherInventaire());
+      */
+
+        Donjon d = new Donjon();
+        d.afficherDonjon();
     }
 }

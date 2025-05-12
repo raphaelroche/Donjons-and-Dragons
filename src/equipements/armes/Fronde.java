@@ -8,7 +8,7 @@ public class Fronde extends Distance{
     }
 
     @Override
-    public void determinerdegat(){
+    public void determinerDegat(){
         this.m_degats = des.lancerDes(1, 4);
     }
 }
