@@ -1,7 +1,4 @@
 import donjons.Donjon;
-import entites.personnages.Personnage;
-
-import java.util.Scanner;
 
 public class Main {
     public static void main(String args[]){

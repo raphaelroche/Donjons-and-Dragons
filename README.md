@@ -1,7 +1,7 @@
 # DOOnjon&Dragon Project
 
 On souhaite développer une application pour **un nouveau un jeu D&D**.
-C'est un jeu de rôle de Medieval Fantasy où les joueurs incarnent des entites.personnages affrontant des entites.monstres dans plusieurs donjons successifs.
+C'est un jeu de rôle de Medieval Fantasy où les joueurs incarnent des placable.entites.personnages affrontant des placable.entites.monstres dans plusieurs donjons successifs.
 
 ## Organisation
 
@@ -31,13 +31,13 @@ De plus, il y aura un rendu hebdomadaire avant chaque **dimanche, minuit**.
 
 ## Le jeu
 
-Il s'agit d'un jeu avec plusieurs joueurs humains face à des entites.monstres contrôlés par le maître du jeu, qui se joue **au tour par tour**. Les joueurs incarnant les entites.personnages doivent éliminer les entites.monstres de trois donjons successifs. Un autre joueur est Maître du Jeu et a pour rôle de narrer l'histoire et expliquer le contexte aux joueurs. Si un seul joueur est éliminé par un monstre dans un des donjons, l'équipe a perdu.
+Il s'agit d'un jeu avec plusieurs joueurs humains face à des placable.entites.monstres contrôlés par le maître du jeu, qui se joue **au tour par tour**. Les joueurs incarnant les placable.entites.personnages doivent éliminer les placable.entites.monstres de trois donjons successifs. Un autre joueur est Maître du Jeu et a pour rôle de narrer l'histoire et expliquer le contexte aux joueurs. Si un seul joueur est éliminé par un monstre dans un des donjons, l'équipe a perdu.
 
  Le jeu se base sur des jets de dés désignés par <nombre de dés>d<nombre de faces des dés>.
  Par exemple, 3d4 désigne le jet de 3 dés à 4 faces.
 
 
-### Les entites.personnages
+### Les placable.entites.personnages
 
 Chaque joueur à l'exception du Maître du Jeu incarne un personnage.
 Chaque personnage est défini par:
@@ -122,7 +122,7 @@ Au début d'une partie, chaque joueur crée son personnage de la façon suivante
   - 3 points
   - l'augmentation déterminée par la race du personnage
 
-### Les entites.monstres
+### Les placable.entites.monstres
 
 *« Wait a minute!\
 Did you hear that ? That... that sound?\
@@ -132,10 +132,10 @@ The Demogorgon ! »\
 Stranger Things, Saison 1, épisode 1*
 
 
-Les entites.monstres sont contrôlés par le maître du jeu.
+Les placable.entites.monstres sont contrôlés par le maître du jeu.
 Un monstre est défini par:
 - son espèce (par exemple dragon)
-- son numéro si plusieurs entites.monstres de la même espèce sont présents
+- son numéro si plusieurs placable.entites.monstres de la même espèce sont présents
 - son attaque (qui est unique)
     - la portée de l'attaque (valant 1 si l'attaque est au corps-à-corps)
     - les dégâts de l'attaque (choix du jet de dés)
@@ -158,9 +158,9 @@ En revanche un monstre ne possède pas d'équipement.
 
 Au début de chaque donjon, le maître du jeu
 - crée la carte d'un donjon: un rectangle dont les dimensions sont comprises entre 15 et 25 cases
-- positionne des obstacles sur la carte: cases où les joueurs et les entites.monstres ne pourront pas se déplacer
-- crée les entites.monstres et choisit leurs caractéristiques
-- positionne les joueurs et les entites.monstres sur la carte (en-dehors des obstacles)
+- positionne des obstacles sur la carte: cases où les joueurs et les placable.entites.monstres ne pourront pas se déplacer
+- crée les placable.entites.monstres et choisit leurs caractéristiques
+- positionne les joueurs et les placable.entites.monstres sur la carte (en-dehors des obstacles)
 - positionne des équipements sur la carte que les joueurs pourront récupérer
 - présente en quelques phrases le contexte aux joueurs
 
@@ -178,13 +178,13 @@ Lors de son tour, le joueur ou le monstre (contrôlé par le maître du jeu) peu
 
 A la fin de chaque action le joueur ou le maître du jeu peut commenter l'action pour améliorer le *Role Play*.
 
-##### S'équiper *(uniquement pour les entites.personnages)*
+##### S'équiper *(uniquement pour les placable.entites.personnages)*
 Un joueur peut équiper une arme ou une armure de son inventaire.
 (L'arme ou l'armure précédemment équipée retourne dans l'inventaire)
 Penser à mettre à jour la valeur de vitesse de personnage s'il s'agit d'une arme lourde ou d'une armure lourde.
 
 ##### Se Déplacer
-Un joueur ou un monstre peut de déplacer d'une distance égale à sa caractéristique de vitesse divisée par 3 sur une case sans monstre, joueur ou obstacle.
+Un joueur ou un monstre peut de déplacer d'une distance égale à sa caractéristique de vitesse divisée par 3 sur une case sans monstre, joueur ou placable.obstacle.
 L'évitement d'obstacles n'est pas pris en compte pour le calcul de la distance de déplacement.
 
 ##### Attaquer
@@ -193,13 +193,13 @@ L'attaquant attaque avec l'arme  qu'il porte.
 - Le joueur commence par faire un jet d'attaque (1d20). Il ajoute ensuite au résultat du dé sa caractéristique de Dextérité s'il s'agit d'une attaque avec arme à distance et sa caractéristique de Force s'il s'agit d'une attaque avec arme au corps-à-corps.
 - Si la somme est supérieur à la classe d'armure du monstre ciblé, le joueur lance le dé de dégât de l'arme et le monstre perd en point de vies le résultat du jet de dé. Dans le cas contraire, le joueur finit son action sans infliger de dégâts au monstre.
 
-#### Ramasser un équipement *(uniquement pour les entites.personnages)*
+#### Ramasser un équipement *(uniquement pour les placable.entites.personnages)*
 Si un joueur est sur une case contenant un équipement, il peut prendre l'équipement pour l'ajouter à son inventaire (l'équipement disparaît de la carte)
 
 #### Fin d'un donjon
-Un donjon se termine lorsqu'un joueur est tué (défaite) ou lorsque tous les entites.monstres sont éliminés (victoire).
+Un donjon se termine lorsqu'un joueur est tué (défaite) ou lorsque tous les placable.entites.monstres sont éliminés (victoire).
 
-En cas de victoire, les entites.personnages regagnent l'intégralité de leur vie et passent au donjon suivant.
+En cas de victoire, les placable.entites.personnages regagnent l'intégralité de leur vie et passent au donjon suivant.
 
 ### Exemple d'affichage
 
