@@ -34,6 +34,10 @@ public abstract class Entite implements Placable {
 
     public void seDeplacer(int direction, Donjon d){
         int distance = this.m_vitesse / 3;
+
+        //mettre un point sur la case ou se trouvai le perso
+        d.positionnerEmplacementVide(this.m_positionX, this.m_positionY);
+        
         switch(direction){
             case 1:
                 //en haut

@@ -23,7 +23,7 @@ public class Donjon {
         // Initialiser la carte avec des "."
         for (int x = 0; x < m_largeur; x++) {
             for (int y = 0; y < m_hauteur; y++) {
-                m_carte[x][y] = ".";
+                positionnerEmplacementVide(x,y);
             }
         }
     }
@@ -59,6 +59,10 @@ public class Donjon {
 
         //légende de la carte
         System.out.println("\t* Equipement\t|\t[ ] Obstacle");
+    }
+
+    public void positionnerEmplacementVide(int x, int y){
+        this.m_carte[x][y] = ".";
     }
 
     public void positionnerElementCarte(Placable p){
