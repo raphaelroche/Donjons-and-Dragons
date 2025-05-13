@@ -1,18 +1,14 @@
 package donjons;
 
+import placable.CaseVide;
 import placable.Placable;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Donjon {
     private String[] m_alphabet;
-    private final String[][] m_carte;
+    private final Placable[][] m_carte;
     private int m_hauteur;
     private int m_largeur;
-    private final Map<String, List<Placable>> symboleVersEntites = new HashMap<>();
+    private CaseVide m_casevide;
 
 
     public Donjon(){
@@ -22,7 +18,7 @@ public class Donjon {
     public Donjon(int hauteur, int largeur){
         this.m_hauteur = hauteur;
         this.m_largeur = largeur;
-        this.m_carte = new String[m_largeur][m_hauteur];
+        this.m_carte = new Placable[m_largeur][m_hauteur];
         this.m_alphabet = new String[] {
                 "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
                 "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
@@ -56,7 +52,7 @@ public class Donjon {
                 System.out.print(i+1 + " |");
             }
             for (int j = 0; j < this.m_largeur; j++) {
-                System.out.print("\t" + this.m_carte[i][j]);
+                System.out.print("\t" + this.m_carte[i][j].getNomAffiche());
             }
             System.out.print("\t|");
             System.out.println();
@@ -69,22 +65,18 @@ public class Donjon {
     }
 
     public void positionnerEmplacementVide(int x, int y){
-        this.m_carte[x][y] = ".";
+        this.m_carte[x][y] = new CaseVide(x, y);
     }
 
     public void positionnerElementCarte(Placable p) {
         int x = p.getPositionX();
         int y = p.getPositionY();
 
-        this.m_carte[x][y] = p.getNomAffiche();
-
-        symboleVersEntites
-                .computeIfAbsent(p.getNomAffiche(), k -> new ArrayList<>())
-                .add(p);
+        this.m_carte[x][y] = p;
     }
 
 
-    public String[][] getCarte(){
+    public Placable[][] getCarte(){
         return this.m_carte;
     }
 
