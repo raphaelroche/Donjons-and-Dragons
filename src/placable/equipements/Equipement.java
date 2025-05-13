@@ -1,5 +1,7 @@
 package placable.equipements;
 
+import des.Des;
+import donjons.Donjon;
 import placable.Placable;
 
 public abstract class Equipement implements Placable {
@@ -7,9 +9,8 @@ public abstract class Equipement implements Placable {
     protected int m_positionX;
     protected int m_positionY;
     protected String m_nomAffiche;
-    public Equipement() {
-        this.m_nomAffiche = " * ";
-    }
+
+
     @Override
     public void setLocation(int x, int y){
         this.m_positionX = x;

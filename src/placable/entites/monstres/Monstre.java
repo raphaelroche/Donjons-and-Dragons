@@ -20,7 +20,10 @@ public class Monstre extends Entite {
 
     //par default
     public Monstre(Donjon d) {
-        monstres = new ArrayList<>();
+        if(monstres == null) {
+            monstres = new ArrayList<>();
+        }
+
         this.m_espece = "dragon";
         this.des = new Des();
         monstres.add(this);
@@ -32,6 +35,11 @@ public class Monstre extends Entite {
 
     public Monstre(String espece, int portee,int pv, String nomattaque,  int classeArmure, int force, int dexterite, int initiative, int x, int y) {
         des = new Des();
+
+        if(monstres == null) {
+            monstres = new ArrayList<>();
+        }
+
         this.m_espece = espece;
         this.m_portee = portee;
         this.m_pv = pv;

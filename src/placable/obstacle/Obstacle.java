@@ -10,6 +10,10 @@ public class Obstacle implements Placable {
     private String m_nomAffiche;
     private Des des;
 
+    public Obstacle(int x, int y){
+        this.m_nomAffiche = "[ ]";
+        this.setLocation(x, y);
+    }
     public Obstacle(Donjon d){
         this.des = new Des();
         this.m_nomAffiche = "[ ]";
