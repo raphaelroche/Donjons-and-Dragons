@@ -1,12 +1,15 @@
 import donjons.Donjon;
 import maitredujeu.MaitreDuJeu;
 import placable.entites.monstres.Monstre;
+import placable.entites.personnages.Personnage;
 import placable.equipements.armes.*;
 import placable.obstacle.Obstacle;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String args[]){
-     /*   System.out.println("Bienvenue dans DOOnjon et Dragons");
+        System.out.println("Bienvenue dans DOOnjon et Dragons");
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Choisissez un nom :");
@@ -22,11 +25,12 @@ public class Main {
        Personnage p1 = new Personnage(nom, race, classe, 5, 5);
       System.out.println(p1.toString());
       System.out.println(p1.afficherInventaire());
-      */
+
 
         MaitreDuJeu mj = new MaitreDuJeu();
 
         Donjon d = new Donjon();
+        mj.positionnerEntite(d,p1);
         d.positionnerElementCarte(new Monstre(d));
         Fronde fronde = new Fronde();
         mj.positionnerEquipement(d, fronde, 1, 2);

@@ -76,8 +76,8 @@ public class Donjon {
     }
 
     public void positionnerElementCarte(Placable p) {
-        int x = p.getPositionX();
-        int y = p.getPositionY();
+        int x = p.getPositionX()-1;
+        int y = p.getPositionY()-1;
 
         this.m_carte[x][y].set(0,p);
     }

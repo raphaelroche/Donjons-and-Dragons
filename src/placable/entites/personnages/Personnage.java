@@ -11,6 +11,7 @@ import placable.equipements.armures.Ecailles;
 import placable.entites.personnages.classes.*;
 import placable.entites.personnages.races.*;
 import des.Des;
+import placable.obstacle.Obstacle;
 
 import java.util.ArrayList;
 
@@ -154,7 +155,7 @@ public class Personnage extends Entite {
     public boolean ramasserEquipement(Equipement e, ArrayList<Placable>[][] carte){
 
 
-        if(this.m_positionX == e.getPositionX() && this.m_positionY == e.getPositionY()){
+        if(contientEquipement(carte[this.m_positionX][this.m_positionY])){
 
             carte[this.m_positionX][this.m_positionY].clear();
             carte[this.m_positionX][this.m_positionY].add(this);
@@ -210,6 +211,14 @@ public class Personnage extends Entite {
         return contenu.toString();
     }
 
+    public static boolean contientEquipement(ArrayList<Placable> liste) {
+        for (Placable p : liste) {
+            if (p.equals(new Equipement())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public String toString() {
