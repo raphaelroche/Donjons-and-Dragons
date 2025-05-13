@@ -6,6 +6,9 @@ out/
 modules.xml
 *.ipr
 
+##VS Code
+.vs/
+
 ### Java ###
 doc/
 *.class

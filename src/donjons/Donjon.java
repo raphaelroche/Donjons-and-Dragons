@@ -2,11 +2,18 @@ package donjons;
 
 import placable.Placable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Donjon {
     private String[] m_alphabet;
     private final String[][] m_carte;
     private int m_hauteur;
     private int m_largeur;
+    private final Map<String, List<Placable>> symboleVersEntites = new HashMap<>();
+
 
     public Donjon(){
         this(15, 15);
@@ -65,9 +72,17 @@ public class Donjon {
         this.m_carte[x][y] = ".";
     }
 
-    public void positionnerElementCarte(Placable p){
-        this.m_carte[p.getPositionX()][p.getPositionY()] = p.getNomAffiche();
+    public void positionnerElementCarte(Placable p) {
+        int x = p.getPositionX();
+        int y = p.getPositionY();
+
+        this.m_carte[x][y] = p.getNomAffiche();
+
+        symboleVersEntites
+                .computeIfAbsent(p.getNomAffiche(), k -> new ArrayList<>())
+                .add(p);
     }
+
 
     public String[][] getCarte(){
         return this.m_carte;
