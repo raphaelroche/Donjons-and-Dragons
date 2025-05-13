@@ -37,25 +37,53 @@ public abstract class Entite implements Placable {
 
         //mettre un point sur la case ou se trouvai le perso
         d.positionnerEmplacementVide(this.m_positionX, this.m_positionY);
-        
-        switch(direction){
-            case 1:
-                //en haut
-                setLocation(this.m_positionX, this.m_positionY - distance);
-                break;
-            case 2:
-                //en bas
-                setLocation(this.m_positionX, this.m_positionY + distance);
-                break;
-            case 3:
-                //gauche
-                setLocation(this.m_positionX - distance, this.m_positionY);
-                break;
-            case 4:
-                //droite
-                setLocation(this.m_positionX + distance, this.m_positionY);
-                break;
+        Placable[][] carte = d.getCarte();
+
+        for(int i = 0; i < distance; i++){
+            switch(direction){
+                case 1:
+                    //en haut
+                    if(this.m_positionY - 1 < 0){
+                        setLocation(this.m_positionX, 0);
+                    }
+                    else{
+                        setLocation(this.m_positionX, this.m_positionY - 1);
+                    }
+
+                    break;
+                case 2:
+                    //en bas
+                    if(this.m_positionY + 1 > d.getHauteur()){
+                        setLocation(this.m_positionX, d.getHauteur());
+                    }
+                    else{
+                        setLocation(this.m_positionX, this.m_positionY + 1);
+                    }
+
+                    break;
+                case 3:
+                    //gauche
+                    if(this.m_positionX - 1 < 0){
+                        setLocation(0, this.m_positionY);
+                    }
+                    else{
+                        setLocation(this.m_positionX - 1, this.m_positionY);
+                    }
+
+                    break;
+                case 4:
+                    //droite
+                    if(this.m_positionX + 1 > d.getLargeur()){
+                        setLocation(d.getLargeur(), this.m_positionY);
+                    }
+                    else{
+                        setLocation(this.m_positionX + 1, this.m_positionY);
+                    }
+
+                    break;
+            }
         }
+
         //mettre a jour la carte du donjon
         d.positionnerElementCarte(this);
 
