@@ -2,6 +2,7 @@ package placable.entites;
 
 import donjons.Donjon;
 import placable.Placable;
+import placable.obstacle.Obstacle;
 
 
 public abstract class Entite implements Placable {
@@ -39,14 +40,17 @@ public abstract class Entite implements Placable {
         d.positionnerEmplacementVide(this.m_positionX, this.m_positionY);
         Placable[][] carte = d.getCarte();
 
+        //label pour quitter directement le for et le switch d'un coup
+        quitterBoucle:
         for(int i = 0; i < distance; i++){
             switch(direction){
                 case 1:
                     //en haut
                     if(this.m_positionY - 1 < 0){
                         setLocation(this.m_positionX, 0);
-                    }
-                    else{
+                    } else if (carte[this.m_positionX] [this.m_positionY - 1].equals(new Obstacle(d))) {
+                       break quitterBoucle;
+                    } else{
                         setLocation(this.m_positionX, this.m_positionY - 1);
                     }
 
@@ -55,8 +59,9 @@ public abstract class Entite implements Placable {
                     //en bas
                     if(this.m_positionY + 1 > d.getHauteur()){
                         setLocation(this.m_positionX, d.getHauteur());
-                    }
-                    else{
+                    } else if (carte[this.m_positionX] [this.m_positionY + 1].equals(new Obstacle(d))) {
+                        break quitterBoucle;
+                    } else{
                         setLocation(this.m_positionX, this.m_positionY + 1);
                     }
 
@@ -65,8 +70,9 @@ public abstract class Entite implements Placable {
                     //gauche
                     if(this.m_positionX - 1 < 0){
                         setLocation(0, this.m_positionY);
-                    }
-                    else{
+                    } else if (carte[this.m_positionX - 1] [this.m_positionY].equals(new Obstacle(d))) {
+                        break quitterBoucle;
+                    } else{
                         setLocation(this.m_positionX - 1, this.m_positionY);
                     }
 
@@ -75,13 +81,15 @@ public abstract class Entite implements Placable {
                     //droite
                     if(this.m_positionX + 1 > d.getLargeur()){
                         setLocation(d.getLargeur(), this.m_positionY);
-                    }
-                    else{
+                    } else if (carte[this.m_positionX + 1] [this.m_positionY].equals(new Obstacle(d))) {
+                        break quitterBoucle;
+                    } else{
                         setLocation(this.m_positionX + 1, this.m_positionY);
                     }
 
                     break;
             }
+
         }
 
         //mettre a jour la carte du donjon
@@ -155,5 +163,12 @@ public abstract class Entite implements Placable {
         if (this.m_initiative < 0) {
             this.m_initiative = 0;
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        return this.getClass() == obj.getClass();
+        //verifie si this est de la meme classe que obj
     }
 }
