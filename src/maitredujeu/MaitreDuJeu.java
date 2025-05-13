@@ -16,17 +16,17 @@ public class MaitreDuJeu {
     }
 
     public void postionnerObstacle(Donjon d, Obstacle o, int x, int y){
-        o.setLocation(x, y);
+        o.setLocation(x-1 , y-1);
         d.positionnerElementCarte(o);
     }
 
     public void positionnerEntite(Donjon d, Entite e, int x, int y){
-        e.setLocation(x, y);
+        e.setLocation(x-1, y-1);
         d.positionnerElementCarte(e);
     }
 
     public void positionnerEquipement(Donjon d, Equipement e, int x, int y){
-        e.setLocation(x, y);
+        e.setLocation(x-1 , y-1);
         d.positionnerElementCarte(e);
     }
 

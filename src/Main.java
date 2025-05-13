@@ -1,5 +1,7 @@
 import donjons.Donjon;
+import maitredujeu.MaitreDuJeu;
 import placable.entites.monstres.Monstre;
+import placable.equipements.armes.*;
 
 public class Main {
     public static void main(String args[]){
@@ -21,8 +23,12 @@ public class Main {
       System.out.println(p1.afficherInventaire());
       */
 
+        MaitreDuJeu mj = new MaitreDuJeu();
+
         Donjon d = new Donjon();
         d.positionnerElementCarte(new Monstre(d));
+        Fronde fronde = new Fronde();
+        mj.positionnerEquipement(d, fronde, 1, 2);
         d.afficherDonjon();
     }
 }
