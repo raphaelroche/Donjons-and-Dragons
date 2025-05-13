@@ -1,54 +1,33 @@
 package maitredujeu;
 
 import donjons.Donjon;
+import placable.entites.Entite;
+import placable.equipements.Equipement;
+import placable.obstacle.Obstacle;
 
 public class MaitreDuJeu {
-    private String[][] m_carte;
+
     public MaitreDuJeu(){
-
+        String m_nom = "Maitre Du Jeu";
     }
 
-    public void creerDonjon(int longueur, int largeur){
-        m_carte = creerCarte(longueur, largeur);
-        positionnerObstacle();
-        creerMonstres();
-        positionnerJoueurs();
-        positionnerEquipements();
-        presenterContexte();
-        Donjon donjon = new Donjon();
-        donjon.afficherDonjon();
+    public void creerDonjon(Donjon d, int longueur, int largeur){
+        d = new Donjon(largeur, longueur);
     }
 
-    public String[][] creerCarte(int longueur, int largeur) {
-        String[][] carte = new String[longueur][largeur];
-        for (int i = 0; i < longueur; i++) {
-            for(int j = 0; j<largeur; j++){
-                carte[i][j] = ".";
-            }
-        }
-        return carte;
+    public void postionnerObstacle(Donjon d, Obstacle o, int x, int y){
+        o.setLocation(x, y);
+        d.positionnerElementCarte(o);
     }
 
-    public void positionnerObstacle(){
-
+    public void positionnerEntite(Donjon d, Entite e, int x, int y){
+        e.setLocation(x, y);
+        d.positionnerElementCarte(e);
     }
 
-    public void creerMonstres() {
-
-
+    public void positionnerEquipement(Donjon d, Equipement e, int x, int y){
+        e.setLocation(x, y);
+        d.positionnerElementCarte(e);
     }
-
-    public void positionnerJoueurs(){
-
-    }
-
-    public void positionnerEquipements(){
-
-    }
-
-    public void presenterContexte(){
-
-    }
-
 
 }
