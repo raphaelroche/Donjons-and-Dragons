@@ -35,7 +35,7 @@ public class Donjon {
         //affichage des lettres
         System.out.print("\t");
         for (int i = 0; i < this.m_largeur; i++) {
-            System.out.print("\t");
+            System.out.print("  ");
             System.out.print(this.m_alphabet[i] + " ");
         }
         System.out.println();
@@ -52,7 +52,7 @@ public class Donjon {
                 System.out.print(i+1 + " |");
             }
             for (int j = 0; j < this.m_largeur; j++) {
-                System.out.print("\t" + this.m_carte[i][j].getNomAffiche());
+                System.out.print(" " + this.m_carte[i][j].getNomAffiche());
             }
             System.out.print("\t|");
             System.out.println();

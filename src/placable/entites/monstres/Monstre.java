@@ -25,8 +25,8 @@ public class Monstre extends Entite {
         this.des = new Des();
         monstres.add(this);
         this.m_numero = monstres.indexOf(this)+1;
-        this.m_nomAffiche = "D" + this.m_numero;
-        setLocation(des.lancerDes(1, d.getLargeur()), des.lancerDes(1, d.getHauteur()));
+        this.m_nomAffiche = " D" + this.m_numero;
+        setLocation(des.lancerDes(1, d.getLargeur()-1), des.lancerDes(1, d.getHauteur()-1));
 
     }
 

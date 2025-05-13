@@ -10,7 +10,7 @@ public class CaseVide implements Placable{
 
 
     public CaseVide(int x, int y){
-        this.m_nomAffiche = ".";
+        this.m_nomAffiche = " . ";
         this.m_positionX = x;
         this.m_positionY = y;
     }

@@ -8,7 +8,7 @@ public abstract class Equipement implements Placable {
     protected int m_positionY;
     protected String m_nomAffiche;
     public Equipement() {
-        this.m_nomAffiche = "*";
+        this.m_nomAffiche = " * ";
     }
     @Override
     public void setLocation(int x, int y){

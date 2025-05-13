@@ -2,6 +2,7 @@ import donjons.Donjon;
 import maitredujeu.MaitreDuJeu;
 import placable.entites.monstres.Monstre;
 import placable.equipements.armes.*;
+import placable.obstacle.Obstacle;
 
 public class Main {
     public static void main(String args[]){
@@ -29,6 +30,8 @@ public class Main {
         d.positionnerElementCarte(new Monstre(d));
         Fronde fronde = new Fronde();
         mj.positionnerEquipement(d, fronde, 1, 2);
+        Obstacle o = new Obstacle(d);
+        mj.postionnerObstacle(d, o, o.getPositionX(), o.getPositionY());
         d.afficherDonjon();
     }
 }
