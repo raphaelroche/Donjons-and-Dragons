@@ -22,106 +22,113 @@ package donjons {
     }
 }
 
-package entites {
-    abstract class Entite {
-        + getX() : int
-        + getY() : int
-        + perdrePV(degats: int)
-    }
-
-    package monstres {
-        class Monstre {
-            + getClasseArmure() : int
+package placable {
+    package entites {
+        abstract class Entite implements Obstacle {
+            + getX() : int
+            + getY() : int
             + perdrePV(degats: int)
-            + attaquer(cible: Personnage, carte: String[][]) : boolean
-            + <<create>> Monstre()
         }
-        Monstre --|> Entite
+
+        package monstres {
+            class Monstre {
+                + getClasseArmure() : int
+                + perdrePV(degats: int)
+                + attaquer(cible: Personnage, carte: String[][]) : boolean
+                + <<create>> Monstre()
+            }
+            Monstre --|> Entite
+        }
+
+        package personnages {
+            class Personnage {
+                + <<create>> Personnage(nom: String, race: int, classe: int, x: int, y: int)
+                + attribuerRaceClasse(race: int, classe: int)
+                + getArmeEquipee() : Armes
+                + getClasseArmure() : int
+                + attaquer(cible: Monstre) : boolean
+                + sEquiperArmure(a: Armures)
+                + sEquiperArme(a: Armes)
+                + ramasserEquipement(e: Equipement, carte: String[][]) : boolean
+                + getNom() : String
+                + getRace() : Race
+                + getVitesse() : int
+                + setVitesse(vitesse: int)
+                + perdrePV(degats: int)
+                + ajusterVitesse(valeur: int)
+                + afficherInventaire() : String
+                + toString() : String
+            }
+            Personnage --|> Entite
+
+            package classes {
+                abstract class Classe
+                class Clerc
+                class Guerrier
+                class Magicien
+                class Roublard
+
+                Clerc --|> Classe
+                Guerrier --|> Classe
+                Magicien --|> Classe
+                Roublard --|> Classe
+            }
+
+            package races {
+                abstract class Race
+                class Elfe
+                class Halfelin
+                class Humain
+                class Nain
+
+                Elfe --|> Race
+                Halfelin --|> Race
+                Humain --|> Race
+                Nain --|> Race
+            }
+        }
+        package obstacle {
+            Class Obstacle implements Placable
+        }
+
+        package equipements {
+                abstract class Equipement implements Placable
+
+                package armes {
+                    class Armes {
+                        + determinerDegat() : int
+                    }
+                    Armes --|> Equipement
+
+                    class CAC
+                    class Distance
+                    CAC --|> Armes
+                    Distance --|> Armes
+
+                    class EpeeLongue
+                    class Rapiere
+                    class Masse
+                    class Baton
+                    class Arbalete
+                    class Arc
+                    class Fronde
+                    class Guerre
+                    class Courantes
+
+                    EpeeLongue --|> CAC
+                    Rapiere --|> CAC
+                    Masse --|> CAC
+                    Baton --|> CAC
+
+                    Arbalete --|> Distance
+                    Arc --|> Distance
+                    Fronde --|> Distance
+                    Guerre --|> Distance
+                    Courantes --|> Distance
+                }
     }
 
-    package personnages {
-        class Personnage {
-            + <<create>> Personnage(nom: String, race: int, classe: int, x: int, y: int)
-            + attribuerRaceClasse(race: int, classe: int)
-            + getArmeEquipee() : Armes
-            + getClasseArmure() : int
-            + attaquer(cible: Monstre) : boolean
-            + sEquiperArmure(a: Armures)
-            + sEquiperArme(a: Armes)
-            + ramasserEquipement(e: Equipement, carte: String[][]) : boolean
-            + getNom() : String
-            + getRace() : Race
-            + getVitesse() : int
-            + setVitesse(vitesse: int)
-            + perdrePV(degats: int)
-            + ajusterVitesse(valeur: int)
-            + afficherInventaire() : String
-            + toString() : String
-        }
-        Personnage --|> Entite
 
-        package classes {
-            abstract class Classe
-            class Clerc
-            class Guerrier
-            class Magicien
-            class Roublard
-
-            Clerc --|> Classe
-            Guerrier --|> Classe
-            Magicien --|> Classe
-            Roublard --|> Classe
-        }
-
-        package races {
-            abstract class Race
-            class Elfe
-            class Halfelin
-            class Humain
-            class Nain
-
-            Elfe --|> Race
-            Halfelin --|> Race
-            Humain --|> Race
-            Nain --|> Race
-        }
-    }
-}
-
-package equipements {
-    abstract class Equipement
-
-    package armes {
-        class Armes {
-            + determinerDegat() : int
-        }
-        Armes --|> Equipement
-
-        class CAC
-        class Distance
-        CAC --|> Armes
-        Distance --|> Armes
-
-        class EpeeLongue
-        class Rapiere
-        class Masse
-        class Baton
-        class Arbalete
-        class Arc
-        class Fronde
-        class Guerre
-        class Courantes
-
-        EpeeLongue --|> CAC
-        Rapiere --|> CAC
-        Masse --|> CAC
-        Baton --|> CAC
-
-        Arbalete --|> Distance
-        Arc --|> Distance
-        Fronde --|> Distance
-        Guerre --|> Distance
-        Courantes --|> Distance
     }
 
     package armures {
