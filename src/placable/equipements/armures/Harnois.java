@@ -1,5 +1,6 @@
 package placable.equipements.armures;
 
+import des.Des;
 import donjons.Donjon;
 
 public class Harnois extends Lourdes{
@@ -13,9 +14,11 @@ public class Harnois extends Lourdes{
         this.m_nom = "harnois";
     }
 
-    public Harnois(Donjon d){
-        super(12);
+    public Harnois(Donjon d, Des des){
+        super(12,des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
         this.m_nom = "harnois";
-        this.setLocation(des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
+    }
+    public Harnois(Donjon d){
+        this(d, new Des());
     }
 }

@@ -20,14 +20,14 @@ public class Donjon {
     public Donjon(int hauteur, int largeur){
         this.m_hauteur = hauteur;
         this.m_largeur = largeur;
-        this.m_carte = new ArrayList[m_largeur][m_hauteur];
+        this.m_carte = new ArrayList[m_hauteur][m_largeur];
         this.m_alphabet = new String[] {
                 "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
                 "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
         };
         // Initialiser la carte avec des "."
-        for (int x = 0; x < m_largeur; x++) {
-            for (int y = 0; y < m_hauteur; y++) {
+        for (int x = 0; x < m_hauteur; x++) {
+            for (int y = 0; y < m_largeur; y++) {
                 m_carte[x][y] = new ArrayList<>();
                 positionnerEmplacementVide(x,y);
             }
@@ -76,8 +76,8 @@ public class Donjon {
     }
 
     public void positionnerElementCarte(Placable p) {
-        int x = p.getPositionX()-1;
-        int y = p.getPositionY()-1;
+        int x = p.getPositionX();
+        int y = p.getPositionY();
 
         this.m_carte[x][y].set(0,p);
     }

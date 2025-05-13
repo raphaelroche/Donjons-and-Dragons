@@ -1,5 +1,6 @@
 package placable.equipements.armes;
 
+import des.Des;
 import donjons.Donjon;
 
 public class Rapiere extends Guerre{
@@ -13,8 +14,13 @@ public class Rapiere extends Guerre{
 
     }
 
-    public Rapiere(Donjon d) {
+    public Rapiere(Donjon d, Des des) {
+        super(des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
         this.m_nom = "rapière";
-        this.setLocation(des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
+
+    }
+
+    public Rapiere(Donjon d){
+        this(d, new Des());
     }
 }

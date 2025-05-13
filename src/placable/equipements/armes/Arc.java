@@ -1,5 +1,6 @@
 package placable.equipements.armes;
 
+import des.Des;
 import donjons.Donjon;
 
 public class Arc extends Distance{
@@ -15,11 +16,13 @@ public class Arc extends Distance{
         this.m_nom = "arc court";
     }
 
-    public Arc(Donjon d) {
-        super(16);
-        this.setLocation(des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
+    public Arc(Donjon d, Des des) {
+        super(16, des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
         this.m_degats = 0;
         this.m_nom = "arc court";
+    }
+    public Arc(Donjon d){
+        this(d, new Des());
     }
 
     @Override

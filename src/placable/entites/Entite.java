@@ -176,7 +176,7 @@ public abstract class Entite implements Placable {
 
     public static boolean contientObstacle(ArrayList<Placable> liste) {
         for (Placable p : liste) {
-            if (p.equals(new Obstacle())) {
+            if (p instanceof Obstacle) {
                 return true;
             }
         }

@@ -1,5 +1,6 @@
 package placable.equipements.armes;
 
+import des.Des;
 import donjons.Donjon;
 
 public class EpeeLongue extends Guerre{
@@ -13,8 +14,13 @@ public class EpeeLongue extends Guerre{
 
     }
 
-    public EpeeLongue(Donjon d) {
+    public EpeeLongue(Donjon d, Des des) {
+        super(des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
         this.m_nom = "épée longue";
-        this.setLocation(des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
+
+    }
+
+    public EpeeLongue(Donjon d){
+        this(d, new Des());
     }
 }

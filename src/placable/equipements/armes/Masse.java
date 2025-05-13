@@ -1,5 +1,6 @@
 package placable.equipements.armes;
 
+import des.Des;
 import donjons.Donjon;
 
 public class Masse extends Courantes{
@@ -13,8 +14,13 @@ public class Masse extends Courantes{
 
     }
 
-    public Masse(Donjon d){
+    public Masse(Donjon d, Des des){
+        super(des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
         this.m_nom = "masse d'armes";
-        this.setLocation(des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
+
+    }
+
+    public Masse(Donjon d){
+        this(d, new Des());
     }
 }

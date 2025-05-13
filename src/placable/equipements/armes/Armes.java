@@ -17,7 +17,7 @@ public abstract class Armes extends Equipement {
     public Armes(int portee, int x, int y){
         this.m_portee = portee;
         this.des = new Des();
-        this.setLocation(x,y);
+        this.setLocation(x-1,y-1);
     }
 
     public int getPortee() {

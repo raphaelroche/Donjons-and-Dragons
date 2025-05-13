@@ -1,5 +1,6 @@
 package placable.entites.personnages;
 
+import donjons.Donjon;
 import placable.Placable;
 import placable.entites.Entite;
 import placable.entites.monstres.Monstre;
@@ -27,7 +28,7 @@ public class Personnage extends Entite {
 
     public Personnage(String nom, int race, int classe, int x, int y) {
         this.m_nom = nom;
-        setLocation(x, y);
+        setLocation(x-1, y-1);
         this.m_inventaire = new ArrayList<Equipement>();
         this.m_armeEquipee = new Armes[1];
         this.m_armureEquipee = new Armures[1];
@@ -152,7 +153,7 @@ public class Personnage extends Entite {
 
     }
 
-    public boolean ramasserEquipement(Equipement e, ArrayList<Placable>[][] carte){
+    public boolean ramasserEquipement(Equipement e, ArrayList<Placable>[][] carte, Donjon d){
 
 
         if(contientEquipement(carte[this.m_positionX][this.m_positionY])){
@@ -213,7 +214,7 @@ public class Personnage extends Entite {
 
     public static boolean contientEquipement(ArrayList<Placable> liste) {
         for (Placable p : liste) {
-            if (p.equals(new Equipement())) {
+            if (p instanceof Equipement) {
                 return true;
             }
         }

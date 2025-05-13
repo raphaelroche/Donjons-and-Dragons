@@ -1,5 +1,6 @@
 package placable.equipements.armures;
 
+import des.Des;
 import donjons.Donjon;
 
 public class DemiPlatte extends Legeres{
@@ -13,9 +14,11 @@ public class DemiPlatte extends Legeres{
         this.m_nom = "demi-platte";
     }
 
-    public DemiPlatte(Donjon d){
-        super(10);
-        this.setLocation(des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
+    public DemiPlatte(Donjon d, Des des){
+        super(10,des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
         this.m_nom = "demi-platte";
+    }
+    public DemiPlatte(Donjon d){
+        this(d, new Des());
     }
 }
