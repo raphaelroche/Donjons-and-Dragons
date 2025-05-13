@@ -1,7 +1,6 @@
 package placable;
 
 import des.Des;
-import donjons.Donjon;
 
 public class CaseVide implements Placable{
     private int m_positionX;

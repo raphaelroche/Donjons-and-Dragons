@@ -61,7 +61,7 @@ public class Donjon {
         this.separer();
 
         //légende de la carte
-        System.out.println("\t* Equipement\t|\t[ ] Obstacle");
+        System.out.println("\t* Equipement\t|\t[ ] Obstacle\t|\tM Monstre");
     }
 
     public void positionnerEmplacementVide(int x, int y){
@@ -74,7 +74,6 @@ public class Donjon {
 
         this.m_carte[x][y] = p;
     }
-
 
     public Placable[][] getCarte(){
         return this.m_carte;

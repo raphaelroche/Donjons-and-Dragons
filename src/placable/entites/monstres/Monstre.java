@@ -20,10 +20,11 @@ public class Monstre extends Entite {
 
     //par default
     public Monstre(Donjon d) {
+        monstres = new ArrayList<>();
         this.m_espece = "dragon";
         this.des = new Des();
         monstres.add(this);
-        this.m_numero = monstres.indexOf(this);
+        this.m_numero = monstres.indexOf(this)+1;
         this.m_nomAffiche = "D" + this.m_numero;
         setLocation(des.lancerDes(1, d.getLargeur()), des.lancerDes(1, d.getHauteur()));
 

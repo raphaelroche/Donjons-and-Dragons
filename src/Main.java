@@ -1,4 +1,5 @@
 import donjons.Donjon;
+import placable.entites.monstres.Monstre;
 
 public class Main {
     public static void main(String args[]){
@@ -21,6 +22,7 @@ public class Main {
       */
 
         Donjon d = new Donjon();
+        d.positionnerElementCarte(new Monstre(d));
         d.afficherDonjon();
     }
 }
