@@ -72,22 +72,14 @@ public class Monstre extends Entite {
         this.m_pv -= degats;
     }
 
-    public int getX(){
-        return this.m_positionX;
-    }
-
-    public  int getY(){
-        return this.m_positionY;
-    }
-
-
-
 
     public boolean attaquer(Personnage cible, String[][] carte){
-        int distanceMonstreCible = 0;
 
-        //determiner la distance monstre-cible avec la carte
 
+        int dX = this.m_positionX - cible.getPositionX();
+        int dY = this.m_positionY - cible.getPositionY();
+
+        double distanceMonstreCible = Math.sqrt(dX * dX + dY * dY);
         if(m_portee <= distanceMonstreCible){
             if(this.m_degats > cible.getClasseArmure()){
                 cible.perdrePV(this.m_degats);

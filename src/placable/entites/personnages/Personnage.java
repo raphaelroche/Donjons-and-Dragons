@@ -91,8 +91,6 @@ public class Personnage extends Entite {
     }
 
 
-
-
     public int getClasseArmure(){
         return this.m_armureEquipee[0].getClasseArmure();
     }
@@ -101,8 +99,8 @@ public class Personnage extends Entite {
 
 
 
-        int dX = this.m_positionX - cible.getX();
-        int dY = this.m_positionY - cible.getY();
+        int dX = this.m_positionX - cible.getPositionX();
+        int dY = this.m_positionY - cible.getPositionY();
 
         double distanceJoueurCible = Math.sqrt(dX * dX + dY * dY);
 
@@ -153,18 +151,16 @@ public class Personnage extends Entite {
 
     }
 
-    public boolean ramasserEquipement(Equipement e, Placable[][] carte){
-        boolean estSurUneCaseEquipement = false;
+    public boolean ramasserEquipement(Equipement e, ArrayList<Placable>[][] carte){
+
 
         if(this.m_positionX == e.getPositionX() && this.m_positionY == e.getPositionY()){
 
-            estSurUneCaseEquipement = true;
-            carte[this.m_positionX][this.m_positionY] = this;
-        }
-
-        if(estSurUneCaseEquipement){
+            carte[this.m_positionX][this.m_positionY].clear();
+            carte[this.m_positionX][this.m_positionY].add(this);
             this.m_inventaire.add(e);
             return true;
+
         }
         return false;
     }
