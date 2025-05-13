@@ -57,8 +57,8 @@ public abstract class Entite implements Placable {
                     break;
                 case 2:
                     //en bas
-                    if(this.m_positionY + 1 > d.getHauteur()){
-                        setLocation(this.m_positionX, d.getHauteur());
+                    if(this.m_positionY + 1 >= d.getHauteur()){
+                        setLocation(this.m_positionX, d.getHauteur()-1);
                     } else if (carte[this.m_positionX] [this.m_positionY + 1].equals(new Obstacle(d))) {
                         break quitterBoucle;
                     } else{
@@ -79,8 +79,8 @@ public abstract class Entite implements Placable {
                     break;
                 case 4:
                     //droite
-                    if(this.m_positionX + 1 > d.getLargeur()){
-                        setLocation(d.getLargeur(), this.m_positionY);
+                    if(this.m_positionX + 1 >= d.getLargeur()){
+                        setLocation(d.getLargeur()-1, this.m_positionY);
                     } else if (carte[this.m_positionX + 1] [this.m_positionY].equals(new Obstacle(d))) {
                         break quitterBoucle;
                     } else{
