@@ -1,5 +1,6 @@
 package placable.entites.personnages;
 
+import placable.Placable;
 import placable.entites.Entite;
 import placable.entites.monstres.Monstre;
 import placable.equipements.Equipement;
@@ -30,7 +31,7 @@ public class Personnage extends Entite {
         this.m_armeEquipee = new Armes[1];
         this.m_armureEquipee = new Armures[1];
         this.m_nomAffiche = this.m_nom.substring(0,3);
-        attribuerRaceClasse(race, classe); //utilise un int pour désigner
+        this.attribuerRaceClasse(race, classe); //utilise un int pour désigner
         des = new Des();
         this.m_force = 3 + des.lancerDes(4,4);
         this.m_dexterite = 3 + des.lancerDes(4,4);
@@ -152,13 +153,13 @@ public class Personnage extends Entite {
 
     }
 
-    public boolean ramasserEquipement(Equipement e, String[][] carte){
+    public boolean ramasserEquipement(Equipement e, Placable[][] carte){
         boolean estSurUneCaseEquipement = false;
 
         if(this.m_positionX == e.getPositionX() && this.m_positionY == e.getPositionY()){
 
             estSurUneCaseEquipement = true;
-            carte[this.m_positionX][this.m_positionY] = this.m_nom.substring(0,3);
+            carte[this.m_positionX][this.m_positionY] = this;
         }
 
         if(estSurUneCaseEquipement){
