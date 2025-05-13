@@ -2,11 +2,13 @@ package placable.equipements.armures;
 
 import des.Des;
 import donjons.Donjon;
+import placable.entites.personnages.Personnage;
 
 public class Harnois extends Lourdes{
-    public Harnois() {
+    public Harnois(Personnage p) {
         super(12);
         this.m_nom = "harnois";
+        p.ajouterEquipementInventaire(this);
     }
 
     public Harnois(int x, int y){

@@ -62,25 +62,25 @@ public class Personnage extends Entite {
         switch(classe) {      //attribue la classe, et ajoute ses objets dans l'inventaire
             case 1:
                 this.m_classe = new Clerc(this);
-                this.m_inventaire.add(new Masse());
-                this.m_inventaire.add(new Ecailles());
-                this.m_inventaire.add(new Arbalete());
+                new Masse(this);
+                new Ecailles(this);
+                new Arbalete(this);
                 break;
             case 2:
                 this.m_classe = new Guerrier(this);
-                this.m_inventaire.add(new CotteDeMailles());
-                this.m_inventaire.add(new EpeeLongue());
-                this.m_inventaire.add(new Arbalete());
+                new CotteDeMailles(this);
+                new EpeeLongue(this);
+                new Arbalete(this);
                 break;
             case 3:
                 this.m_classe = new Magicien(this);
-                this.m_inventaire.add(new Baton());
-                this.m_inventaire.add(new Fronde());
+                new Baton(this);
+                new Fronde(this);
                 break;
             case 4:
                 this.m_classe = new Roublard(this);
-                this.m_inventaire.add(new Rapiere());
-                this.m_inventaire.add(new Arc());
+                new Rapiere(this);
+                new Arc(this);
                 break;
             default:
                 break;
@@ -91,6 +91,7 @@ public class Personnage extends Entite {
     public Armes getArmeEquipee(){
         return m_armeEquipee[0];
     }
+
 
 
     public int getClasseArmure(){
@@ -198,6 +199,10 @@ public class Personnage extends Entite {
         if (this.m_vitesse < 0) {
             this.m_vitesse = 0;
         }
+    }
+
+    public void ajouterEquipementInventaire(Equipement e){
+        this.m_inventaire.add(e);
     }
 
     public String afficherInventaire() {

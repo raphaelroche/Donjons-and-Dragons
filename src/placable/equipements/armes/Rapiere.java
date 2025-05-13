@@ -2,10 +2,12 @@ package placable.equipements.armes;
 
 import des.Des;
 import donjons.Donjon;
+import placable.entites.personnages.Personnage;
 
 public class Rapiere extends Guerre{
-    public Rapiere() {
+    public Rapiere(Personnage p) {
         this.m_nom = "rapière";
+        p.ajouterEquipementInventaire(this);
     }
 
     public Rapiere(int x, int y) {

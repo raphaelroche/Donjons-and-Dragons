@@ -2,12 +2,14 @@ package placable.equipements.armes;
 
 import des.Des;
 import donjons.Donjon;
+import placable.entites.personnages.Personnage;
 
 public class Arc extends Distance{
-    public Arc() {
+    public Arc(Personnage p) {
         super(16);
         this.m_degats = 0;
         this.m_nom = "arc court";
+        p.ajouterEquipementInventaire(this);
     }
 
     public Arc(int x, int y) {

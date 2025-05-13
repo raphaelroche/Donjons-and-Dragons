@@ -2,10 +2,12 @@ package placable.equipements.armes;
 
 import des.Des;
 import donjons.Donjon;
+import placable.entites.personnages.Personnage;
 
 public class Masse extends Courantes{
-    public Masse() {
+    public Masse(Personnage p) {
         this.m_nom = "masse d'armes";
+        p.ajouterEquipementInventaire(this);
     }
 
     public Masse(int x, int y) {

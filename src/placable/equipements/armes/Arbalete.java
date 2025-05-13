@@ -2,14 +2,16 @@ package placable.equipements.armes;
 
 import des.Des;
 import donjons.Donjon;
+import placable.entites.personnages.Personnage;
 
 //dans l'inventaire
 public class Arbalete extends Distance{
 
-    public Arbalete() {
+    public Arbalete(Personnage p) {
         super(16);
         this.m_degats = 0;
         this.m_nom = "arbalète";
+        p.ajouterEquipementInventaire(this);
     }
 
     //sur la carte
@@ -17,6 +19,7 @@ public class Arbalete extends Distance{
         super(16, x, y);
         this.m_degats = 0;
         this.m_nom = "arbalète";
+
     }
 
     //sur la carte par defaut
