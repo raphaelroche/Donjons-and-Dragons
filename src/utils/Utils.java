@@ -57,10 +57,7 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
 
     public int[] demanderPositionCarte(String message, char minLettre, char maxLettre, int minNumero, int maxNumero, Scanner scanner) {
         int[] position = new int[2]; // [indexLettre, numero]
-        char[] alphabet = new char[] {
-                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
-        };
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         while (true) {
             System.out.print(message + " (format: LettreNuméro, par exemple A1, B20... entre "
@@ -79,11 +76,11 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
 
                 try {
                     numero = Integer.parseInt(input.substring(1));
-                    int indexLettre = lettre - 'A';
+                    int indexLettre = alphabet.indexOf(lettre)+1;
 
                     if (indexLettre >= (minLettre - 'A') && indexLettre <= (maxLettre - 'A') && numero >= minNumero && numero <= maxNumero) {
-                        position[0] = indexLettre;
-                        position[1] = numero;
+                        position[0] = numero;
+                        position[1] = indexLettre;
                         break;
                     } else {
                         System.out.println("Position hors plage. Veuillez entrer une position valide.");

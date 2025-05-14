@@ -58,7 +58,7 @@ public class Donjon {
             for (int j = 0; j < this.m_largeur; j++) {
                 System.out.print(" " + this.m_carte[i][j].getFirst().getNomAffiche());
             }
-            System.out.print("\t|");
+            System.out.print("  |");
             System.out.println();
         }
         //ligne de séparation
@@ -114,6 +114,6 @@ public class Donjon {
     public char getLettreMax() { return this.m_alphabet[m_largeur]; }
 
     public void separer() {
-        System.out.println("   *----------------------------------------------------------------*");
+        System.out.println("\t*" + "-".repeat(this.getLargeur()*4) + "*");
     }
 }

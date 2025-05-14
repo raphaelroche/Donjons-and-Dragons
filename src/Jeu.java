@@ -1,4 +1,5 @@
 import donjons.*;
+import maitredujeu.MaitreDuJeu;
 import placable.entites.personnages.Personnage;
 import utils.*;
 
@@ -10,9 +11,11 @@ public class Jeu {
     private int m_nbJoueurs;
     private Scanner scanner;
     private Donjon m_d1;
+    private MaitreDuJeu mdj;
 
     public Jeu() {
         scanner = new Scanner(System.in);
+        mdj = new MaitreDuJeu();
     }
 
     public void demarrerJeu() {
@@ -58,10 +61,13 @@ public class Jeu {
 
         if (position[0] == -1 || position[1] == -1) {
             Personnage p = new Personnage(nom, race, classe, m_d1);
+            mdj.positionnerEntite(this.m_d1,p);
+
         }
         else {
             Personnage p = new Personnage(nom, race, classe, position[0], position[1]);
-        }
+            mdj.positionnerEntite(this.m_d1,p);
 
+        }
     }
 }
