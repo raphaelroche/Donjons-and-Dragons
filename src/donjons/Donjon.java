@@ -75,6 +75,22 @@ public class Donjon {
         }
     }
 
+    public void decalerADroite(ArrayList<Placable> l){
+        for (int i = l.size() - 2; i >= 0; i--) { // on part de la fin !
+            Placable p = l.get(i);
+            l.set(i + 1, p);
+        }
+        l.set(0, null); // la première case devient vide
+
+    }
+
+    public void decalerAGauche(ArrayList<Placable> l){
+        for(int i = 1; i<l.size(); i++){
+            Placable p  = l.get(i);
+            l.set(i-1, p);
+        }
+        l.set(l.size() - 1, null);
+    }
     public void positionnerElementCarte(Placable p) {
         int x = p.getPositionX();
         int y = p.getPositionY();

@@ -2,6 +2,7 @@ package placable.entites;
 
 import donjons.Donjon;
 import placable.Placable;
+import placable.equipements.Equipement;
 import placable.obstacle.Obstacle;
 
 import java.util.ArrayList;
@@ -41,7 +42,16 @@ public abstract class Entite implements Placable {
         //mettre un point sur la case ou se trouvai le perso
 
         ArrayList<Placable>[][] carte = d.getCarte();
-        d.positionnerEmplacementVide(this.m_positionX, this.m_positionY);
+
+        //si la case contient un equipement et que le joueur ne la pas recuperé alors on met l'equipement a l'index 0 pour l'afficher
+        if(contientEquipement(carte[this.m_positionX][this.m_positionY])){
+            d.decalerAGauche(carte[this.m_positionX][this.m_positionY]);
+        }
+        //sinon on affiche une case vide a l'endroit ou etait l'entite
+        else{
+            d.positionnerEmplacementVide(this.m_positionX, this.m_positionY);
+        }
+
 
         //label pour quitter directement le for et le switch d'un coup
         quitterBoucle:
@@ -99,6 +109,9 @@ public abstract class Entite implements Placable {
         d.positionnerElementCarte(this);
 
     }
+
+
+
     @Override
     public String getNomAffiche(){
         return this.m_nomAffiche;
@@ -178,6 +191,14 @@ public abstract class Entite implements Placable {
     public static boolean contientObstacle(ArrayList<Placable> liste) {
         for (Placable p : liste) {
             if (p instanceof Obstacle) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean contientEquipement(ArrayList<Placable> liste) {
+        for (Placable p : liste) {
+            if (p instanceof Equipement) {
                 return true;
             }
         }

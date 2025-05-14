@@ -231,14 +231,7 @@ public class Personnage extends Entite {
         return contenu.toString();
     }
 
-    public static boolean contientEquipement(ArrayList<Placable> liste) {
-        for (Placable p : liste) {
-            if (p instanceof Equipement) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     @Override
     public String toString() {
