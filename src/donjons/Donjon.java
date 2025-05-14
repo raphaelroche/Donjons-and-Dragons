@@ -6,7 +6,7 @@ import placable.Placable;
 import java.util.ArrayList;
 
 public class Donjon {
-    private String[] m_alphabet;
+    private char[] m_alphabet;
     private final ArrayList<Placable>[][] m_carte;
     private int m_hauteur;
     private int m_largeur;
@@ -21,10 +21,11 @@ public class Donjon {
         this.m_hauteur = hauteur;
         this.m_largeur = largeur;
         this.m_carte = new ArrayList[m_hauteur][m_largeur];
-        this.m_alphabet = new String[] {
-                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-                "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+        this.m_alphabet = new char[] {
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         };
+
         // Initialiser la carte avec des "."
         for (int x = 0; x < m_hauteur; x++) {
             for (int y = 0; y < m_largeur; y++) {
@@ -109,6 +110,8 @@ public class Donjon {
     public int getLargeur() {
         return this.m_largeur;
     }
+
+    public char getLettreMax() { return this.m_alphabet[m_largeur]; }
 
     public void separer() {
         System.out.println("   *----------------------------------------------------------------*");
