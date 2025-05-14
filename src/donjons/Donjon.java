@@ -4,6 +4,7 @@ import placable.CaseVide;
 import placable.Placable;
 import placable.entites.Entite;
 import placable.equipements.Equipement;
+import placable.obstacle.Obstacle;
 
 import java.util.ArrayList;
 
@@ -94,28 +95,44 @@ public class Donjon {
 
         l.set(1, null);
     }
-    public void positionnerElementCarte(Placable p) {
+    public boolean positionnerElementCarte(Placable p) {
         int x = p.getPositionX();
         int y = p.getPositionY();
 
         if(p instanceof Equipement){
             if(this.m_carte[x][y].getFirst() instanceof CaseVide){
                 this.m_carte[x][y].set(0,p);
+                return true;
             }
             else if(this.m_carte[x][y].getFirst() instanceof Entite){
                 this.m_carte[x][y].set(1,p);
+                return true;
+            }
+            else{
+                //si la case sur laquelle on veut placer l'equipement est un obtsacle alors on redemendera de placer
+                return false;
             }
         }
         else if(p instanceof Entite){
             if(this.m_carte[x][y].getFirst() instanceof Equipement){
                 this.decalerADroite(this.m_carte[x][y]);
+                this.m_carte[x][y].set(0,p);
+                return true;
             }
-            this.m_carte[x][y].set(0,p);
+            else if(this.m_carte[x][y].getFirst() instanceof CaseVide){
+                this.m_carte[x][y].set(0,p);
+                return true;
+            }
+            return false;
         }
         else{
-            this.m_carte[x][y].set(0,p);
-        }
+            if(this.m_carte[x][y].getFirst() == null || this.m_carte[x][y].getFirst() instanceof CaseVide){
+                this.m_carte[x][y].set(0,p);
+                return true;
+            }
+            return false;
 
+        }
     }
 
     public ArrayList<Placable>[][] getCarte(){

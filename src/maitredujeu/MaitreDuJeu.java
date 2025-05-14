@@ -15,22 +15,16 @@ public class MaitreDuJeu {
         d = new Donjon(largeur, longueur);
     }
 
-    public void postionnerObstacle(Donjon d, Obstacle o, int x, int y){
-        o.setLocation(x , y);
-        d.positionnerElementCarte(o);
+    public boolean postionnerObstacle(Donjon d, Obstacle o){return d.positionnerElementCarte(o);
     }
 
-    public void positionnerEntite(Donjon d, Entite e){
-        d.positionnerElementCarte(e);
+    public boolean positionnerEntite(Donjon d, Entite e){return d.positionnerElementCarte(e);
     }
 
-    public void positionnerEquipement(Donjon d, Equipement e){
-        d.positionnerElementCarte(e);
+    public boolean positionnerEquipement(Donjon d, Equipement e){
+        return d.positionnerElementCarte(e);
     }
 
-    public void positionnerEquipement(Donjon d, Equipement e, int x, int y){
-        e.setLocation(x, y);
-        d.positionnerElementCarte(e);
-    }
+
 
 }
