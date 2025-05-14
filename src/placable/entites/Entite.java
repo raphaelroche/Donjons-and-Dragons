@@ -41,6 +41,7 @@ public abstract class Entite implements Placable {
         //mettre un point sur la case ou se trouvai le perso
 
         ArrayList<Placable>[][] carte = d.getCarte();
+        d.positionnerEmplacementVide(this.m_positionX, this.m_positionY);
 
         //label pour quitter directement le for et le switch d'un coup
         quitterBoucle:
@@ -48,52 +49,52 @@ public abstract class Entite implements Placable {
             switch(direction){
                 case 1:
                     //en haut
-                    if(this.m_positionY - 1 < 0){
-                        setLocation(this.m_positionX, 0);
-                    } else if (contientObstacle(carte[this.m_positionX] [this.m_positionY - 1])) {
+                    if(this.m_positionX - 1 < 0){
+                        setLocation(0, this.m_positionY);
+                    } else if (contientObstacle(carte[this.m_positionX-1] [this.m_positionY])) {
                        break quitterBoucle;
                     } else{
-                        setLocation(this.m_positionX, this.m_positionY - 1);
+                        setLocation(this.m_positionX-1, this.m_positionY);
                     }
 
                     break;
                 case 2:
                     //en bas
-                    if(this.m_positionY + 1 >= d.getHauteur()){
-                        setLocation(this.m_positionX, d.getHauteur()-1);
-                    } else if (contientObstacle(carte[this.m_positionX] [this.m_positionY + 1])) {
+                    if(this.m_positionX + 1 >= d.getHauteur()){
+                        setLocation(d.getHauteur()-1, this.m_positionY);
+                    } else if (contientObstacle(carte[this.m_positionX+1] [this.m_positionY])) {
                         break quitterBoucle;
                     } else{
-                        setLocation(this.m_positionX, this.m_positionY + 1);
+                        setLocation(this.m_positionX+1, this.m_positionY);
                     }
 
                     break;
                 case 3:
                     //gauche
-                    if(this.m_positionX - 1 < 0){
-                        setLocation(0, this.m_positionY);
-                    } else if (contientObstacle(carte[this.m_positionX - 1] [this.m_positionY])) {
+                    if(this.m_positionY - 1 < 0){
+                        setLocation(this.m_positionX, 0);
+                    } else if (contientObstacle(carte[this.m_positionX] [this.m_positionY-1])) {
                         break quitterBoucle;
                     } else{
-                        setLocation(this.m_positionX - 1, this.m_positionY);
+                        setLocation(this.m_positionX, this.m_positionY-1);
                     }
 
                     break;
                 case 4:
                     //droite
-                    if(this.m_positionX + 1 >= d.getLargeur()){
-                        setLocation(d.getLargeur()-1, this.m_positionY);
-                    } else if (contientObstacle(carte[this.m_positionX + 1] [this.m_positionY])) {
+                    if(this.m_positionY + 1 >= d.getLargeur()){
+                        setLocation(this.m_positionX, d.getLargeur()-1);
+                    } else if (contientObstacle(carte[this.m_positionX] [this.m_positionY+1])) {
                         break quitterBoucle;
                     } else{
-                        setLocation(this.m_positionX + 1, this.m_positionY);
+                        setLocation(this.m_positionX, this.m_positionY+1);
                     }
 
                     break;
             }
 
         }
-        d.positionnerEmplacementVide(this.m_positionX, this.m_positionY);
+
         //mettre a jour la carte du donjon
         d.positionnerElementCarte(this);
 

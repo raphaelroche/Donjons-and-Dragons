@@ -32,10 +32,12 @@ public class Main {
         Donjon d = new Donjon();
         mj.positionnerEntite(d,p1);
         d.positionnerElementCarte(new Monstre(d));
-        Fronde fronde = new Fronde();
-        mj.positionnerEquipement(d, fronde, 1, 2);
+        Fronde fronde = new Fronde(d);
+        mj.positionnerEquipement(d, fronde);
         Obstacle o = new Obstacle(d);
         mj.postionnerObstacle(d, o, o.getPositionX(), o.getPositionY());
+        d.afficherDonjon();
+        p1.seDeplacer(1,d);
         d.afficherDonjon();
     }
 }
