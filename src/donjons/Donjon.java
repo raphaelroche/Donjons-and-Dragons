@@ -2,6 +2,8 @@ package donjons;
 
 import placable.CaseVide;
 import placable.Placable;
+import placable.entites.Entite;
+import placable.equipements.Equipement;
 
 import java.util.ArrayList;
 
@@ -77,26 +79,43 @@ public class Donjon {
     }
 
     public void decalerADroite(ArrayList<Placable> l){
-        for (int i = l.size() - 2; i >= 0; i--) { // on part de la fin !
-            Placable p = l.get(i);
-            l.set(i + 1, p);
-        }
+
+        Placable p = l.getFirst();
+        l.set(1, p);
+
         l.set(0, null); // la première case devient vide
 
     }
 
     public void decalerAGauche(ArrayList<Placable> l){
-        for(int i = 1; i<l.size(); i++){
-            Placable p  = l.get(i);
-            l.set(i-1, p);
-        }
-        l.set(l.size() - 1, null);
+
+        Placable p  = l.get(1);
+        l.set(0, p);
+
+        l.set(1, null);
     }
     public void positionnerElementCarte(Placable p) {
         int x = p.getPositionX();
         int y = p.getPositionY();
 
-        this.m_carte[x][y].set(0,p);
+        if(p instanceof Equipement){
+            if(this.m_carte[x][y].getFirst() instanceof CaseVide){
+                this.m_carte[x][y].set(0,p);
+            }
+            else if(this.m_carte[x][y].getFirst() instanceof Entite){
+                this.m_carte[x][y].set(1,p);
+            }
+        }
+        else if(p instanceof Entite){
+            if(this.m_carte[x][y].getFirst() instanceof Equipement){
+                this.decalerADroite(this.m_carte[x][y]);
+            }
+            this.m_carte[x][y].set(0,p);
+        }
+        else{
+            this.m_carte[x][y].set(0,p);
+        }
+
     }
 
     public ArrayList<Placable>[][] getCarte(){
