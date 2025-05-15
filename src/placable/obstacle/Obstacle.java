@@ -12,7 +12,7 @@ public class Obstacle implements Placable {
 
     public Obstacle(int x, int y){
         this.m_nomAffiche = "[ ]";
-        this.setLocation(x, y);
+        this.setLocation(x-1, y-1);
     }
     public Obstacle(Donjon d){
         this.des = new Des();
