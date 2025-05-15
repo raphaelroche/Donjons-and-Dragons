@@ -105,7 +105,7 @@ public class Donjon {
                 return true;
             }
             else if(this.m_carte[x][y].getFirst() instanceof Entite){
-                this.m_carte[x][y].set(1,p);
+                this.m_carte[x][y].add(p);
                 return true;
             }
             else{
