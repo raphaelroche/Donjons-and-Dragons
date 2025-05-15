@@ -39,7 +39,7 @@ public class Jeu {
             initJoueur(i+1, this.m_d1);
         }
 
-        mdj.positionnerEquipement(this.m_d1, new Fronde(1, 1));
+        mdj.postionnerObstacle(this.m_d1, new Obstacle(1, 1));
 
         m_d1.afficherDonjon();
     }
