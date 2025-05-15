@@ -2,7 +2,6 @@ import des.Des;
 import donjons.*;
 import maitredujeu.MaitreDuJeu;
 import placable.entites.personnages.Personnage;
-import placable.equipements.armes.*;
 import placable.obstacle.Obstacle;
 import utils.*;
 
@@ -15,12 +14,16 @@ public class Jeu {
     private Scanner scanner;
     private Donjon m_d1;
     private MaitreDuJeu mdj;
-    private Des des;
+    private Des m_des;
+    private String[] alphabet;
 
     public Jeu() {
         scanner = new Scanner(System.in);
         mdj = new MaitreDuJeu();
-        des = new Des();
+        m_des = new Des();
+        alphabet = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+                "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+                "U", "V", "W", "X", "Y", "Z"};
     }
 
     public void demarrerJeu() {
@@ -38,6 +41,7 @@ public class Jeu {
 
         for (int i = 0; i < this.m_nbJoueurs; i++) {
             initJoueur(i+1, this.m_d1);
+            System.out.println("=================================================================================");
         }
 
 
@@ -71,10 +75,11 @@ public class Jeu {
         if (position[0] == -1 || position[1] == -1) {
             Personnage p = new Personnage(nom, race, classe, m_d1);
             while (!peutSePlacer) {
-                p.setLocation(des.lancerDes(1, this.m_d1.getHauteur() - 1),
-                        (des.lancerDes(1, this.m_d1.getLargeur() - 1)));
+                p.setLocation(m_des.lancerDes(1, this.m_d1.getHauteur() - 1),
+                        (m_des.lancerDes(1, this.m_d1.getLargeur() - 1)));
                 peutSePlacer = mdj.positionnerEntite(this.m_d1, p);
             }
+            System.out.println(p.getNom() + " a été placé en " + alphabet[p.getPositionY()] + String.valueOf(p.getPositionX()+1));
         }
         else {
             Personnage p = new Personnage(nom, race, classe, position[0], position[1]);
