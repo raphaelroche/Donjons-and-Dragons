@@ -102,15 +102,7 @@ public class Personnage extends Entite {
     }
 
 
-    public Armes getArmeEquipee(){
-        return m_armeEquipee[0];
-    }
 
-
-
-    public int getClasseArmure(){
-        return this.m_armureEquipee[0].getClasseArmure();
-    }
 
     public boolean attaquer(Monstre cible){
 
@@ -122,7 +114,7 @@ public class Personnage extends Entite {
         double distanceJoueurCible = Math.sqrt(dX * dX + dY * dY);
 
 
-        if(this.m_armeEquipee[0].getPortee() <= distanceJoueurCible){
+        if(this.m_armeEquipee[0].getPortee() >= distanceJoueurCible){
             int degat = des.lancerDes(1, 20);
             if(this.m_armeEquipee[0].getPortee() == 1){
                 degat += this.m_force;
@@ -168,7 +160,7 @@ public class Personnage extends Entite {
 
     }
 
-    public boolean ramasserEquipement(Equipement e, ArrayList<Placable>[][] carte, Donjon d){
+    public boolean ramasserEquipement(Equipement e, ArrayList<Placable>[][] carte){
 
 
         if(contientEquipement(carte[this.m_positionX][this.m_positionY])){
@@ -188,7 +180,13 @@ public class Personnage extends Entite {
         return this.m_nom;
     }
 
+    public Armes getArmeEquipee(){
+        return m_armeEquipee[0];
+    }
 
+    public int getClasseArmure(){
+        return this.m_armureEquipee[0].getClasseArmure();
+    }
 
     public Race getRace() {
         return this.m_race;

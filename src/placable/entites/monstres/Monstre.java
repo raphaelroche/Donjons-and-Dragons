@@ -80,7 +80,7 @@ public class Monstre extends Entite {
         int dY = this.m_positionY - cible.getPositionY();
 
         double distanceMonstreCible = Math.sqrt(dX * dX + dY * dY);
-        if(m_portee <= distanceMonstreCible){
+        if(this.m_portee >= distanceMonstreCible){
             if(this.m_degats > cible.getClasseArmure()){
                 cible.perdrePV(this.m_degats);
                 return true;
