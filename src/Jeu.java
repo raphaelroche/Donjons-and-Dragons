@@ -34,12 +34,13 @@ public class Jeu {
         int largeurD = this.m_utils.demanderChoixOuParDefaut("Entrez la largeur du tableau", 15, 25, 15, scanner);
 
         m_d1 = new Donjon(hauteurD, largeurD);
+        mdj.postionnerObstacle(this.m_d1, new Obstacle(1, 1));
 
         for (int i = 0; i < this.m_nbJoueurs; i++) {
             initJoueur(i+1, this.m_d1);
         }
 
-        mdj.postionnerObstacle(this.m_d1, new Obstacle(1, 1));
+
 
         m_d1.afficherDonjon();
     }
