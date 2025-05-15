@@ -1,8 +1,6 @@
 import des.Des;
 import donjons.*;
 import maitredujeu.MaitreDuJeu;
-import placable.Placable;
-import placable.entites.Entite;
 import placable.entites.personnages.Personnage;
 import placable.obstacle.Obstacle;
 import utils.*;
@@ -54,7 +52,14 @@ public class Jeu {
                     'A', this.m_d1.getLettreMax(),
                     1, this.m_d1.getHauteur(),
                     scanner);
-            mdj.postionnerObstacle(m_d1, new Obstacle(position[0], position[1]));
+            if (position[0] == -1 || position[1] == -1) {
+                System.out.println("Obstacle aléatoirement positionné\n");
+                mdj.positionnerObstacle(this.m_d1, new Obstacle(this.m_d1));
+            }
+            else {
+                mdj.positionnerObstacle(this.m_d1, new Obstacle(position[0], position[1]));
+                System.out.println("Obstacle positionné en " + alphabet[position[1]-1] + String.valueOf(position[0]));
+            }
         }
 
         for (i = 0; i < this.m_nbJoueurs; i++) {

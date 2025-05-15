@@ -15,7 +15,7 @@ public class MaitreDuJeu {
         d = new Donjon(largeur, longueur);
     }
 
-    public boolean postionnerObstacle(Donjon d, Obstacle o){return d.positionnerElementCarte(o);}
+    public boolean positionnerObstacle(Donjon d, Obstacle o){return d.positionnerElementCarte(o);}
 
     public boolean positionnerEntite(Donjon d, Entite e){return d.positionnerElementCarte(e);}
 
