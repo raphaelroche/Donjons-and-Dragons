@@ -2,6 +2,8 @@ import des.Des;
 import donjons.*;
 import maitredujeu.MaitreDuJeu;
 import placable.entites.personnages.Personnage;
+import placable.equipements.armes.*;
+import placable.obstacle.Obstacle;
 import utils.*;
 
 import java.util.Scanner;
@@ -36,6 +38,8 @@ public class Jeu {
         for (int i = 0; i < this.m_nbJoueurs; i++) {
             initJoueur(i+1, this.m_d1);
         }
+
+        mdj.positionnerEquipement(this.m_d1, new Fronde(1, 1));
 
         m_d1.afficherDonjon();
     }
@@ -73,12 +77,13 @@ public class Jeu {
         }
         else {
             Personnage p = new Personnage(nom, race, classe, position[0], position[1]);
+            peutSePlacer = mdj.positionnerEntite(this.m_d1,p);
             while(!peutSePlacer) {
-                position = this.m_utils.demanderPositionCarte("Choisissez la position du joueur",
+                position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du joueur",
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
-                p.setLocation(position[0], position[1]);
+                p.setLocation(position[0]-1, position[1]-1);
                 peutSePlacer = mdj.positionnerEntite(this.m_d1,p);
             }
         }
