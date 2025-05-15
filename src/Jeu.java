@@ -1,3 +1,4 @@
+import des.Des;
 import donjons.*;
 import maitredujeu.MaitreDuJeu;
 import placable.entites.personnages.Personnage;
@@ -12,10 +13,12 @@ public class Jeu {
     private Scanner scanner;
     private Donjon m_d1;
     private MaitreDuJeu mdj;
+    private Des des;
 
     public Jeu() {
         scanner = new Scanner(System.in);
         mdj = new MaitreDuJeu();
+        des = new Des();
     }
 
     public void demarrerJeu() {
@@ -59,15 +62,25 @@ public class Jeu {
                 1, d.getHauteur(),
                 scanner);
 
+        boolean peutSePlacer = false;
         if (position[0] == -1 || position[1] == -1) {
             Personnage p = new Personnage(nom, race, classe, m_d1);
-            mdj.positionnerEntite(this.m_d1,p);
-
+            while (!peutSePlacer) {
+                p.setLocation(des.lancerDes(1, this.m_d1.getHauteur() - 1),
+                        (des.lancerDes(1, this.m_d1.getLargeur() - 1)));
+                peutSePlacer = mdj.positionnerEntite(this.m_d1, p);
+            }
         }
         else {
             Personnage p = new Personnage(nom, race, classe, position[0], position[1]);
-            mdj.positionnerEntite(this.m_d1,p);
-
+            while(!peutSePlacer) {
+                position = this.m_utils.demanderPositionCarte("Choisissez la position du joueur",
+                        'A', d.getLettreMax(),
+                        1, d.getHauteur(),
+                        scanner);
+                p.setLocation(position[0], position[1]);
+                peutSePlacer = mdj.positionnerEntite(this.m_d1,p);
+            }
         }
     }
 }
