@@ -136,7 +136,7 @@ public class Personnage extends Entite {
             }
             if(degat > cible.getclasseArmure()){
                 this.m_armeEquipee[0].determinerDegat();
-                cible.perdrePV(this.m_armeEquipee[0].getDegats());
+                cible.ajusterPv(-(this.m_armeEquipee[0].getDegats()));
                 return true;
             }
         }
@@ -214,9 +214,6 @@ public class Personnage extends Entite {
         this.m_vitesse = vitesse;
     }
 
-    public void perdrePV(int degats){
-        this.m_pv -= degats;
-    }
 
     public void ajusterVitesse(int valeur) {
         this.m_vitesse += valeur;

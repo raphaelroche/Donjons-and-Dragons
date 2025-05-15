@@ -68,10 +68,6 @@ public class Monstre extends Entite {
         return this.m_classeArmure;
     }
 
-    public void perdrePV(int degats){
-        this.m_pv -= degats;
-    }
-
 
     public boolean attaquer(Personnage cible, String[][] carte){
 
@@ -82,7 +78,7 @@ public class Monstre extends Entite {
         double distanceMonstreCible = Math.sqrt(dX * dX + dY * dY);
         if(this.m_portee >= distanceMonstreCible){
             if(this.m_degats > cible.getClasseArmure()){
-                cible.perdrePV(this.m_degats);
+                cible.ajusterPv(-(this.m_degats));
                 return true;
             }
         }
