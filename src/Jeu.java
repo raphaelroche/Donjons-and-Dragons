@@ -89,6 +89,8 @@ public class Jeu {
             System.out.println("=================================================================================");
         }
 
+        mdj.positionnerEntite(this.m_d1, new Monstre("dragonnnnn"));
+
         afficherEntites();
 
         this.m_d1.afficherDonjon();
