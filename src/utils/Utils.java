@@ -121,7 +121,8 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
         // Choisir un type aléatoire
         int choix = des.lancerDes(1, 11);
 
-        return switch (choix) {
+        Equipement e = null;
+         switch (choix) {
             case 1 -> new Arbalete(x, y);
             case 2 -> new Arc(x, y);
             case 3 -> new Baton(x, y);
@@ -133,8 +134,9 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
             case 9 -> new DemiPlatte(x, y);
             case 10 -> new Ecailles(x, y);
             case 11 -> new Harnois(x, y);
-            default -> null;
+
         };
+         return e;
     }
     public Obstacle creerObstacleAleatoire(Donjon d){
         Des des = new Des();
