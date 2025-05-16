@@ -5,6 +5,7 @@ import placable.entites.personnages.Personnage;
 public class Magicien extends Classe {
     public Magicien() {
         this.m_pv = 12;
+        this.m_nomClasse = "Magicien";
     }
 
     @Override

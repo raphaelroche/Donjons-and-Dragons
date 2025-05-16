@@ -1,8 +1,8 @@
 import des.Des;
 import donjons.*;
 import maitredujeu.MaitreDuJeu;
-import placable.entites.personnages.Personnage;
-import placable.equipements.Equipement;
+import placable.entites.monstres.Monstre;
+import placable.entites.personnages.*;
 import placable.equipements.armes.*;
 import placable.equipements.armures.*;
 import placable.obstacle.Obstacle;
@@ -79,7 +79,7 @@ public class Jeu {
                 creerEquipement(type, i, position[0], position[1]);
             } else if (creationEquipement == 2) {
                 System.out.println("Vous avez choisi de créer les équipement aléatoirement.");
-                creerEquipementAleatoire(i);
+                initEquipementAleatoire(i);
             }
         }
 
@@ -88,6 +88,8 @@ public class Jeu {
             this.m_joueursEnVie.add(p);
             System.out.println("=================================================================================");
         }
+
+        afficherEntites();
 
         this.m_d1.afficherDonjon();
     }
@@ -178,7 +180,7 @@ public class Jeu {
         }
     }
 
-    public void creerEquipementAleatoire(int i) {
+    public void initEquipementAleatoire(int i) {
         System.out.println("Equipement aléatoirement positionné\n");
         mdj.positionnerEquipement(this.m_d1, this.m_utils.creerEquipementAleatoire(this.m_d1));
     }
@@ -209,5 +211,20 @@ public class Jeu {
                 case 7 -> mdj.positionnerEquipement(this.m_d1, new Rapiere(x, y));
             }
         }
+    }
+
+    public void afficherEntites() {
+        for (Personnage p : this.m_joueursEnVie) {
+            System.out.println("\t" + p.getNomAffiche() + " " + p.getNom() +
+                    " (" + p.getNomRace() + " " + p.getNomClasse() + ", " + p.getPv() + ")");
+        }
+        if (this.m_d1.getListeMonstre() != null) {
+            for (Monstre m : this.m_d1.getListeMonstre()) {
+                System.out.println(m.getNomAffiche() + " " + m.getEspece() +
+                        " (" + m.getPv() + ")");
+            }
+        }
+        System.out.println();
+
     }
 }

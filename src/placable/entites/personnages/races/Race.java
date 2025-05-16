@@ -8,6 +8,11 @@ public abstract class Race {
     protected int m_vitesse;
     protected int m_force;
     protected int m_initiative;
+    protected String m_nomRace;
 
     public abstract void initialiser(Personnage p);
+
+    public String getNom() {
+        return m_nomRace;
+    }
 }

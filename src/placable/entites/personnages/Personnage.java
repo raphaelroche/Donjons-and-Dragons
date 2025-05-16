@@ -12,7 +12,6 @@ import placable.equipements.armures.Ecailles;
 import placable.entites.personnages.classes.*;
 import placable.entites.personnages.races.*;
 import des.Des;
-import placable.obstacle.Obstacle;
 
 import java.util.ArrayList;
 
@@ -210,6 +209,18 @@ public class Personnage extends Entite {
 
     public Race getRace() {
         return this.m_race;
+    }
+
+    public String getNomRace() {
+        return m_race.getNom();
+    }
+
+    public Classe getClasse() {
+        return this.m_classe;
+    }
+
+    public String getNomClasse() {
+        return m_classe.getNom();
     }
 
     public int getVitesse() {

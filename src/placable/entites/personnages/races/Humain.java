@@ -9,6 +9,7 @@ public class Humain extends Race {
         this.m_dexterite = 2;
         this.m_vitesse = 2;
         this.m_initiative = 2;
+        this.m_nomRace = "Humain";
     }
     @Override
     public void initialiser(Personnage p){

@@ -123,17 +123,17 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
 
         Equipement e = null;
          switch (choix) {
-            case 1 -> new Arbalete(x, y);
-            case 2 -> new Arc(x, y);
-            case 3 -> new Baton(x, y);
-            case 4 -> new EpeeLongue(x, y);
-            case 5 -> new Fronde(x, y);
-            case 6 -> new Masse(x, y);
-            case 7 -> new Rapiere(x, y);
-            case 8 -> new CotteDeMailles(x, y);
-            case 9 -> new DemiPlatte(x, y);
-            case 10 -> new Ecailles(x, y);
-            case 11 -> new Harnois(x, y);
+            case 1 -> e = new Arbalete(x, y);
+            case 2 -> e = new Arc(x, y);
+            case 3 -> e = new Baton(x, y);
+            case 4 -> e = new EpeeLongue(x, y);
+            case 5 -> e = new Fronde(x, y);
+            case 6 -> e = new Masse(x, y);
+            case 7 -> e = new Rapiere(x, y);
+            case 8 -> e = new CotteDeMailles(x, y);
+            case 9 -> e = new DemiPlatte(x, y);
+            case 10 -> e = new Ecailles(x, y);
+            case 11 -> e = new Harnois(x, y);
 
         };
          return e;

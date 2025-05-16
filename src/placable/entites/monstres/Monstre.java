@@ -90,6 +90,10 @@ public class Monstre extends Entite {
         }
         return false;
     }
+
+    public String getEspece() {
+        return m_espece;
+    }
 }
 
 

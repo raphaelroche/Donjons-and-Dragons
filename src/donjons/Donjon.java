@@ -3,6 +3,7 @@ package donjons;
 import placable.CaseVide;
 import placable.Placable;
 import placable.entites.Entite;
+import placable.entites.monstres.Monstre;
 import placable.equipements.Equipement;
 import placable.obstacle.Obstacle;
 
@@ -14,6 +15,7 @@ public class Donjon {
     private int m_hauteur;
     private int m_largeur;
     private CaseVide m_casevide;
+    private Monstre[] m_listeMonstre;
 
 
     public Donjon(){
@@ -151,5 +153,9 @@ public class Donjon {
 
     public void separer() {
         System.out.println("\t*" + "-".repeat(this.getLargeur()*4) + "*");
+    }
+
+    public Monstre[] getListeMonstre() {
+        return m_listeMonstre;
     }
 }

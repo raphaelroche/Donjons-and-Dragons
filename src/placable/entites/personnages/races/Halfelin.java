@@ -6,6 +6,7 @@ public class Halfelin extends Race{
     public  Halfelin() {
         this.m_dexterite = 4;
         this.m_vitesse = 2;
+        this.m_nomRace = "Halfelin";
     }
     @Override
     public void initialiser(Personnage p){
