@@ -136,7 +136,7 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
             default -> null;
         };
     }
-    public static Obstacle CreerObstacleAleatoire(Donjon d){
+    public Obstacle creerObstacleAleatoire(Donjon d){
         Des des = new Des();
         int x = des.lancerDes(1, d.getLargeur() - 1);
         int y = des.lancerDes(1, d.getHauteur() - 1);
