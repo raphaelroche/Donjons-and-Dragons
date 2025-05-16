@@ -41,4 +41,9 @@ public class Obstacle implements Placable {
     public int getPositionY(){
         return m_positionY;
     }
+
+    @Override
+    public boolean estObstacle(){
+        return true;
+    }
 }

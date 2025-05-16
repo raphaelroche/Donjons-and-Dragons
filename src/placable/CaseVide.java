@@ -35,4 +35,9 @@ public class CaseVide implements Placable{
     public int getPositionY(){
         return m_positionY;
     }
+
+    @Override
+    public boolean estCaseVide(){
+        return true;
+    }
 }

@@ -36,4 +36,9 @@ public abstract class Equipement implements Placable {
     public int getPositionY(){
         return this.m_positionY;
     }
+
+    @Override
+    public boolean estEquipement(){
+        return true;
+    }
 }

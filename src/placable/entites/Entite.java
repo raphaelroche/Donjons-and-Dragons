@@ -204,4 +204,9 @@ public abstract class Entite implements Placable {
         }
         return false;
     }
+
+    @Override
+    public boolean estEntite(){
+        return true;
+    }
 }
