@@ -68,7 +68,14 @@ public class Monstre extends Entite {
         return this.m_classeArmure;
     }
 
-
+    @Override
+    public void ajusterPv(int valeur) {
+        this.m_pv += valeur;
+        if (this.m_pv < 0) {
+            this.m_pv = 0;
+            monstres.remove(this);
+        }
+    }
     public boolean attaquer(Personnage cible, String[][] carte){
 
 
@@ -84,11 +91,6 @@ public class Monstre extends Entite {
         }
         return false;
     }
-
-
-
-
-
 }
 
 

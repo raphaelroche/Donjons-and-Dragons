@@ -5,11 +5,11 @@ import donjons.Donjon;
 import placable.entites.personnages.Personnage;
 
 public class Fronde extends Distance{
-    public Fronde(Personnage p) {
+    public Fronde() {
         super(6);
         this.m_degats = 0;
         this.m_nom = "fronde";
-        p.ajouterEquipementInventaire(this);
+
     }
 
     public Fronde(int x, int y) {

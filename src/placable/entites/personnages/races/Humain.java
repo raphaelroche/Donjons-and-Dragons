@@ -3,11 +3,18 @@ package placable.entites.personnages.races;
 import placable.entites.personnages.Personnage;
 
 public class Humain extends Race {
-    public Humain(Personnage p) {
+    public Humain() {
         
-        p.ajusterForce(2);
-        p.ajusterDexterite(2);
-        p.ajusterVitesse(2);
-        p.ajusterInitiative(2);
+        this.m_force = 2;
+        this.m_dexterite = 2;
+        this.m_vitesse = 2;
+        this.m_initiative = 2;
+    }
+    @Override
+    public void initialiser(Personnage p){
+        p.ajusterDexterite(this.m_dexterite);
+        p.ajusterVitesse(this.m_vitesse);
+        p.ajusterInitiative(this.m_initiative);
+        p.ajusterForce(this.m_force);
     }
 }

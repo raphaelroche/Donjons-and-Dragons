@@ -5,10 +5,10 @@ import donjons.Donjon;
 import placable.entites.personnages.Personnage;
 
 public class DemiPlatte extends Legeres{
-    public DemiPlatte(Personnage p) {
+    public DemiPlatte() {
         super(10);
         this.m_nom = "demi-platte";
-        p.ajouterEquipementInventaire(this);
+
     }
 
     public DemiPlatte(int x, int y){

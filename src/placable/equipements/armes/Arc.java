@@ -5,11 +5,11 @@ import donjons.Donjon;
 import placable.entites.personnages.Personnage;
 
 public class Arc extends Distance{
-    public Arc(Personnage p) {
+    public Arc() {
         super(16);
         this.m_degats = 0;
         this.m_nom = "arc court";
-        p.ajouterEquipementInventaire(this);
+
     }
 
     public Arc(int x, int y) {

@@ -7,11 +7,11 @@ import placable.entites.personnages.Personnage;
 //dans l'inventaire
 public class Arbalete extends Distance{
 
-    public Arbalete(Personnage p) {
+    public Arbalete() {
         super(16);
         this.m_degats = 0;
         this.m_nom = "arbalète";
-        p.ajouterEquipementInventaire(this);
+
     }
 
     //sur la carte

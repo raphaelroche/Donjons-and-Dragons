@@ -5,9 +5,9 @@ import donjons.Donjon;
 import placable.entites.personnages.Personnage;
 
 public class EpeeLongue extends Guerre{
-    public EpeeLongue(Personnage p) {
+    public EpeeLongue() {
         this.m_nom = "épée longue";
-        p.ajouterEquipementInventaire(this);
+
     }
 
     public EpeeLongue(int x, int y) {

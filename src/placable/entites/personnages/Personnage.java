@@ -71,42 +71,50 @@ public class Personnage extends Entite {
     public void attribuerRaceClasse(int race, int classe) {
         switch(race) {      //attribue la race
             case 1:
-                this.m_race = new Humain(this);
+                this.m_race = new Humain();
+                this.m_race.initialiser(this);
                 break;
             case 2:
-                this.m_race = new Nain(this);
+                this.m_race = new Nain();
+                this.m_race.initialiser(this);
                 break;
             case 3:
-                this.m_race = new Elfe(this);
+                this.m_race = new Elfe();
+                this.m_race.initialiser(this);
                 break;
             case 4:
-                this.m_race = new Halfelin(this);
+                this.m_race = new Halfelin();
+                this.m_race.initialiser(this);
                 break;
             default:
                 break;
         }
         switch(classe) {      //attribue la classe, et ajoute ses objets dans l'inventaire
             case 1:
-                this.m_classe = new Clerc(this);
-                new Masse(this);
-                new Ecailles(this);
-                new Arbalete(this);
+                this.m_classe = new Clerc();
+                this.m_classe.initialiser(this);
+                this.ajouterEquipementInventaire(new Masse());
+                this.ajouterEquipementInventaire(new Ecailles());
+                this.ajouterEquipementInventaire(new Arbalete());
                 break;
             case 2:
-                this.m_classe = new Guerrier(this);
-                new CotteDeMailles(this);
-                new EpeeLongue(this);
-                new Arbalete(this);
+                this.m_classe = new Guerrier();
+                this.m_classe.initialiser(this);
+                this.ajouterEquipementInventaire(new CotteDeMailles());
+                this.ajouterEquipementInventaire(new EpeeLongue());
+                this.ajouterEquipementInventaire(new Arbalete());
                 break;
             case 3:
-                this.m_classe = new Magicien(this);
-                new Baton(this);
-                new Fronde(this);
+                this.m_classe = new Magicien();
+                this.m_classe.initialiser(this);
+                this.ajouterEquipementInventaire( new Baton());
+                this.ajouterEquipementInventaire( new Fronde());
                 break;
             case 4:
-                this.m_classe = new Roublard(this);
-                new Rapiere(this);
-                new Arc(this);
+                this.m_classe = new Roublard();
+                this.m_classe.initialiser(this);
+                this.ajouterEquipementInventaire(new Rapiere());
+                this.ajouterEquipementInventaire(new Arc());
                 break;
             default:
                 break;

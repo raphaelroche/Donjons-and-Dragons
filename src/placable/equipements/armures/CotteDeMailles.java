@@ -5,10 +5,10 @@ import donjons.Donjon;
 import placable.entites.personnages.Personnage;
 
 public class CotteDeMailles extends Lourdes{
-    public CotteDeMailles(Personnage p) {
+    public CotteDeMailles() {
         super(11);
         this.m_nom = "cotte de mailles";
-        p.ajouterEquipementInventaire(this);
+
     }
 
     public CotteDeMailles(int x, int y){

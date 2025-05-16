@@ -5,9 +5,9 @@ import donjons.Donjon;
 import placable.entites.personnages.Personnage;
 
 public class Masse extends Courantes{
-    public Masse(Personnage p) {
+    public Masse() {
         this.m_nom = "masse d'armes";
-        p.ajouterEquipementInventaire(this);
+
     }
 
     public Masse(int x, int y) {

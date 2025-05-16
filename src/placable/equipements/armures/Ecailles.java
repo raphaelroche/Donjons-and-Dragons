@@ -5,10 +5,10 @@ import donjons.Donjon;
 import placable.entites.personnages.Personnage;
 
 public class Ecailles extends Legeres{
-    public Ecailles(Personnage p) {
+    public Ecailles() {
         super(9);
         this.m_nom = "armure d'écailles";
-        p.ajouterEquipementInventaire(this);
+
     }
 
     public Ecailles(int x, int y) {

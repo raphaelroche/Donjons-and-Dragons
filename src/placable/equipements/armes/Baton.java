@@ -5,9 +5,8 @@ import donjons.Donjon;
 import placable.entites.personnages.Personnage;
 
 public class Baton extends Courantes{
-    public Baton(Personnage p) {
+    public Baton() {
         this.m_nom = "bâton";
-        p.ajouterEquipementInventaire(this);
     }
 
     public Baton(int x, int y) {

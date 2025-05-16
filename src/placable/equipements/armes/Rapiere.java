@@ -5,9 +5,9 @@ import donjons.Donjon;
 import placable.entites.personnages.Personnage;
 
 public class Rapiere extends Guerre{
-    public Rapiere(Personnage p) {
+    public Rapiere() {
         this.m_nom = "rapière";
-        p.ajouterEquipementInventaire(this);
+
     }
 
     public Rapiere(int x, int y) {

@@ -5,10 +5,10 @@ import donjons.Donjon;
 import placable.entites.personnages.Personnage;
 
 public class Harnois extends Lourdes{
-    public Harnois(Personnage p) {
+    public Harnois() {
         super(12);
         this.m_nom = "harnois";
-        p.ajouterEquipementInventaire(this);
+
     }
 
     public Harnois(int x, int y){
