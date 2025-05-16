@@ -14,12 +14,7 @@ public class Obstacle implements Placable {
         this.m_nomAffiche = "[ ]";
         this.setLocation(x-1, y-1);
     }
-    public Obstacle(Donjon d){
-        this.des = new Des();
-        this.m_nomAffiche = "[ ]";
-        this.m_positionX = des.lancerDes(1, d.getLargeur()-1);
-        this.m_positionY = des.lancerDes(1, d.getHauteur()-1);
-    }
+
 
     @Override
     public void setLocation(int x, int y){

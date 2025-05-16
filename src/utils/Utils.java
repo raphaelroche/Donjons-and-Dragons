@@ -9,6 +9,7 @@ import placable.equipements.armures.CotteDeMailles;
 import placable.equipements.armures.DemiPlatte;
 import placable.equipements.armures.Ecailles;
 import placable.equipements.armures.Harnois;
+import placable.obstacle.Obstacle;
 
 import java.util.Scanner;
 
@@ -134,6 +135,12 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
             case 11 -> new Harnois(x, y);
             default -> null;
         };
+    }
+    public static Obstacle CreerObstacleAleatoire(Donjon d){
+        Des des = new Des();
+        int x = des.lancerDes(1, d.getLargeur() - 1);
+        int y = des.lancerDes(1, d.getHauteur() - 1);
+        return new Obstacle(x, y);
     }
 
 }
