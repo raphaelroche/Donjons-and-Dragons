@@ -2,6 +2,7 @@ import des.Des;
 import donjons.*;
 import maitredujeu.MaitreDuJeu;
 import placable.entites.personnages.Personnage;
+import placable.equipements.armes.Arbalete;
 import placable.obstacle.Obstacle;
 import utils.*;
 
@@ -45,27 +46,22 @@ public class Jeu {
                 0, 10, 5,
                 this.scanner);
 
-        System.out.println("Vous allez maintenant placer les obstacles sur la carte");
+        if(this.m_nbObstacle > 0) {
+            System.out.println("Vous avez choisi de placer " + this.m_nbObstacle + " obstacles");
+        } else {
+            System.out.println("Vous n'avez pas choisi d'obstacles");
+        }
         int i;
         for (i = 0; i < this.m_nbObstacle; i++) {
-            int[] position = this.m_utils.demanderPositionCarte("Choisissez la position de l'obstacle " + String.valueOf(i+1),
-                    'A', this.m_d1.getLettreMax(),
-                    1, this.m_d1.getHauteur(),
-                    scanner);
-            if (position[0] == -1 || position[1] == -1) {
-                System.out.println("Obstacle aléatoirement positionné\n");
-                mdj.positionnerObstacle(this.m_d1, new Obstacle(this.m_d1));
-            }
-            else {
-                mdj.positionnerObstacle(this.m_d1, new Obstacle(position[0], position[1]));
-                System.out.println("Obstacle positionné en " + alphabet[position[1]-1] + String.valueOf(position[0]));
-            }
+            creerObstacleAleatoire(i);
         }
 
         for (i = 0; i < this.m_nbJoueurs; i++) {
-            this.m_joueursEnVie.add(initJoueur(i + 1, this.m_d1));
+            Personnage p = initJoueur(i + 1, this.m_d1);
+            this.m_joueursEnVie.add(p);
             System.out.println("=================================================================================");
         }
+
         this.m_d1.afficherDonjon();
     }
 
@@ -97,13 +93,14 @@ public class Jeu {
         }
 
         int race = this.m_utils.demanderChoix(scanner,
-                "Choisissez une race :\n1 - Humain\n2 - Nain\n3 - Elfe\n4 - Halfelin", 1, 4);
+                "Choisissez une race :\n1 - Humain\n2 - Nain\n3 - Elfe\n4 - Halfelin",
+                1, 4);
         scanner.nextLine();
 
 
         int classe = this.m_utils.demanderChoix(scanner,
-                "Choisissez une classe :\n1 - Clerc\n2 - Guerrier\n3 - Magicien\n4 - Roublard", 1, 4);
-
+                "Choisissez une classe :\n1 - Clerc\n2 - Guerrier\n3 - Magicien\n4 - Roublard",
+                1, 4);
         scanner.nextLine();
 
 
@@ -136,6 +133,21 @@ public class Jeu {
                 peutSePlacer = mdj.positionnerEntite(this.m_d1, p);
             }
             return p;
+        }
+    }
+
+    public void creerObstacleAleatoire(int i) {
+        int[] position = this.m_utils.demanderPositionCarte("Choisissez la position de l'obstacle " + String.valueOf(i+1),
+                'A', this.m_d1.getLettreMax(),
+                1, this.m_d1.getHauteur(),
+                scanner);
+        if (position[0] == -1 || position[1] == -1) {
+            System.out.println("Obstacle aléatoirement positionné\n");
+            mdj.positionnerObstacle(this.m_d1, new Obstacle(this.m_d1));
+        }
+        else {
+            mdj.positionnerObstacle(this.m_d1, new Obstacle(position[0], position[1]));
+            System.out.println("Obstacle positionné en " + alphabet[position[1]-1] + String.valueOf(position[0]));
         }
     }
 }

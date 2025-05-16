@@ -82,7 +82,7 @@ public class Donjon {
     public void decalerADroite(ArrayList<Placable> l){
 
         Placable p = l.getFirst();
-        l.set(1, p);
+        l.add(p);
 
         l.set(0, null); // la première case devient vide
 
@@ -99,12 +99,12 @@ public class Donjon {
         int x = p.getPositionX();
         int y = p.getPositionY();
 
-        if(p instanceof Equipement){
-            if(this.m_carte[x][y].getFirst() instanceof CaseVide){
+        if(p.estEquipement()){
+            if(this.m_carte[x][y].getFirst().estCaseVide()){
                 this.m_carte[x][y].set(0,p);
                 return true;
             }
-            else if(this.m_carte[x][y].getFirst() instanceof Entite && ((this.m_carte[x][y].size() == 1) || (this.m_carte[x][y].size() > 1 && this.m_carte[x][y].get(1) == null))){
+            else if(this.m_carte[x][y].getFirst().estEntite() && ((this.m_carte[x][y].size() == 1) || (this.m_carte[x][y].size() > 1 && this.m_carte[x][y].get(1) == null))){
                 this.m_carte[x][y].add(p);
                 return true;
             }
@@ -113,20 +113,20 @@ public class Donjon {
                 return false;
             }
         }
-        else if(p instanceof Entite){
-            if(this.m_carte[x][y].getFirst() instanceof Equipement){
+        else if(p.estEntite()){
+            if(this.m_carte[x][y].getFirst().estEquipement()){
                 this.decalerADroite(this.m_carte[x][y]);
                 this.m_carte[x][y].set(0,p);
                 return true;
             }
-            else if(this.m_carte[x][y].getFirst() instanceof CaseVide){
+            else if(this.m_carte[x][y].getFirst().estCaseVide() || this.m_carte[x][y].getFirst() == null){
                 this.m_carte[x][y].set(0,p);
                 return true;
             }
             return false;
         }
         else{
-            if(this.m_carte[x][y].getFirst() == null || this.m_carte[x][y].getFirst() instanceof CaseVide){
+            if(this.m_carte[x][y].getFirst() == null || this.m_carte[x][y].getFirst().estCaseVide()){
                 this.m_carte[x][y].set(0,p);
                 return true;
             }
