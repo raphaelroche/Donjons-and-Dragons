@@ -19,17 +19,16 @@ public class Monstre extends Entite {
     private static ArrayList<Monstre> monstres;
 
     //par default
-    public Monstre(Donjon d) {
+    public Monstre(String espece) {
         if(monstres == null) {
             monstres = new ArrayList<>();
         }
 
-        this.m_espece = "dragon";
-        this.des = new Des();
+        this.m_espece = espece;
         monstres.add(this);
         this.m_numero = monstres.indexOf(this)+1;
         this.m_nomAffiche = " D" + this.m_numero;
-        setLocation(des.lancerDes(1, d.getLargeur()-1), des.lancerDes(1, d.getHauteur()-1));
+
 
     }
 

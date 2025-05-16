@@ -1,6 +1,14 @@
 package utils;
 
 import des.Des;
+import donjons.Donjon;
+import placable.entites.monstres.Monstre;
+import placable.equipements.Equipement;
+import placable.equipements.armes.*;
+import placable.equipements.armures.CotteDeMailles;
+import placable.equipements.armures.DemiPlatte;
+import placable.equipements.armures.Ecailles;
+import placable.equipements.armures.Harnois;
 
 import java.util.Scanner;
 
@@ -93,6 +101,39 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
             }
         }
         return position;
+    }
+
+    public static Monstre creerMonstreAleatoire(Donjon d) {
+        Des des = new Des();
+        int x = des.lancerDes(1, d.getLargeur()-1);
+        int y = des.lancerDes(1, d.getHauteur()-1);
+        Monstre m = new Monstre("dragon");
+        m.setLocation(x, y);
+        return m;
+    }
+
+    public static Equipement creerEquipementAleatoire(Donjon d) {
+        Des des = new Des();
+        int x = des.lancerDes(1, d.getLargeur() - 1);
+        int y = des.lancerDes(1, d.getHauteur() - 1);
+
+        // Choisir un type aléatoire
+        int choix = des.lancerDes(1, 11);
+
+        return switch (choix) {
+            case 1 -> new Arbalete(x, y);
+            case 2 -> new Arc(x, y);
+            case 3 -> new Baton(x, y);
+            case 4 -> new EpeeLongue(x, y);
+            case 5 -> new Fronde(x, y);
+            case 6 -> new Masse(x, y);
+            case 7 -> new Rapiere(x, y);
+            case 8 -> new CotteDeMailles(x, y);
+            case 9 -> new DemiPlatte(x, y);
+            case 10 -> new Ecailles(x, y);
+            case 11 -> new Harnois(x, y);
+            default -> null;
+        };
     }
 
 }
