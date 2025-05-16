@@ -2,7 +2,8 @@ import des.Des;
 import donjons.*;
 import maitredujeu.MaitreDuJeu;
 import placable.entites.personnages.Personnage;
-import placable.equipements.armes.Arbalete;
+import placable.equipements.armes.*;
+import placable.equipements.armures.*;
 import placable.obstacle.Obstacle;
 import utils.*;
 
@@ -19,6 +20,7 @@ public class Jeu {
     private Des m_des;
     private String[] alphabet;
     private int m_nbObstacle;
+    private int m_nbEquipements;
 
     public Jeu() {
         scanner = new Scanner(System.in);
@@ -54,6 +56,21 @@ public class Jeu {
         int i;
         for (i = 0; i < this.m_nbObstacle; i++) {
             creerObstacleAleatoire(i);
+        }
+
+        this.m_nbEquipements = this.m_utils.demanderChoixOuParDefaut("Indiquez le nombre d'équipements",
+                0, 10, 5,
+                this.scanner);
+        for (i = 0; i<this.m_nbEquipements; i++) {
+            System.out.println("Choisissez l'équipement " + String.valueOf(i+1));
+            int type = this.m_utils.demanderChoixOuParDefaut("Choisissez un type d'équipement :\n1 - Armures\n2 - Armes",
+                    1, 10, -1, scanner);
+            if (type == 1 || type == 2) {
+                creerEquipement(type, i);
+            } else {
+                System.out.println("Vous avez choisi de créer les équipement aléatoirement.");
+                m_utils.creerEquipementAleatoire(this.m_d1);
+            }
         }
 
         for (i = 0; i < this.m_nbJoueurs; i++) {
@@ -143,11 +160,39 @@ public class Jeu {
                 scanner);
         if (position[0] == -1 || position[1] == -1) {
             System.out.println("Obstacle aléatoirement positionné\n");
-            mdj.positionnerObstacle(this.m_d1, new Obstacle(this.m_d1));
+            m_utils.creerobstacleAleatoire(this.m_d1);
         }
         else {
             mdj.positionnerObstacle(this.m_d1, new Obstacle(position[0], position[1]));
             System.out.println("Obstacle positionné en " + alphabet[position[1]-1] + String.valueOf(position[0]));
+        }
+    }
+
+    public void creerEquipement(int type, int i) {
+
+        if (type == 1) {
+            int typeArmure = this.m_utils.demanderChoix(scanner,
+                    "Choisissez un type d'armure :\n1 - Cotte de mailles\n2 - Demi-plaque\n3 - Ecailles\n4 - Harnois",
+                    1, 4);
+            switch (typeArmure) {
+                case 1 -> mdj.positionnerEquipement(this.m_d1, new CotteDeMailles());
+                case 2 -> mdj.positionnerEquipement(this.m_d1, new DemiPlatte());
+                case 3 -> mdj.positionnerEquipement(this.m_d1, new Ecailles());
+                case 4 -> mdj.positionnerEquipement(this.m_d1, new Harnois());
+            }
+        } else {
+            int typeArme = this.m_utils.demanderChoix(scanner,
+                    "Choisissez un type d'arme :\n1 - Arbalète\n2 - Arc\n3 - Lance",
+                    1, 3);
+            switch (typeArme) {
+                case 1 -> mdj.positionnerEquipement(this.m_d1, new Arbalete());
+                case 2 -> mdj.positionnerEquipement(this.m_d1, new Arc());
+                case 3 -> mdj.positionnerEquipement(this.m_d1, new Baton());
+                case 4 -> mdj.positionnerEquipement(this.m_d1, new EpeeLongue());
+                case 5 -> mdj.positionnerEquipement(this.m_d1, new Fronde());
+                case 6 -> mdj.positionnerEquipement(this.m_d1, new Masse());
+                case 7 -> mdj.positionnerEquipement(this.m_d1, new Rapiere());
+            }
         }
     }
 }

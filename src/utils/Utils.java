@@ -104,7 +104,7 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
         return position;
     }
 
-    public static Monstre creerMonstreAleatoire(Donjon d) {
+    public Monstre creerMonstreAleatoire(Donjon d) {
         Des des = new Des();
         int x = des.lancerDes(1, d.getLargeur()-1);
         int y = des.lancerDes(1, d.getHauteur()-1);
@@ -113,7 +113,7 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
         return m;
     }
 
-    public static Equipement creerEquipementAleatoire(Donjon d) {
+    public Equipement creerEquipementAleatoire(Donjon d) {
         Des des = new Des();
         int x = des.lancerDes(1, d.getLargeur() - 1);
         int y = des.lancerDes(1, d.getHauteur() - 1);
