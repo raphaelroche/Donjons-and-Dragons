@@ -224,6 +224,291 @@ package placable.entites.personnages {
   }
 }
 
+package placable.equipements {
+  abstract class Equipement <<abstract>> {
+    # m_nom : String
+    # m_positionX : Integer
+    # m_positionY : Integer
+    # m_nomAffiche : String
+
+    + <<create>> Equipement()
+    + setLocation(x : Integer, y : Integer)
+    + getNomEquipement() : String
+    + getNomAffiche() : String
+    + getPositionX() : Integer
+    + getPositionY() : Integer
+    + estEquipement() : Boolean
+  }
+}
+
+
+
+package placable.equipements.armes {
+  abstract class CAC <<abstract>> {
+    + <<create>> CAC()
+    + <<create>> CAC(x : Integer, y : Integer)
+  }
+}
+
+
+
+package placable.equipements.armes {
+  abstract class Distance <<abstract>> {
+    + <<create>> Distance(portee : Integer)
+    + <<create>> Distance(portee : Integer, x : Integer, y : Integer)
+  }
+}
+
+
+
+package placable.equipements.armes {
+  abstract class Guerre <<abstract>> {
+    + <<create>> Guerre()
+    + <<create>> Guerre(x : Integer, y : Integer)
+    + determinerDegat()
+  }
+
+}
+
+
+
+package placable.equipements.armes {
+  abstract class Courantes <<abstract>> {
+    + <<create>> Courantes()
+    + <<create>> Courantes(x : Integer, y : Integer)
+    + determinerDegat()
+  }
+
+}
+
+
+
+package placable.equipements.armes {
+  class Arbalete {
+    + <<create>> Arbalete()
+    + <<create>> Arbalete(x : Integer, y : Integer)
+    + determinerDegat()
+  }
+}
+
+
+
+package placable.equipements.armes {
+  class Arc {
+    + <<create>> Arc()
+    + <<create>> Arc(x : Integer, y : Integer)
+    + determinerDegat()
+  }
+
+
+}
+
+
+package placable.equipements.armes {
+  abstract class Armes <<abstract>> {
+    # m_degats : Integer
+    # m_portee : Integer
+    # des : Des
+    # m_changeStat : Boolean
+
+    + <<create>> Armes(portee : Integer)
+    + <<create>> Armes(portee : Integer, x : Integer, y : Integer)
+    + getPortee() : Integer
+    + {abstract} determinerDegat()
+    + getDegats() : Integer
+    + getChangeStat() : Boolean
+  }
+
+  
+}
+
+
+
+package placable.equipements.armes {
+  class Baton {
+    + <<create>> Baton()
+    + <<create>> Baton(x : Integer, y : Integer)
+  }
+
+  
+
+}
+
+
+
+package placable.equipements.armes {
+  class EpeeLongue {
+    + <<create>> EpeeLongue()
+    + <<create>> EpeeLongue(x : Integer, y : Integer)
+  }
+
+
+}
+
+
+
+package placable.equipements.armes {
+  class Fronde {
+    + <<create>> Fronde()
+    + <<create>> Fronde(x : Integer, y : Integer)
+    + determinerDegat()
+  }
+
+}
+
+package placable.equipements.armes {
+  class Masse {
+    + <<create>> Masse()
+    + <<create>> Masse(x : Integer, y : Integer)
+  }
+
+}
+
+
+package placable.equipements.armes {
+  class Rapiere {
+    + <<create>> Rapiere()
+    + <<create>> Rapiere(x : Integer, y : Integer)
+  }
+
+
+}
+
+
+package placable.equipements.armures {
+  abstract class Armures <<abstract>> {
+    # m_classe : Integer
+    # m_changeStat : Boolean
+    # des : Des
+
+    + <<create>> Armures(classe : Integer)
+    + <<create>> Armures(classe : Integer, x : Integer, y : Integer)
+    + getClasseArmure() : Integer
+    + getChangeStat() : Boolean
+  }
+
+ 
+}
+
+
+package placable.equipements.armures {
+  abstract class Lourdes <<abstract>> {
+    + <<create>> Lourdes(classe : Integer)
+    + <<create>> Lourdes(classe : Integer, x : Integer, y : Integer)
+  }
+
+  
+}
+
+
+package placable.equipements.armures {
+  abstract class Legeres <<abstract>> {
+    + <<create>> Legeres(classe : Integer)
+    + <<create>> Legeres(classe : Integer, x : Integer, y : Integer)
+  }
+
+ 
+}
+
+
+
+package placable.equipements.armures {
+  class CotteDeMailles {
+    + <<create>> CotteDeMailles()
+    + <<create>> CotteDeMailles(x : Integer, y : Integer)
+  
+  }
+}
+
+
+package placable.equipements.armures {
+  class DemiPlatte {
+    + <<create>> DemiPlatte()
+    + <<create>> DemiPlatte(x : Integer, y : Integer)
+   
+  }
+}
+
+
+package placable.equipements.armures {
+  class Ecailles {
+    + <<create>> Ecailles()
+    + <<create>> Ecailles(x : Integer, y : Integer)
+   
+  }
+}
+
+
+package placable.equipements.armures {
+  class Harnois {
+    + <<create>> Harnois()
+    + <<create>> Harnois(x : Integer, y : Integer)
+  
+  }
+}
+
+
+package placable.obstacle {
+  class Obstacle {
+    - m_positionX : Integer
+    - m_positionY : Integer
+    - m_nomAffiche : String
+    - des : Des
+
+    + <<create>> Obstacle(x : Integer, y : Integer)
+    + setLocation(x : Integer, y : Integer)
+    + getNomAffiche() : String
+    + getPositionX() : Integer
+    + getPositionY() : Integer
+    + estObstacle() : Boolean
+  }
+
+}
+
+package utils {
+  class Utils {
+    - des : Des
+
+    + <<create>> Utils()
+    + demanderChoix(scanner : Scanner, message : String, min : Integer, max : Integer) : Integer
+    + demanderChoixOuParDefaut(message : String, min : Integer, max : Integer, valeurParDefaut : Integer, scanner : Scanner) : Integer
+    + demanderPositionCarte(message : String, minLettre : Char, maxLettre : Char, minNumero : Integer, maxNumero : Integer, scanner : Scanner) : int[*]
+    + creerMonstreAleatoire(d : Donjon) : Monstre
+    + creerEquipementAleatoire(d : Donjon) : Equipement
+    + creerObstacleAleatoire(d : Donjon) : Obstacle
+    + creerPersonnageAleatoire(nom : String, race : Integer, classe : Integer, d : Donjon) : Personnage
+  }
+}
+
+
+class Jeu {
+  - m_joueursEnVie : ArrayList<Personnage>
+  - m_utils : Utils
+  - m_nbJoueurs : int
+  - scanner : Scanner
+  - m_d1 : Donjon
+  - mdj : MaitreDuJeu
+  - m_des : Des
+  - alphabet : String[*]
+  - m_nbObstacle : int
+  - m_nbEquipements : int
+
+  + <<create>> Jeu()
+  + demarrerJeu()
+  + initJoueur(nJoueur : int, d : Donjon) : Personnage
+  + creerObstacleAleatoire(i : int)
+  + initEquipementAleatoire(i : int)
+  + creerEquipement(type : int, i : int, x : int, y : int)
+  + afficherEntites()
+}
+
+
+class Main {
+  + main(args : String[])
+}
+
+
+
 ' -------------------- RELATIONS --------------------
 
 CaseVide ..|> Placable
@@ -271,4 +556,151 @@ Personnage .> Armes : <<use>>
 Personnage .> Armures : <<use>>
 Personnage .> Classe : <<use>>
 Personnage .> Race : <<use>>
+
+Equipement ..|> Placable
+Equipement .> Des : <<use>>
+Equipement .> Donjon : <<use>>
+
+
+CAC --|> Armes
+
+
+
+Distance --|> Armes
+
+
+
+Guerre --|> CAC
+CAC --|> Armes
+Guerre .> Des : <<use>>
+
+
+
+Courantes --|> CAC
+CAC --|> Armes
+Courantes .> Des : <<use>>
+
+
+
+Arbalete --|> Distance
+Distance --|> Armes
+Arbalete .> Des : <<use>>
+
+
+
+Arc --|> Distance
+Distance --|> Armes
+Arc .> Des : <<use>>
+
+
+Armes --|> Equipement
+Armes .> Des : <<use>>
+
+
+
+Baton --|> Courantes
+Courantes --|> CAC
+CAC --|> Armes
+
+
+
+EpeeLongue --|> Guerre
+Guerre --|> CAC
+CAC --|> Armes
+
+
+
+Fronde --|> Distance
+Distance --|> Armes
+Fronde .> Des : <<use>>
+
+
+
+Masse --|> Courantes
+Courantes --|> CAC
+CAC --|> Armes
+
+
+
+Rapiere --|> Guerre
+Guerre --|> CAC
+CAC --|> Armes
+
+
+
+
+Armures --|> Equipement
+Armures .> Des : <<use>>
+
+
+Lourdes --|> Armures
+
+
+
+Legeres --|> Armures
+
+
+
+CotteDeMailles --|> Lourdes
+Lourdes --|> Armures
+CotteDeMailles .> Donjon : <<use>>
+CotteDeMailles .> Des : <<use>>
+
+
+
+DemiPlatte --|> Legeres
+Legeres --|> Armures
+DemiPlatte .> Donjon : <<use>>
+DemiPlatte .> Des : <<use>>
+
+
+
+Ecailles --|> Legeres
+Legeres --|> Armures
+Ecailles .> Donjon : <<use>>
+Ecailles .> Des : <<use>>
+
+
+Harnois --|> Lourdes
+Lourdes --|> Armures
+Harnois .> Donjon : <<use>>
+Harnois .> Des : <<use>>
+
+
+Obstacle ..|> Placable
+Obstacle .> Des : <<use>>
+
+
+Utils .> Des : <<use>>
+Utils .> Scanner : <<use>>
+Utils .> Donjon : <<use>>
+Utils .> Monstre : <<create>>
+Utils .> Equipement : <<create>>
+Utils .> Obstacle : <<create>>
+Utils .> Personnage : <<create>>
+
+
+Jeu .> Personnage : <<use>>
+Jeu .> Monstre : <<use>>
+Jeu .> Donjon : <<use>>
+Jeu .> MaitreDuJeu : <<use>>
+Jeu .> Utils : <<use>>
+Jeu .> Des : <<use>>
+Jeu .> Scanner : <<use>>
+Jeu .> Equipement : <<use>>
+Jeu .> Obstacle : <<use>>
+Jeu .> Arbalete : <<create>>
+Jeu .> Arc : <<create>>
+Jeu .> Baton : <<create>>
+Jeu .> EpeeLongue : <<create>>
+Jeu .> Fronde : <<create>>
+Jeu .> Masse : <<create>>
+Jeu .> Rapiere : <<create>>
+Jeu .> CotteDeMailles : <<create>>
+Jeu .> DemiPlatte : <<create>>
+Jeu .> Ecailles : <<create>>
+Jeu .> Harnois : <<create>>
+
+Main .> Jeu : <<instantiate>>
+
 @enduml

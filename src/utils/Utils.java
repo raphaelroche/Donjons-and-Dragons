@@ -119,7 +119,7 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
         // Choisir un type aléatoire
         int choix = des.lancerDes(1, 11);
 
-        Equipement e = null;
+        Equipement e;
          switch (choix) {
             case 1 -> e = new Arbalete(x, y);
             case 2 -> e = new Arc(x, y);

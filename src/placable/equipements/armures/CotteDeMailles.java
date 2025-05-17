@@ -16,13 +16,5 @@ public class CotteDeMailles extends Lourdes{
         this.m_nom = "cotte de mailles";
     }
 
-    public CotteDeMailles(Donjon d, Des des){
-        super(11,des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
-        this.m_nom = "cotte de mailles";
-    }
-
-    public CotteDeMailles(Donjon d){
-        this(d, new Des());
-    }
 
 }

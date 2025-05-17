@@ -16,11 +16,4 @@ public class DemiPlatte extends Legeres{
         this.m_nom = "demi-platte";
     }
 
-    public DemiPlatte(Donjon d, Des des){
-        super(10,des.lancerDes(1,d.getLargeur()-1), des.lancerDes(1,d.getHauteur()-1));
-        this.m_nom = "demi-platte";
-    }
-    public DemiPlatte(Donjon d){
-        this(d, new Des());
-    }
 }
