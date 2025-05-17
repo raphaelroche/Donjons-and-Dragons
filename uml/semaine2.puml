@@ -1,10 +1,11 @@
 @startuml
-skinparam style strictuml
-hide empty members
+scale 1
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
-
-' -------------------- PACKAGES --------------------
+skinparam defaultFontSize 15
+skinparam style strictuml
+hide empty members
+left to right direction
 
 package des {
   class Des {
