@@ -105,7 +105,6 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
     }
 
     public Monstre creerMonstreAleatoire(Donjon d) {
-        Des des = new Des();
         int x = des.lancerDes(1, d.getLargeur()-1);
         int y = des.lancerDes(1, d.getHauteur()-1);
         Monstre m = new Monstre("dragon");
@@ -114,7 +113,6 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
     }
 
     public Equipement creerEquipementAleatoire(Donjon d) {
-        Des des = new Des();
         int x = des.lancerDes(1, d.getLargeur() - 1);
         int y = des.lancerDes(1, d.getHauteur() - 1);
 
@@ -139,10 +137,14 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
          return e;
     }
     public Obstacle creerObstacleAleatoire(Donjon d){
-        Des des = new Des();
         int x = des.lancerDes(1, d.getLargeur() - 1);
         int y = des.lancerDes(1, d.getHauteur() - 1);
         return new Obstacle(x, y);
+    }
+    public Personnage creerPersonnageAleatoire(String nom, int race, int classe,Donjon d){
+        int x = des.lancerDes(1, d.getLargeur() - 1);
+        int y = des.lancerDes(1, d.getHauteur() - 1);
+        return new Personnage(nom, race, classe, x, y);
     }
 
 }

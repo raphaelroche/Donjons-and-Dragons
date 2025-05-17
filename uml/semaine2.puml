@@ -1,0 +1,274 @@
+@startuml
+skinparam style strictuml
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+
+' -------------------- PACKAGES --------------------
+
+package des {
+  class Des {
+    + lancerDes(nbDes : Integer, nbFaces : Integer) : Integer
+  }
+}
+
+package donjons {
+  class Donjon {
+    - m_alphabet : String[*]
+    - m_carte : Placable[*][*]
+    - m_hauteur : Integer
+    - m_largeur : Integer
+    - m_casevide : CaseVide
+    - m_listeMonstre : Monstre[*]
+
+    + <<create>> Donjon()
+    + Donjon(hauteur : Integer, largeur : Integer)
+    + afficherDonjon()
+    + positionnerEmplacementVide(x : Integer, y : Integer)
+    + decalerADroite(l : Placable[*])
+    + decalerAGauche(l : Placable[*])
+    + positionnerElementCarte(p : Placable) : Boolean
+    + getCarte() : Placable[*][*]
+    + getHauteur() : Integer
+    + getLargeur() : Integer
+    + getLettreMax() : String
+    + separer()
+    + getListeMonstre() : Monstre[*]
+  }
+}
+
+package maitredujeu {
+  class MaitreDuJeu {
+    + <<create>> MaitreDuJeu()
+    + creerDonjon(d : Donjon, longueur : Integer, largeur : Integer)
+    + positionnerObstacle(d : Donjon, o : Obstacle) : Boolean
+    + positionnerEntite(d : Donjon, e : Entite) : Boolean
+    + positionnerEquipement(d : Donjon, e : Equipement) : Boolean
+  }
+}
+
+package placable {
+  interface Placable {
+    + setLocation(x : Integer, y : Integer)
+    + getPositionX() : Integer
+    + getPositionY() : Integer
+    + getNomAffiche() : String
+    + estObstacle() : Boolean
+    + estEntite() : Boolean
+    + estEquipement() : Boolean
+    + estCaseVide() : Boolean
+  }
+
+  class CaseVide {
+    - m_positionX : Integer
+    - m_positionY : Integer
+    - m_nomAffiche : String
+    - des : Des
+
+    + <<create>> CaseVide(x : Integer, y : Integer)
+    + setLocation(x : Integer, y : Integer)
+    + getNomAffiche() : String
+    + getPositionX() : Integer
+    + getPositionY() : Integer
+    + estCaseVide() : Boolean
+  }
+}
+
+package placable.entites {
+  abstract class Entite <<abstract>> {
+    # m_pv : Integer
+    # m_pvMax : Integer
+    # m_force : Integer
+    # m_dexterite : Integer
+    # m_initiative : Integer
+    # m_positionX : Integer
+    # m_positionY : Integer
+    # m_vitesse : Integer
+    # m_nomAffiche : String
+
+    + setLocation(x : Integer, y : Integer)
+    + getPositionX() : Integer
+    + getPositionY() : Integer
+    + getNomAffiche() : String
+    + seDeplacer(direction : Integer, d : Donjon)
+    + getPv() : Integer
+    + getForce() : Integer
+    + getDexterite() : Integer
+    + getInitiative() : Integer
+    + setPv(pv : Integer)
+    + setForce(force : Integer)
+    + setDexterite(dexterite : Integer)
+    + setInitiative(initiative : Integer)
+    + ajusterPv(valeur : Integer)
+    + ajusterForce(valeur : Integer)
+    + ajusterDexterite(valeur : Integer)
+    + ajusterInitiative(valeur : Integer)
+    + equals(obj : Object) : Boolean
+    + estEntite() : Boolean
+    + {static} contientObstacle(liste : Placable[*]) : Boolean
+    + {static} contientEquipement(liste : Placable[*]) : Boolean
+  }
+}
+
+package placable.entites.monstres {
+  class Monstre {
+    - m_espece : String
+    - m_numero : Integer
+    - m_nomAttaque : String
+    - m_portee : Integer
+    - m_degats : Integer
+    - m_classeArmure : Integer
+    - des : Des
+    - {static} monstres : Monstre[*]
+
+    + <<create>> Monstre(espece : String)
+    + Monstre(espece : String, portee : Integer, pv : Integer, nomattaque : String, classeArmure : Integer, force : Integer, dexterite : Integer, initiative : Integer, x : Integer, y : Integer)
+    + getclasseArmure() : Integer
+    + ajusterPv(valeur : Integer)
+    + attaquer(cible : Personnage, carte : String[*][*]) : Boolean
+    + getEspece() : String
+  }
+}
+
+package placable.entites.personnages.classes {
+  abstract class Classe <<abstract>> {
+    # m_nomClasse : String
+    # m_pv : Integer
+    + {abstract} initialiser(p : Personnage)
+    + getNom() : String
+  }
+
+  class Clerc {
+    + <<create>> Clerc()
+    + initialiser(p : Personnage)
+  }
+
+  class Guerrier {
+    + <<create>> Guerrier()
+    + initialiser(p : Personnage)
+  }
+
+  class Magicien {
+    + <<create>> Magicien()
+    + initialiser(p : Personnage)
+  }
+
+  class Roublard {
+    + <<create>> Roublard()
+    + initialiser(p : Personnage)
+  }
+}
+
+package placable.entites.personnages.races {
+  abstract class Race <<abstract>> {
+    # m_dexterite : Integer
+    # m_vitesse : Integer
+    # m_force : Integer
+    # m_initiative : Integer
+    # m_nomRace : String
+
+    + {abstract} initialiser(p : Personnage)
+    + getNom() : String
+  }
+
+  class Humain {
+    + <<create>> Humain()
+    + initialiser(p : Personnage)
+  }
+
+  class Nain {
+    + <<create>> Nain()
+    + initialiser(p : Personnage)
+  }
+
+  class Elfe {
+    + <<create>> Elfe()
+    + initialiser(p : Personnage)
+  }
+
+  class Halfelin {
+    + <<create>> Halfelin()
+    + initialiser(p : Personnage)
+  }
+}
+
+package placable.entites.personnages {
+  class Personnage {
+    # m_nom : String
+    - m_race : Race
+    - m_classe : Classe
+    - des : Des
+    - m_inventaire : Equipement[*]
+    - m_armeEquipee : Armes[*]
+    - m_armureEquipee : Armures[*]
+
+    + <<create>> Personnage(nom : String, race : Integer, classe : Integer, x : Integer, y : Integer)
+    + attribuerRaceClasse(race : Integer, classe : Integer)
+    + attaquer(cible : Monstre) : Boolean
+    + sEquiperArmure(a : Armures)
+    + sEquiperArme(a : Armes)
+    + ramasserEquipement(e : Equipement, carte : Placable[*][*]) : Boolean
+    + getNom() : String
+    + getArmeEquipee() : Armes
+    + getClasseArmure() : Integer
+    + getRace() : Race
+    + getNomRace() : String
+    + getClasse() : Classe
+    + getNomClasse() : String
+    + getVitesse() : Integer
+    + setVitesse(vitesse : Integer)
+    + ajusterVitesse(valeur : Integer)
+    + ajouterEquipementInventaire(e : Equipement)
+    + afficherInventaire() : String
+    + toString() : String
+  }
+}
+
+' -------------------- RELATIONS --------------------
+
+CaseVide ..|> Placable
+Entite ..|> Placable
+Monstre --|> Entite
+Personnage --|> Entite
+
+Clerc --|> Classe
+Guerrier --|> Classe
+Magicien --|> Classe
+Roublard --|> Classe
+
+Humain --|> Race
+Nain --|> Race
+Elfe --|> Race
+Halfelin --|> Race
+
+MaitreDuJeu .> Donjon : <<use>>
+MaitreDuJeu .> Obstacle : <<use>>
+MaitreDuJeu .> Entite : <<use>>
+MaitreDuJeu .> Equipement : <<use>>
+
+Donjon .> Placable : <<use>>
+Donjon .> CaseVide : <<instantiate>>
+Donjon .> Monstre : <<use>>
+Donjon .> ArrayList : <<use>>
+
+CaseVide .> Des : <<use>>
+Entite .> Donjon : <<use>>
+Entite .> Equipement : <<use>>
+Entite .> Obstacle : <<use>>
+Entite .> ArrayList : <<use>>
+
+Monstre .> Des : <<use>>
+Monstre .> Personnage : <<use>>
+Monstre .> ArrayList : <<use>>
+
+Classe .> Personnage : <<use>>
+Race .> Personnage : <<use>>
+
+Personnage .> Des : <<use>>
+Personnage .> Monstre : <<use>>
+Personnage .> Equipement : <<use>>
+Personnage .> Armes : <<use>>
+Personnage .> Armures : <<use>>
+Personnage .> Classe : <<use>>
+Personnage .> Race : <<use>>
+@enduml

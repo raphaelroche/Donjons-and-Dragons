@@ -45,27 +45,7 @@ public class Personnage extends Entite {
         this.m_vitesse = 3 + des.lancerDes(4,4);
         this.m_initiative = 3 + des.lancerDes(4,4);
     }
-    public Personnage(String nom, int race, int classe, Donjon d) {
-        this.m_nom = nom;
-        des = new Des();
-        setLocation(des.lancerDes(1, d.getHauteur()-1), des.lancerDes(1, d.getLargeur()-1));
-        this.m_inventaire = new ArrayList<Equipement>();
-        this.m_armeEquipee = new Armes[1];
-        this.m_armureEquipee = new Armures[1];
-        if(this.m_nom.length()<3){
-            this.m_nomAffiche = (this.m_nom + "   ").substring(0,3);
-        }
-        else{
-            this.m_nomAffiche = this.m_nom.substring(0,3);
-        }
-
-        this.attribuerRaceClasse(race, classe); //utilise un int pour désigner
-        this.m_force = 3 + des.lancerDes(4,4);
-        this.m_dexterite = 3 + des.lancerDes(4,4);
-        this.m_vitesse = 3 + des.lancerDes(4,4);
-        this.m_initiative = 3 + des.lancerDes(4,4);
-    }
-
+   
 
     public void attribuerRaceClasse(int race, int classe) {
         switch(race) {      //attribue la race
