@@ -73,7 +73,7 @@ package placable {
     + getPositionY() : Integer
     + estCaseVide() : Boolean
   }
-}
+
 
 package placable.entites {
   abstract class Entite <<abstract>> {
@@ -109,7 +109,7 @@ package placable.entites {
     + {static} contientObstacle(liste : Placable[*]) : Boolean
     + {static} contientEquipement(liste : Placable[*]) : Boolean
   }
-}
+
 
 package placable.entites.monstres {
   class Monstre {
@@ -137,7 +137,7 @@ package placable.entites.personnages.classes {
     # m_pv : Integer
     + {abstract} initialiser(p : Personnage)
     + getNom() : String
-  }
+
 
   class Clerc {
     + <<create>> Clerc()
@@ -158,7 +158,8 @@ package placable.entites.personnages.classes {
     + <<create>> Roublard()
     + initialiser(p : Personnage)
   }
-}
+ }
+ }
 
 package placable.entites.personnages.races {
   abstract class Race <<abstract>> {
@@ -170,17 +171,18 @@ package placable.entites.personnages.races {
 
     + {abstract} initialiser(p : Personnage)
     + getNom() : String
-  }
 
-  class Humain {
-    + <<create>> Humain()
-    + initialiser(p : Personnage)
-  }
+
 
   class Nain {
     + <<create>> Nain()
     + initialiser(p : Personnage)
   }
+
+  class Humain {
+      + <<create>> Humain()
+      + initialiser(p : Personnage)
+    }
 
   class Elfe {
     + <<create>> Elfe()
@@ -240,7 +242,7 @@ package placable.equipements {
     + getPositionY() : Integer
     + estEquipement() : Boolean
   }
-}
+
 
 
 
@@ -447,6 +449,7 @@ package placable.equipements.armures {
   
   }
 }
+}
 
 
 package placable.obstacle {
@@ -463,7 +466,6 @@ package placable.obstacle {
     + getPositionY() : Integer
     + estObstacle() : Boolean
   }
-
 }
 
 package utils {
