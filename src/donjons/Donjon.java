@@ -127,13 +127,16 @@ public class Donjon {
             }
             return false;
         }
-        else{
+        else if(p.estObstacle()){
             if(this.m_carte[x][y].getFirst() == null || this.m_carte[x][y].getFirst().estCaseVide()){
                 this.m_carte[x][y].set(0,p);
                 return true;
             }
             return false;
 
+        }
+        else{
+            return false;
         }
     }
 

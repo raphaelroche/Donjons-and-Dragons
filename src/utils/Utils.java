@@ -3,6 +3,7 @@ package utils;
 import des.Des;
 import donjons.Donjon;
 import placable.entites.monstres.Monstre;
+import placable.entites.personnages.Personnage;
 import placable.equipements.Equipement;
 import placable.equipements.armes.*;
 import placable.equipements.armures.CotteDeMailles;
@@ -15,7 +16,7 @@ import java.util.Scanner;
 
 public class Utils {        //vérifie qu'on donne un entier compris entre min et max
                             // sert beaucoup lors des choix
-    private Des des;
+
 
     public int demanderChoix(Scanner scanner, String message, int min, int max) {
         int choix = -1;
@@ -105,6 +106,7 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
     }
 
     public Monstre creerMonstreAleatoire(Donjon d) {
+        Des des = new Des();
         int x = des.lancerDes(1, d.getLargeur()-1);
         int y = des.lancerDes(1, d.getHauteur()-1);
         Monstre m = new Monstre("dragon");
@@ -113,13 +115,14 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
     }
 
     public Equipement creerEquipementAleatoire(Donjon d) {
+        Des des = new Des();
         int x = des.lancerDes(1, d.getLargeur() - 1);
         int y = des.lancerDes(1, d.getHauteur() - 1);
 
         // Choisir un type aléatoire
         int choix = des.lancerDes(1, 11);
 
-        Equipement e;
+        Equipement e = null;
          switch (choix) {
             case 1 -> e = new Arbalete(x, y);
             case 2 -> e = new Arc(x, y);
@@ -137,11 +140,13 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
          return e;
     }
     public Obstacle creerObstacleAleatoire(Donjon d){
+        Des des = new Des();
         int x = des.lancerDes(1, d.getLargeur() - 1);
         int y = des.lancerDes(1, d.getHauteur() - 1);
         return new Obstacle(x, y);
     }
-    public Personnage creerPersonnageAleatoire(String nom, int race, int classe,Donjon d){
+    public Personnage creerPersonnageAleatoire(String nom, int race, int classe, Donjon d){
+        Des des = new Des();
         int x = des.lancerDes(1, d.getLargeur() - 1);
         int y = des.lancerDes(1, d.getHauteur() - 1);
         return new Personnage(nom, race, classe, x, y);

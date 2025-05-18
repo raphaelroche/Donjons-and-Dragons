@@ -190,7 +190,7 @@ public abstract class Entite implements Placable {
 
     public static boolean contientObstacle(ArrayList<Placable> liste) {
         for (Placable p : liste) {
-            if (p.estObstacle) {
+            if (p.estObstacle()) {
                 return true;
             }
         }
@@ -198,7 +198,7 @@ public abstract class Entite implements Placable {
     }
     public static boolean contientEquipement(ArrayList<Placable> liste) {
         for (Placable p : liste) {
-            if (p.estEquipement) {
+            if (p.estEquipement()) {
                 return true;
             }
         }
