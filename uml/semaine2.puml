@@ -1,5 +1,4 @@
 @startuml
-scale 1
 skinparam classAttributeIconSize 0
 skinparam classFontStyle Bold
 skinparam defaultFontSize 15
