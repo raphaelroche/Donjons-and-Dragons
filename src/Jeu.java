@@ -144,6 +144,7 @@ public class Jeu {
         boolean peutSePlacer = false;
         if (position[0] == -1 || position[1] == -1) {
             Personnage p = m_utils.creerPersonnageAleatoire(nom, race, classe, m_d1);
+            peutSePlacer = mdj.positionnerEntite(this.m_d1, p);
             while (!peutSePlacer) {
                 p.setLocation(m_des.lancerDes(1, this.m_d1.getHauteur() - 1),
                         (m_des.lancerDes(1, this.m_d1.getLargeur() - 1)));
@@ -172,19 +173,37 @@ public class Jeu {
                 1, this.m_d1.getHauteur(),
                 scanner);
         if (position[0] == -1 || position[1] == -1) {
+            Obstacle o = this.m_utils.creerObstacleAleatoire(this.m_d1);
+            boolean peutSePlacer = mdj.positionnerObstacle(this.m_d1, o);
+            while(!peutSePlacer) {
+                o.setLocation(m_des.lancerDes(1, this.m_d1.getHauteur() - 1),
+                        (m_des.lancerDes(1, this.m_d1.getLargeur() - 1)));
+
+                peutSePlacer = mdj.positionnerObstacle(this.m_d1, o);
+            }
             System.out.println("Obstacle aléatoirement positionné\n");
-            mdj.positionnerObstacle(this.m_d1, this.m_utils.creerObstacleAleatoire(this.m_d1));
         }
         else {
-            mdj.positionnerObstacle(this.m_d1, new Obstacle(position[0], position[1]));
-            System.out.println("Obstacle positionné en " + alphabet[position[1]-1] + String.valueOf(position[0]));
+            Obstacle o = new Obstacle(position[0], position[1]);
+            boolean peutSePlacer = mdj.positionnerObstacle(m_d1, o);
+            while(!peutSePlacer) {
+                position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position de l'obstacle",
+                        'A', this.m_d1.getLettreMax(),
+                        1, this.m_d1.getHauteur(),
+                        scanner);
+                o.setLocation(position[0]-1,position[1]-1);
+                peutSePlacer = mdj.positionnerObstacle(m_d1, o);
+            }
+                System.out.println("Obstacle positionné en " + alphabet[position[1]-1] + String.valueOf(position[0]));
+
+
         }
     }
 
     public void initEquipementAleatoire(int i) {
 
         Equipement e = this.m_utils.creerEquipementAleatoire(this.m_d1);
-        boolean peutSePlacer = false;
+        boolean peutSePlacer = mdj.positionnerEquipement(this.m_d1, e);
         while(!peutSePlacer){
             e.setLocation(m_des.lancerDes(1, this.m_d1.getHauteur() - 1),
                     (m_des.lancerDes(1, this.m_d1.getLargeur() - 1)));
@@ -201,6 +220,7 @@ public class Jeu {
             int typeArmure = this.m_utils.demanderChoix(scanner,
                     "Choisissez un type d'armure :\n1 - Cotte de mailles\n2 - Demi-plaque\n3 - Ecailles\n4 - Harnois",
                     1, 4);
+            scanner.nextLine();
             switch (typeArmure) {
                 case 1 -> e = new CotteDeMailles();
                 case 2 -> e =  new DemiPlatte();
@@ -211,6 +231,7 @@ public class Jeu {
             int typeArme = this.m_utils.demanderChoix(scanner,
                     "Choisissez un type d'arme : \n1 - Arbalète\n2 - Arc\n3 - Baton\n4 - Epee longue\n5 - Fronde\n6 - Masse\n7 - Rapière",
                     1, 7);
+            scanner.nextLine();
             switch (typeArme) {
                 case 1 -> e = new Arbalete();
                 case 2 -> e = new Arc();
@@ -220,7 +241,7 @@ public class Jeu {
                 case 6 -> e = new Masse();
                 case 7 -> e = new Rapiere();
             }
-            }
+        }
         int[] position = this.m_utils.demanderPositionCarte("Choisissez la position de l'équipement " + String.valueOf(i+1), 'A', this.m_d1.getLettreMax(),
                 1, this.m_d1.getHauteur(),
                 scanner);
