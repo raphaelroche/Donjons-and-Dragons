@@ -72,9 +72,7 @@ package placable {
     + getPositionY() : Integer
     + estCaseVide() : Boolean
   }
-
-
-package placable.entites {
+  package placable.entites {
   abstract class Entite <<abstract>> {
     # m_pv : Integer
     # m_pvMax : Integer
@@ -109,8 +107,7 @@ package placable.entites {
     + {static} contientEquipement(liste : Placable[*]) : Boolean
   }
 
-
-package placable.entites.monstres {
+  package placable.entites.monstres {
   class Monstre {
     - m_espece : String
     - m_numero : Integer
@@ -129,8 +126,37 @@ package placable.entites.monstres {
     + getEspece() : String
   }
 }
+package placable.entites.personnages {
+  class Personnage {
+    # m_nom : String
+    - m_race : Race
+    - m_classe : Classe
+    - des : Des
+    - m_inventaire : Equipement[*]
+    - m_armeEquipee : Armes[*]
+    - m_armureEquipee : Armures[*]
 
-package placable.entites.personnages.classes {
+    + <<create>> Personnage(nom : String, race : Integer, classe : Integer, x : Integer, y : Integer)
+    + attribuerRaceClasse(race : Integer, classe : Integer)
+    + attaquer(cible : Monstre) : Boolean
+    + sEquiperArmure(a : Armures)
+    + sEquiperArme(a : Armes)
+    + ramasserEquipement(e : Equipement, carte : Placable[*][*]) : Boolean
+    + getNom() : String
+    + getArmeEquipee() : Armes
+    + getClasseArmure() : Integer
+    + getRace() : Race
+    + getNomRace() : String
+    + getClasse() : Classe
+    + getNomClasse() : String
+    + getVitesse() : Integer
+    + setVitesse(vitesse : Integer)
+    + ajusterVitesse(valeur : Integer)
+    + ajouterEquipementInventaire(e : Equipement)
+    + afficherInventaire() : String
+    + toString() : String
+  }
+  package placable.entites.personnages.classes {
   abstract class Classe <<abstract>> {
     # m_nomClasse : String
     # m_pv : Integer
@@ -159,8 +185,7 @@ package placable.entites.personnages.classes {
   }
  }
  }
-
-package placable.entites.personnages.races {
+ package placable.entites.personnages.races {
   abstract class Race <<abstract>> {
     # m_dexterite : Integer
     # m_vitesse : Integer
@@ -193,39 +218,9 @@ package placable.entites.personnages.races {
     + initialiser(p : Personnage)
   }
 }
-
-package placable.entites.personnages {
-  class Personnage {
-    # m_nom : String
-    - m_race : Race
-    - m_classe : Classe
-    - des : Des
-    - m_inventaire : Equipement[*]
-    - m_armeEquipee : Armes[*]
-    - m_armureEquipee : Armures[*]
-
-    + <<create>> Personnage(nom : String, race : Integer, classe : Integer, x : Integer, y : Integer)
-    + attribuerRaceClasse(race : Integer, classe : Integer)
-    + attaquer(cible : Monstre) : Boolean
-    + sEquiperArmure(a : Armures)
-    + sEquiperArme(a : Armes)
-    + ramasserEquipement(e : Equipement, carte : Placable[*][*]) : Boolean
-    + getNom() : String
-    + getArmeEquipee() : Armes
-    + getClasseArmure() : Integer
-    + getRace() : Race
-    + getNomRace() : String
-    + getClasse() : Classe
-    + getNomClasse() : String
-    + getVitesse() : Integer
-    + setVitesse(vitesse : Integer)
-    + ajusterVitesse(valeur : Integer)
-    + ajouterEquipementInventaire(e : Equipement)
-    + afficherInventaire() : String
-    + toString() : String
-  }
 }
-
+}
+}
 package placable.equipements {
   abstract class Equipement <<abstract>> {
     # m_nom : String
@@ -243,59 +238,56 @@ package placable.equipements {
   }
 
 
-
-
 package placable.equipements.armes {
   abstract class CAC <<abstract>> {
     + <<create>> CAC()
     + <<create>> CAC(x : Integer, y : Integer)
   }
-}
 
 
 
-package placable.equipements.armes {
+
+
   abstract class Distance <<abstract>> {
     + <<create>> Distance(portee : Integer)
     + <<create>> Distance(portee : Integer, x : Integer, y : Integer)
   }
-}
 
 
 
-package placable.equipements.armes {
+
+
   abstract class Guerre <<abstract>> {
     + <<create>> Guerre()
     + <<create>> Guerre(x : Integer, y : Integer)
     + determinerDegat()
   }
 
-}
 
 
 
-package placable.equipements.armes {
+
+
   abstract class Courantes <<abstract>> {
     + <<create>> Courantes()
     + <<create>> Courantes(x : Integer, y : Integer)
     + determinerDegat()
   }
 
-}
 
 
 
-package placable.equipements.armes {
+
   class Arbalete {
     + <<create>> Arbalete()
     + <<create>> Arbalete(x : Integer, y : Integer)
     + determinerDegat()
-  }
+  
 }
 
 
 
-package placable.equipements.armes {
+
   class Arc {
     + <<create>> Arc()
     + <<create>> Arc(x : Integer, y : Integer)
@@ -303,10 +295,10 @@ package placable.equipements.armes {
   }
 
 
-}
 
 
-package placable.equipements.armes {
+
+
   abstract class Armes <<abstract>> {
     # m_degats : Integer
     # m_portee : Integer
@@ -322,11 +314,11 @@ package placable.equipements.armes {
   }
 
   
-}
 
 
 
-package placable.equipements.armes {
+
+
   class Baton {
     + <<create>> Baton()
     + <<create>> Baton(x : Integer, y : Integer)
@@ -334,49 +326,44 @@ package placable.equipements.armes {
 
   
 
-}
 
 
 
-package placable.equipements.armes {
+
+
   class EpeeLongue {
     + <<create>> EpeeLongue()
     + <<create>> EpeeLongue(x : Integer, y : Integer)
   }
 
 
-}
 
 
 
-package placable.equipements.armes {
+
   class Fronde {
     + <<create>> Fronde()
     + <<create>> Fronde(x : Integer, y : Integer)
     + determinerDegat()
   }
 
-}
 
-package placable.equipements.armes {
+
+
   class Masse {
     + <<create>> Masse()
     + <<create>> Masse(x : Integer, y : Integer)
   }
 
-}
 
 
-package placable.equipements.armes {
+
+
   class Rapiere {
     + <<create>> Rapiere()
     + <<create>> Rapiere(x : Integer, y : Integer)
   }
-
-
 }
-
-
 package placable.equipements.armures {
   abstract class Armures <<abstract>> {
     # m_classe : Integer
@@ -389,68 +376,62 @@ package placable.equipements.armures {
     + getChangeStat() : Boolean
   }
 
- 
-}
 
 
-package placable.equipements.armures {
+
   abstract class Lourdes <<abstract>> {
     + <<create>> Lourdes(classe : Integer)
     + <<create>> Lourdes(classe : Integer, x : Integer, y : Integer)
   }
 
   
-}
 
 
-package placable.equipements.armures {
+
   abstract class Legeres <<abstract>> {
     + <<create>> Legeres(classe : Integer)
     + <<create>> Legeres(classe : Integer, x : Integer, y : Integer)
   }
 
  
-}
 
 
 
-package placable.equipements.armures {
+
+
   class CotteDeMailles {
     + <<create>> CotteDeMailles()
     + <<create>> CotteDeMailles(x : Integer, y : Integer)
   
   }
-}
 
 
-package placable.equipements.armures {
+
+
   class DemiPlatte {
     + <<create>> DemiPlatte()
     + <<create>> DemiPlatte(x : Integer, y : Integer)
    
   }
-}
 
 
-package placable.equipements.armures {
+
+
   class Ecailles {
     + <<create>> Ecailles()
     + <<create>> Ecailles(x : Integer, y : Integer)
    
   }
-}
 
 
-package placable.equipements.armures {
+
+
   class Harnois {
     + <<create>> Harnois()
     + <<create>> Harnois(x : Integer, y : Integer)
-  
+  }
   }
 }
-}
-
-
 package placable.obstacle {
   class Obstacle {
     - m_positionX : Integer
@@ -466,6 +447,11 @@ package placable.obstacle {
     + estObstacle() : Boolean
   }
 }
+}
+
+
+
+
 
 package utils {
   class Utils {
