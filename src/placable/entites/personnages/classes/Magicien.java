@@ -12,4 +12,9 @@ public class Magicien extends Classe {
     public void initialiser(Personnage p){
         p.setPv(this.m_pv);
     }
+
+    @Override
+    public boolean estMagicien(){
+        return true;
+    }
 }

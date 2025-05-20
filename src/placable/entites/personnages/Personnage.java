@@ -12,7 +12,12 @@ import placable.equipements.armures.Ecailles;
 import placable.entites.personnages.classes.*;
 import placable.entites.personnages.races.*;
 import des.Des;
+import sorts.ArmeMagique;
+import sorts.BoogieWoogie;
+import sorts.Guerison;
+import sorts.Sort;
 
+import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 
 public class Personnage extends Entite {
@@ -22,13 +27,15 @@ public class Personnage extends Entite {
     private Des des;
 
     private ArrayList<Equipement> m_inventaire;
+    private ArrayList<Sort> m_sorts;
     private Armes[] m_armeEquipee;
     private Armures[] m_armureEquipee;
 
     public Personnage(String nom, int race, int classe, int x, int y) {
         this.m_nom = nom;
         setLocation(x-1, y-1);
-        this.m_inventaire = new ArrayList<Equipement>();
+        this.m_inventaire = new ArrayList<>();
+        this.m_sorts = new ArrayList<>();
         this.m_armeEquipee = new Armes[1];
         this.m_armureEquipee = new Armures[1];
         if(this.m_nom.length()<3){
@@ -75,6 +82,7 @@ public class Personnage extends Entite {
                 this.ajouterEquipementInventaire(new Masse());
                 this.ajouterEquipementInventaire(new Ecailles());
                 this.ajouterEquipementInventaire(new Arbalete());
+                this.m_sorts.add(new Guerison());
                 break;
             case 2:
                 this.m_classe = new Guerrier();
@@ -88,6 +96,9 @@ public class Personnage extends Entite {
                 this.m_classe.initialiser(this);
                 this.ajouterEquipementInventaire( new Baton());
                 this.ajouterEquipementInventaire( new Fronde());
+                this.m_sorts.add(new Guerison());
+                this.m_sorts.add(new BoogieWoogie());
+                this.m_sorts.add(new ArmeMagique());
                 break;
             case 4:
                 this.m_classe = new Roublard();
@@ -100,7 +111,11 @@ public class Personnage extends Entite {
         }
     }
 
+    public void Guerir(Personnage p){
+        if(this.m_classe.estClerc()){
 
+        }
+    }
 
 
     public boolean attaquer(Monstre cible){

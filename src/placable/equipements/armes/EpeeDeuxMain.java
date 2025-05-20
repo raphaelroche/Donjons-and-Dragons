@@ -11,4 +11,9 @@ public class EpeeDeuxMain extends Guerre{
         this.m_nom = "épee à 2 mains";
 
     }
+    @Override
+    public void determinerDegat(){
+        this.m_degats = des.lancerDes(2, 6);
+    }
+
 }

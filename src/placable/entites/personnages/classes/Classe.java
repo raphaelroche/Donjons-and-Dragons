@@ -9,4 +9,11 @@ public abstract class Classe {
     public String getNom() {
         return m_nomClasse;
     }
+
+    public boolean estMagicien(){
+        return false;
+    }
+    public boolean estClerc(){
+        return false;
+    }
 }

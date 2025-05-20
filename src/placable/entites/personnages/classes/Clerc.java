@@ -14,4 +14,9 @@ public class Clerc extends Classe{
     public void initialiser(Personnage p){
         p.setPv(this.m_pv);
     }
+
+    @Override
+    public boolean estClerc(){
+        return true;
+    }
 }
