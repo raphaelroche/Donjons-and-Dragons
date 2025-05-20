@@ -11,10 +11,6 @@ public class MaitreDuJeu {
         String m_nom = "Maitre Du Jeu";
     }
 
-    public void creerDonjon(Donjon d, int longueur, int largeur){
-        d = new Donjon(largeur, longueur);
-    }
-
     public boolean positionnerObstacle(Donjon d, Obstacle o){return d.positionnerElementCarte(o);}
 
     public boolean positionnerEntite(Donjon d, Entite e){return d.positionnerElementCarte(e);}

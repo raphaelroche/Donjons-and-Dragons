@@ -205,6 +205,10 @@ public abstract class Entite implements Placable {
         return false;
     }
 
+    public int getPvMax() {
+        return this.m_pvMax;
+    }
+
     @Override
     public boolean estEntite(){
         return true;
