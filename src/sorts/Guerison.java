@@ -12,7 +12,7 @@ public class Guerison extends Sort {
     }
 
     @Override
-    public Object lancerSort(ContextSort c){
+    public boolean lancerSort(ContextSort c){
         this.m_efficacite=des.lancerDes(1,10);
         c.setPV(this.m_efficacite);
         return true;

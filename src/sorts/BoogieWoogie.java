@@ -6,7 +6,7 @@ public class BoogieWoogie extends Sort {
 
 
     @Override
-    public Object lancerSort(ContextSort c){
+    public boolean lancerSort(ContextSort c){
         int x1 = c.getXcible1();
         int y1 = c.getYcible1();
         int x2 = c.getXcible2();
