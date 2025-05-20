@@ -16,5 +16,8 @@ public abstract class Guerre extends CAC{
     @Override
     public void determinerDegat(){
         this.m_degats = des.lancerDes(1, 8);
+        if(this.estEnchanter){
+            this.m_degats+=1;
+        }
     }
 }

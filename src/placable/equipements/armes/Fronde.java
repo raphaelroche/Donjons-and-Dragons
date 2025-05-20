@@ -21,5 +21,8 @@ public class Fronde extends Distance{
     @Override
     public void determinerDegat(){
         this.m_degats = des.lancerDes(1, 4);
+        if(this.estEnchanter){
+            this.m_degats+=1;
+        }
     }
 }

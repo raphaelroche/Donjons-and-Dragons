@@ -8,16 +8,19 @@ public abstract class Armes extends Equipement {
     protected int m_portee;
     protected Des des;
     protected boolean m_changeStat;
+    protected boolean estEnchanter;
 
     public Armes(int portee) {
         this.m_portee = portee;
         this.des = new Des();
+        this.estEnchanter = false;
     }
 
     public Armes(int portee, int x, int y){
         this.m_portee = portee;
         this.des = new Des();
         this.setLocation(x-1,y-1);
+        this.estEnchanter = false;
     }
 
     public int getPortee() {
@@ -31,5 +34,9 @@ public abstract class Armes extends Equipement {
     }
     public boolean getChangeStat() {
         return this.m_changeStat;
+    }
+
+    public void setEnchantement(boolean b) {
+        this.estEnchanter = b;
     }
 }

@@ -2,7 +2,8 @@ package sorts;
 
 public class ArmeMagique extends Sort {
     @Override
-    public void lancerSort(ContextSort c){
-
+    public Object lancerSort(ContextSort c){
+        c.setArme(true);
+        return true;
     }
 }

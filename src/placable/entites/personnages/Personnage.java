@@ -12,10 +12,7 @@ import placable.equipements.armures.Ecailles;
 import placable.entites.personnages.classes.*;
 import placable.entites.personnages.races.*;
 import des.Des;
-import sorts.ArmeMagique;
-import sorts.BoogieWoogie;
-import sorts.Guerison;
-import sorts.Sort;
+import sorts.*;
 
 import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
@@ -111,10 +108,34 @@ public class Personnage extends Entite {
         }
     }
 
-    public void Guerir(Personnage p){
-        if(this.m_classe.estClerc()){
+    public boolean Guerir(Personnage p){
+        boolean heal = false;
+
+        if(this.m_classe.estClerc() || this.m_classe.estMagicien()){
+            ContextSort cible = new ContextSort(p);
+             heal = (boolean) this.m_sorts.getFirst().lancerSort(cible);
 
         }
+        return heal;
+    }
+
+    public boolean echangerPosition(Entite e1, Entite e2){
+        boolean echange = false;
+        if(this.m_classe.estMagicien()){
+            ContextSort cible = new ContextSort(e1,e2);
+                echange = (boolean) this.m_sorts.get(1).lancerSort(cible);
+        }
+        return echange;
+    }
+
+    public boolean enchanterArme(Armes arme){
+        boolean enchanter = false;
+        if(this.m_classe.estMagicien()){
+            ContextSort armeAEnchanter = new ContextSort(arme);
+            enchanter = (boolean) this.m_sorts.get(2).lancerSort(armeAEnchanter);
+        }
+        return enchanter;
+
     }
 
 
