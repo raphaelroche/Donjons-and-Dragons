@@ -157,6 +157,9 @@ public abstract class Entite implements Placable {
         if (this.m_pv < 0) {
             this.m_pv = 0;
         }
+        if(this.m_pv>this.m_pvMax){
+            this.m_pv = this.m_pvMax;
+        }
     }
 
 
