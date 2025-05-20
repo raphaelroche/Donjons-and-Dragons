@@ -120,7 +120,7 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
         int y = des.lancerDes(1, d.getHauteur() - 1);
 
         // Choisir un type aléatoire
-        int choix = des.lancerDes(1, 11);
+        int choix = des.lancerDes(1, 12);
 
         Equipement e = null;
          switch (choix) {
@@ -135,6 +135,7 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
             case 9 -> e = new DemiPlatte(x, y);
             case 10 -> e = new Ecailles(x, y);
             case 11 -> e = new Harnois(x, y);
+            case 12 -> e = new EpeeDeuxMain(x, y);
 
         };
          return e;
