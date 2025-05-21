@@ -268,7 +268,7 @@ public class Personnage extends Entite {
 
         StringBuilder contenu = new StringBuilder();
         for (int i = 0; i < this.m_inventaire.size(); i++) {
-            contenu.append((i + 1)).append(" - ").append(this.m_inventaire.get(i).getNomEquipement()).append("\n");
+            contenu.append("  [").append(i + 1).append("] ").append(this.m_inventaire.get(i).getNomEquipement());
         }
         return contenu.toString();
     }
@@ -278,13 +278,15 @@ public class Personnage extends Entite {
     @Override
     public String toString() {
         return "Nom : " + this.m_nom +
-                ", Race : " + (this.m_race != null ? this.m_race.getClass().getSimpleName() : "Aucune") +
-                ", Classe : " + (this.m_classe != null ? this.m_classe.getClass().getSimpleName() : "Aucune") +
-                ", PV : " + this.m_pv +
-                ", Force : " + this.m_force +
-                ", Dextérité : " + this.m_dexterite +
-                ", Vitesse : " + this.m_vitesse +
-                ", Initiative : " + this.m_initiative;
+                ", \n\tRace : " + (this.m_race).getNom() +
+                ", \n\tClasse : " + (this.m_classe).getNom() +
+                ", \n\tVie : " + this.m_pv + "/" + this.m_pvMax +
+                ", \n\tInventaire :" + this.afficherInventaire() +
+                ", \n\tForce : " + this.m_force +
+                ", \n\tDextérité : " + this.m_dexterite +
+                ", \n\tVitesse : " + this.m_vitesse +
+                ", \n\tInitiative : " + this.m_initiative +
+                "\n";
     }
 
 }

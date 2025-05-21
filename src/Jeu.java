@@ -123,12 +123,12 @@ public class Jeu {
     }
 
     public void deroulePartie(Donjon d) {
+        for (Personnage p : this.m_joueursEnVie) {
+            System.out.println(p);
+
+        }
         while(this.m_joueursEnVie.size() == this.m_nbJoueurs && !this.m_monstresEnVie.isEmpty()) {
-            for (Personnage p : this.m_joueursEnVie) {
-                //lister caracteristiques
-                //lister inventaire
-                //demander action
-            }
+
         }
     }
 
