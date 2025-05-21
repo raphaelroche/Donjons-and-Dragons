@@ -49,9 +49,9 @@ public class Monstre extends Entite {
         this.m_classeArmure = classeArmure;
         this.m_initiative = initiative;
         monstres.add(this);
-        setLocation(x, y);
+        setLocation(x-1, y-1);
 
-        this.m_nomAffiche = "X";
+        this.m_nomAffiche = " X ";
         if(portee > 1){
             this.m_force = 0;
             this.m_dexterite = dexterite;

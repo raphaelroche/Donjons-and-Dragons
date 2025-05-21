@@ -24,6 +24,7 @@ public class Jeu {
     private String[] alphabet;
     private int m_nbObstacle;
     private int m_nbEquipements;
+    private int m_nb_monstres;
 
     public Jeu() {
         scanner = new Scanner(System.in);
@@ -108,6 +109,17 @@ public class Jeu {
                 initEquipementAleatoire(i, d);
             }
         }
+        this.m_nb_monstres = this.m_utils.demanderChoixOuParDefaut("Indiquez le nombre de monstres",
+                1, 5, 2,
+                this.scanner);
+
+        System.out.println("Vous avez choisi de placer " + this.m_nb_monstres + " monstres");
+
+
+        for (i = 0; i < this.m_nb_monstres; i++) {
+            creerMonstres(i, d);
+        }
+
         return d;
     }
 
@@ -238,6 +250,143 @@ public class Jeu {
         System.out.println("Equipement aléatoirement positionné\n");
 
     }
+    public void creerMonstres(int i, Donjon d){
+        int[] position = this.m_utils.demanderPositionCarte("Choisissez la positition du monstre (ou faite entrer pour choisir toute les caracteristique par defaut !" + String.valueOf(i+1),
+                'A', d.getLettreMax(),
+                1, d.getHauteur(),
+                scanner);
+        if (position[0] == -1 || position[1] == -1) {
+            Monstre m = this.m_utils.creerMonstreAleatoire(d);
+            boolean peutSePlacer = mdj.positionnerEntite(d,m);
+            while(!peutSePlacer) {
+                m.setLocation(m_des.lancerDes(1, d.getHauteur() - 1),
+                        (m_des.lancerDes(1, d.getLargeur() - 1)));
+
+                peutSePlacer = mdj.positionnerEntite(d, m);
+            }
+            System.out.println("Monstre aléatoirement positionné\n");
+            m_monstresEnVie.add(m);
+
+        }
+        else {
+            String espece = "";
+            while (espece.isBlank() || !espece.matches("[a-zA-Z]+")) {
+                System.out.println("Donnez l'espece du monstre : ");
+                espece = scanner.nextLine();
+            }
+            int portee = 0;
+            while (portee <= 0) {
+                System.out.println("Donnez sa portée : ");
+                if (scanner.hasNextInt()) {
+                    portee = scanner.nextInt();
+                    scanner.nextLine(); // consomme le \n
+                    if (portee <= 0) {
+                        System.out.println("La portée doit être un entier strictement positif !");
+                    }
+                } else {
+                    System.out.println("Entrée invalide, entier requis !");
+                    scanner.nextLine(); // consomme l'entrée invalide
+                }
+            }
+
+
+            int pv = 0;
+            while (pv <= 0) {
+                System.out.println("Donnez son nombre de pv max : ");
+                if(scanner.hasNextInt()) {
+                    pv = scanner.nextInt();
+                    scanner.nextLine(); // consomme le \n
+                    if (pv <= 0) {
+                        System.out.println("Le nombre de PV doit être > 0");
+                    }
+                } else {
+                    System.out.println("Entrée invalide, entier requis !");
+                    scanner.nextLine(); // consomme l'entrée invalide
+                }
+            }
+            String attaque = "";
+            while (attaque.isBlank()|| !attaque.matches("[a-zA-Z]+")) {
+                System.out.println("Donnez le nom de l'attaque du monstre : ");
+                attaque = scanner.nextLine();
+
+            }
+            int armure = 0;
+            while (armure <= 0) {
+                System.out.println("Donnez sa classe d'armure : ");
+                if (scanner.hasNextInt()) {
+                    armure = scanner.nextInt();
+                    scanner.nextLine(); // consomme le \n
+                    if (armure <= 0) {
+                        System.out.println("L'armure doit être un entier strictement positif.");
+                    }
+                } else {
+                    System.out.println("Entrée invalide, entier requis !");
+                    scanner.nextLine(); // consomme l'entrée invalide
+                }
+            }
+
+            int force = 0;
+            while (force <= 0) {
+                System.out.println("Donnez sa force : ");
+                if (scanner.hasNextInt()) {
+                    force = scanner.nextInt();
+                    scanner.nextLine(); // consomme le \n
+                    if (force <= 0) {
+                        System.out.println("La force doit être un entier strictement positif !");
+                    }
+                } else {
+                    System.out.println("Entrée invalide, entier requis !");
+                    scanner.nextLine(); // consomme l'entrée invalide
+                }
+            }
+
+            int dexterite = 0;
+            while (dexterite <= 0) {
+                System.out.println("Donnez sa dexterite : ");
+                if (scanner.hasNextInt()) {
+                    dexterite = scanner.nextInt();
+                    scanner.nextLine();
+                    if (dexterite <= 0) {
+                        System.out.println("La dextérité doit être un entier strictement positif !");
+                    }
+                } else {
+                    System.out.println("Entrée invalide, entier requis !");
+                    scanner.nextLine();
+                }
+            }
+
+            int initiative = 0;
+            while (initiative <= 0) {
+                System.out.println("Donnez son initiative : ");
+                if (scanner.hasNextInt()) {
+                    initiative = scanner.nextInt();
+                    scanner.nextLine();
+                    if (initiative <= 0) {
+                        System.out.println("L'initiative doit être un entier strictement positif !");
+                    }
+                } else {
+                    System.out.println("Entrée invalide, entier requis !");
+                    scanner.nextLine();
+                }
+            }
+
+
+            Monstre m  = new Monstre(espece, portee, pv, attaque, armure, force, dexterite, initiative, position[0], position[1]);
+            boolean peutSePlacer = mdj.positionnerEntite(d, m);
+            while(!peutSePlacer) {
+                position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du Monstre",
+                        'A', d.getLettreMax(),
+                        1, d.getHauteur(),
+                        scanner);
+                m.setLocation(position[0]-1,position[1]-1);
+                peutSePlacer = mdj.positionnerEntite(d, m);
+            }
+            System.out.println("Monstre positionné en " + alphabet[position[1]-1] + String.valueOf(position[0]));
+            m_monstresEnVie.add(m);
+
+        }
+
+    }
 
     public void creerEquipement(int type, int i, Donjon d) {
         Equipement e = null;
@@ -303,4 +452,6 @@ public class Jeu {
         System.out.println();
 
     }
+
+
 }
