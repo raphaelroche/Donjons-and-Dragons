@@ -25,16 +25,16 @@ public class Personnage extends Entite {
 
     private ArrayList<Equipement> m_inventaire;
     private ArrayList<Sort> m_sorts;
-    private Armes[] m_armeEquipee;
-    private Armures[] m_armureEquipee;
+    private Armes m_armeEquipee;
+    private Armures m_armureEquipee;
 
     public Personnage(String nom, int race, int classe, int x, int y) {
         this.m_nom = nom;
         setLocation(x-1, y-1);
         this.m_inventaire = new ArrayList<>();
         this.m_sorts = new ArrayList<>();
-        this.m_armeEquipee = new Armes[1];
-        this.m_armureEquipee = new Armures[1];
+        this.m_armeEquipee =null;
+        this.m_armureEquipee =null;
         if(this.m_nom.length()<3){
             this.m_nomAffiche = (this.m_nom + "   ").substring(0,3);
         }
@@ -149,17 +149,17 @@ public class Personnage extends Entite {
         double distanceJoueurCible = Math.sqrt(dX * dX + dY * dY);
 
 
-        if(this.m_armeEquipee[0].getPortee() >= distanceJoueurCible){
+        if(this.m_armeEquipee.getPortee() >= distanceJoueurCible){
             int degat = des.lancerDes(1, 20);
-            if(this.m_armeEquipee[0].getPortee() == 1){
+            if(this.m_armeEquipee.getPortee() == 1){
                 degat += this.m_force;
             }
             else{
                 degat += this.m_dexterite;
             }
             if(degat > cible.getclasseArmure()){
-                this.m_armeEquipee[0].determinerDegat();
-                cible.ajusterPv(-(this.m_armeEquipee[0].getDegats()));
+                this.m_armeEquipee.determinerDegat();
+                cible.ajusterPv(-(this.m_armeEquipee.getDegats()));
                 return true;
             }
         }
@@ -168,27 +168,26 @@ public class Personnage extends Entite {
     }
 
     public void sEquiperArmure(Armures a){
-        if(this.m_armureEquipee[0] != null){
-            this.m_inventaire.add(this.m_armureEquipee[0]);
-            this.m_armureEquipee[0] = null;
+        if(this.m_armureEquipee != null){
+            this.m_inventaire.add(this.m_armureEquipee);
+            this.m_armureEquipee = null;
         }
-        this.m_armureEquipee[0] = a;
-        this.m_inventaire.remove(this.m_armureEquipee[0]);
+        this.m_armureEquipee= a;
+        this.m_inventaire.remove(this.m_armureEquipee);
 
-        if(m_armureEquipee[0].getChangeStat()){
+        if(m_armureEquipee.getChangeStat()){
             this.m_vitesse -= 4;
         }
     }
     public void sEquiperArme(Armes a){
 
-        if(this.m_armeEquipee[0] != null){
-            this.m_inventaire.add(this.m_armeEquipee[0]);
-            this.m_armeEquipee[0] = null;
+        if(this.m_armeEquipee != null){
+            this.m_inventaire.add(this.m_armeEquipee);
         }
-        this.m_armeEquipee[0] = a;
-        this.m_inventaire.remove(this.m_armeEquipee[0]);
+        this.m_armeEquipee= a;
+        this.m_inventaire.remove(this.m_armeEquipee);
 
-        if(m_armeEquipee[0].getChangeStat()){
+        if(m_armeEquipee.getChangeStat()){
             this.m_vitesse -= 2;
             this.m_force += 4;
         }
@@ -216,11 +215,11 @@ public class Personnage extends Entite {
     }
 
     public Armes getArmeEquipee(){
-        return m_armeEquipee[0];
+        return m_armeEquipee;
     }
 
     public int getClasseArmure(){
-        return this.m_armureEquipee[0].getClasseArmure();
+        return this.m_armureEquipee.getClasseArmure();
     }
 
     public Race getRace() {

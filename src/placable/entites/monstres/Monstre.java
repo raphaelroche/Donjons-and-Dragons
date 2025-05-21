@@ -26,8 +26,15 @@ public class Monstre extends Entite {
 
         this.m_espece = espece;
         monstres.add(this);
-        this.m_numero = monstres.indexOf(this)+1;
-        this.m_nomAffiche = " D" + this.m_numero;
+        if(monstres.size() > 1) {
+            this.m_numero = monstres.indexOf(this)+1;
+            this.m_nomAffiche = " X" + this.m_numero;
+        }
+        else{
+            this.m_nomAffiche = " X ";
+        }
+
+
 
 
     }
@@ -51,7 +58,13 @@ public class Monstre extends Entite {
         monstres.add(this);
         setLocation(x-1, y-1);
 
-        this.m_nomAffiche = " X ";
+        if(monstres.size() > 1) {
+            this.m_numero = monstres.indexOf(this)+1;
+            this.m_nomAffiche = " X" + this.m_numero;
+        }
+        else{
+            this.m_nomAffiche = " X ";
+        }
         if(portee > 1){
             this.m_force = 0;
             this.m_dexterite = dexterite;
