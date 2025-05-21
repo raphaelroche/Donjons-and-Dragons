@@ -18,7 +18,6 @@ public class Jeu {
     private Utils m_utils;
     private int m_nbJoueurs;
     private Scanner scanner;
-    private Donjon m_d1;
     private MaitreDuJeu mdj;
     private Des m_des;
     private String[] alphabet;
@@ -418,7 +417,7 @@ public class Jeu {
                 case 8 -> e = new EpeeDeuxMain();
             }
         }
-        int[] position = this.m_utils.demanderPositionCarte("Choisissez la position de l'équipement " + String.valueOf(i+1), 'A', this.m_d1.getLettreMax(),
+        int[] position = this.m_utils.demanderPositionCarte("Choisissez la position de l'équipement " + String.valueOf(i+1), 'A', d.getLettreMax(),
                 1, d.getHauteur(),
                 scanner);
         boolean peutSePlacer = false;
