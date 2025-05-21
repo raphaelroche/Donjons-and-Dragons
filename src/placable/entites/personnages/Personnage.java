@@ -209,6 +209,15 @@ public class Personnage extends Entite {
     }
 
 
+    @Override
+    public boolean estPerso(){
+        return true;
+    }
+    @Override
+    public String getIdentificationEntite(){
+        return this.m_nom;
+    }
+
     // Getters
     public String getNom() {
         return this.m_nom;

@@ -28,7 +28,7 @@ public class Monstre extends Entite {
         monstres.add(this);
         if(monstres.size() > 1) {
             this.m_numero = monstres.indexOf(this)+1;
-            this.m_nomAffiche = " X" + this.m_numero;
+            this.m_nomAffiche = "X " + this.m_numero+" ";
         }
         else{
             this.m_nomAffiche = " X ";
@@ -60,7 +60,7 @@ public class Monstre extends Entite {
 
         if(monstres.size() > 1) {
             this.m_numero = monstres.indexOf(this)+1;
-            this.m_nomAffiche = " X" + this.m_numero;
+            this.m_nomAffiche = "X" + this.m_numero+" ";
         }
         else{
             this.m_nomAffiche = " X ";
@@ -88,6 +88,14 @@ public class Monstre extends Entite {
             monstres.remove(this);
         }
     }
+    @Override
+    public boolean estMonstre(){
+        return true;
+    }
+    @Override
+    public String getIdentificationEntite(){
+        return this.m_espece + this.m_numero;
+    }
     public boolean attaquer(Personnage cible, String[][] carte){
 
 
@@ -106,6 +114,9 @@ public class Monstre extends Entite {
 
     public String getEspece() {
         return m_espece;
+    }
+    public int getNumero(){
+        return this.m_numero;
     }
 }
 

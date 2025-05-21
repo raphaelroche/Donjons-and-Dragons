@@ -110,7 +110,14 @@ public abstract class Entite implements Placable {
 
     }
 
+    public boolean estMonstre(){
+        return false;
+    }
+    public boolean estPerso(){
+        return false;
+    }
 
+    public abstract String getIdentificationEntite();
 
     @Override
     public String getNomAffiche(){
