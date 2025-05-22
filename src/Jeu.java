@@ -36,6 +36,7 @@ public class Jeu {
                 "U", "V", "W", "X", "Y", "Z"};
         this.m_joueursEnVie = new ArrayList<>();
         this.m_monstresEnVie = new ArrayList<>();
+        this.m_entitesEnVie = new ArrayList<>();
     }
 
     public void demarrerJeu() {
@@ -136,8 +137,37 @@ public class Jeu {
             for(Entite e : this.m_monstresEnVie) {
                 System.out.println("Au tour de "+e.getIdentificationEntite());
                 for(int i = 0; i<3;i++){
-                    faireActionEntite();
+                    demanderAction(e, d);
                 }
+            }
+        }
+    }
+
+    public void demanderAction(Entite e, Donjon d) {
+        int choixAction;
+        StringBuilder message = new StringBuilder("choississez votre action : \n0 - passer votre tour \n1 - se deplacer\n2 - attaquer");
+        if(e.estMonstre()){
+
+            choixAction = m_utils.demanderChoix(scanner,
+                    message.toString(),
+                    0, 2);
+
+        }
+        else{
+
+            if(((Personnage) e).estClerc() || ((Personnage) e).estMagicien()){
+                message.append("\n3 - jeter un sort");
+            }
+            if(d.getCarte()[e.getPositionX()][e.getPositionY()].get(1).estEquipement()) {
+                //arranger ca dans donjon
+                choixAction = m_utils.demanderChoix(scanner,
+                        message.toString(),
+                        0, 4);
+            }
+            else{
+                choixAction = m_utils.demanderChoix(scanner,
+                        message.toString(),
+                        0, 3);
             }
         }
     }

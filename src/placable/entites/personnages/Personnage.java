@@ -49,7 +49,7 @@ public class Personnage extends Entite {
         this.m_vitesse = 3 + des.lancerDes(4,4);
         this.m_initiative = 3 + des.lancerDes(4,4);
     }
-   
+
 
     public void attribuerRaceClasse(int race, int classe) {
         switch(race) {      //attribue la race
@@ -106,6 +106,12 @@ public class Personnage extends Entite {
             default:
                 break;
         }
+    }
+    public boolean estClerc(){
+        return this.m_classe.estClerc();
+    }
+    public boolean estMagicien(){
+        return this.m_classe.estMagicien();
     }
 
     public boolean Guerir(Personnage p){
