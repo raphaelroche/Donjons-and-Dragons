@@ -170,9 +170,10 @@ public class Jeu {
                         0, 3);
             }
         }
+        faireActionEntite(choixAction);
     }
 
-    public void faireActionEntite(){
+    public void faireActionEntite(int choix){
 
     }
 

@@ -20,6 +20,7 @@ public class Monstre extends Entite {
 
     //par default
     public Monstre(String espece) {
+        this.des = new Des();
         if(monstres == null) {
             monstres = new ArrayList<>();
         }
@@ -33,6 +34,24 @@ public class Monstre extends Entite {
         else{
             this.m_nomAffiche = " X ";
         }
+
+        this.m_portee = des.lancerDes(1, 5);
+        if(m_portee > 1){
+            this.m_force = 0;
+            this.m_dexterite = des.lancerDes(2, 6);
+            this.m_nomAttaque = "attaque de feu";
+        }
+        else{
+            this.m_force =  this.des.lancerDes(2, 6);
+            this.m_dexterite = 0;
+            this.m_nomAttaque = "croc du dragon";
+        }
+        this.m_classeArmure = des.lancerDes(3, 5);
+        this.m_degats = des.lancerDes(1, 6);
+        this.m_pv = des.lancerDes(4, 6);
+        this.m_initiative = des.lancerDes(3, 6);
+
+
 
 
 
