@@ -118,8 +118,8 @@ public class Monstre extends Entite {
     }
 
     @Override
-    public boolean attaquer(int x, int y, Donjon d) {
-        Placable p = d.getCarte()[x-1][y-1].getFirst();
+    public boolean attaquer(int x, int y,ArrayList<Placable>[][] carte) {
+        Placable p = carte[x-1][y-1].getFirst();
         if(p.estEntite()){
             if(((Entite)p).estPerso()){
                 Personnage cible = (Personnage)p;

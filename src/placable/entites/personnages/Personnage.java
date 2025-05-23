@@ -146,8 +146,8 @@ public class Personnage extends Entite {
 
 
     @Override
-    public boolean attaquer(int x, int y, Donjon d){
-        Placable p = d.getCarte()[x-1][y-1].getFirst();
+    public boolean attaquer(int x, int y, ArrayList<Placable>[][] carte){
+        Placable p = carte[x-1][y-1].getFirst();
         if(p.estEntite()){
             if(((Entite) p).estMonstre()){
                 Monstre cible = (Monstre)p;
@@ -181,7 +181,7 @@ public class Personnage extends Entite {
     public void sEquiperArmure(Armures a){
         if(this.m_armureEquipee != null){
             this.m_inventaire.add(this.m_armureEquipee);
-            this.m_armureEquipee = null;
+
         }
         this.m_armureEquipee= a;
         this.m_inventaire.remove(this.m_armureEquipee);
