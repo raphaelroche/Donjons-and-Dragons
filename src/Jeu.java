@@ -186,7 +186,7 @@ public class Jeu {
                     System.out.println("Vous ne vous trouvez pas sur un equipement !");
                     choixAction = m_utils.demanderChoix(scanner,
                             message.toString(),
-                            0, nbchoix);
+                            0, nbchoix-1);
                     scanner.nextLine();
                 }
             }
