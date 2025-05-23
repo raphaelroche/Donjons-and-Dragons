@@ -145,30 +145,35 @@ public class Personnage extends Entite {
     }
 
 
-    public boolean attaquer(Monstre cible){
+    @Override
+    public boolean attaquer(int x, int y, Donjon d){
+        Placable p = d.getCarte()[x-1][y-1].getFirst();
+        if(p.estEntite()){
+            if(((Entite) p).estMonstre()){
+                Monstre cible = (Monstre)p;
+                int dX = this.m_positionX - x;
+                int dY = this.m_positionY - y;
+
+                double distanceJoueurCible = Math.sqrt(dX * dX + dY * dY);
 
 
-
-        int dX = this.m_positionX - cible.getPositionX();
-        int dY = this.m_positionY - cible.getPositionY();
-
-        double distanceJoueurCible = Math.sqrt(dX * dX + dY * dY);
-
-
-        if(this.m_armeEquipee.getPortee() >= distanceJoueurCible){
-            int degat = des.lancerDes(1, 20);
-            if(this.m_armeEquipee.getPortee() == 1){
-                degat += this.m_force;
-            }
-            else{
-                degat += this.m_dexterite;
-            }
-            if(degat > cible.getclasseArmure()){
-                this.m_armeEquipee.determinerDegat();
-                cible.ajusterPv(-(this.m_armeEquipee.getDegats()));
-                return true;
+                if(this.m_armeEquipee.getPortee() >= distanceJoueurCible){
+                    int degat = des.lancerDes(1, 20);
+                    if(this.m_armeEquipee.getPortee() == 1){
+                        degat += this.m_force;
+                    }
+                    else{
+                        degat += this.m_dexterite;
+                    }
+                    if(degat >  cible.getclasseArmure()){
+                        this.m_armeEquipee.determinerDegat();
+                        cible.ajusterPv(-(this.m_armeEquipee.getDegats()));
+                        return true;
+                    }
+                }
             }
         }
+
         return false;
 
     }

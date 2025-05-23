@@ -2,6 +2,7 @@ package placable.entites.monstres;
 
 import des.Des;
 import donjons.Donjon;
+import placable.Placable;
 import placable.entites.Entite;
 import placable.entites.personnages.Personnage;
 
@@ -115,19 +116,26 @@ public class Monstre extends Entite {
     public String getIdentificationEntite(){
         return this.m_espece + this.m_numero;
     }
-    public boolean attaquer(Personnage cible, String[][] carte){
 
+    @Override
+    public boolean attaquer(int x, int y, Donjon d) {
+        Placable p = d.getCarte()[x-1][y-1].getFirst();
+        if(p.estEntite()){
+            if(((Entite)p).estPerso()){
+                Personnage cible = (Personnage)p;
+                int dX = this.m_positionX - cible.getPositionX();
+                int dY = this.m_positionY - cible.getPositionY();
 
-        int dX = this.m_positionX - cible.getPositionX();
-        int dY = this.m_positionY - cible.getPositionY();
-
-        double distanceMonstreCible = Math.sqrt(dX * dX + dY * dY);
-        if(this.m_portee >= distanceMonstreCible){
-            if(this.m_degats > cible.getClasseArmure()){
-                cible.ajusterPv(-(this.m_degats));
-                return true;
+                double distanceMonstreCible = Math.sqrt(dX * dX + dY * dY);
+                if(this.m_portee >= distanceMonstreCible){
+                    if(this.m_degats > cible.getClasseArmure()){
+                        cible.ajusterPv(-(this.m_degats));
+                        return true;
+                    }
+                }
             }
         }
+
         return false;
     }
 

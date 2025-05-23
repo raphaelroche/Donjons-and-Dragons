@@ -110,6 +110,7 @@ public abstract class Entite implements Placable {
 
     }
 
+    public abstract boolean attaquer(int x, int y, Donjon d);
     public boolean estMonstre(){
         return false;
     }
