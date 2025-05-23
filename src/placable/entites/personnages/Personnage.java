@@ -1,6 +1,7 @@
 package placable.entites.personnages;
 
 import donjons.Donjon;
+import placable.CaseVide;
 import placable.Placable;
 import placable.entites.Entite;
 import placable.entites.monstres.Monstre;
@@ -119,7 +120,7 @@ public class Personnage extends Entite {
 
         if(this.m_classe.estClerc() || this.m_classe.estMagicien()){
             ContextSort cible = new ContextSort(p);
-             heal = (boolean) this.m_sorts.getFirst().lancerSort(cible);
+             heal =  this.m_sorts.getFirst().lancerSort(cible);
 
         }
         return heal;
@@ -129,7 +130,7 @@ public class Personnage extends Entite {
         boolean echange = false;
         if(this.m_classe.estMagicien()){
             ContextSort cible = new ContextSort(e1,e2);
-                echange = (boolean) this.m_sorts.get(1).lancerSort(cible);
+                echange = this.m_sorts.get(1).lancerSort(cible);
         }
         return echange;
     }
@@ -138,16 +139,17 @@ public class Personnage extends Entite {
         boolean enchanter = false;
         if(this.m_classe.estMagicien()){
             ContextSort armeAEnchanter = new ContextSort(arme);
-            enchanter = (boolean) this.m_sorts.get(2).lancerSort(armeAEnchanter);
+            enchanter = this.m_sorts.get(2).lancerSort(armeAEnchanter);
         }
         return enchanter;
 
     }
 
 
+
     @Override
-    public boolean attaquer(int x, int y, ArrayList<Placable>[][] carte){
-        Placable p = carte[x-1][y-1].getFirst();
+    public boolean attaquer(int x, int y, Donjon d){
+        Placable p = d.getCarte()[x-1][y-1].getFirst();
         if(p.estEntite()){
             if(((Entite) p).estMonstre()){
                 Monstre cible = (Monstre)p;
@@ -168,6 +170,9 @@ public class Personnage extends Entite {
                     if(degat >  cible.getclasseArmure()){
                         this.m_armeEquipee.determinerDegat();
                         cible.ajusterPv(-(this.m_armeEquipee.getDegats()));
+                        if(cible.getPv()<=0){
+                           tuerCible(d, x-1, y-1);
+                        }
                         return true;
                     }
                 }

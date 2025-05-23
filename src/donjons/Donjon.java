@@ -31,11 +31,12 @@ public class Donjon {
                 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         };
 
-        // Initialiser la carte avec des "."
+        // Initialiser la carte avec des "." initaliser la 2 eme case a null
         for (int x = 0; x < m_hauteur; x++) {
             for (int y = 0; y < m_largeur; y++) {
                 m_carte[x][y] = new ArrayList<>();
                 positionnerEmplacementVide(x,y);
+                m_carte[x][y].add(null);
             }
         }
     }
@@ -84,7 +85,7 @@ public class Donjon {
     public void decalerADroite(ArrayList<Placable> l){
 
         Placable p = l.getFirst();
-        l.add(p);
+        l.set(1,p);
 
         l.set(0, null); // la première case devient vide
 
@@ -106,8 +107,8 @@ public class Donjon {
                 this.m_carte[x][y].set(0,p);
                 return true;
             }
-            else if(this.m_carte[x][y].getFirst().estEntite() && ((this.m_carte[x][y].size() == 1) || (this.m_carte[x][y].size() > 1 && this.m_carte[x][y].get(1) == null))){
-                this.m_carte[x][y].add(p);
+            else if(this.m_carte[x][y].getFirst().estEntite() && ((this.m_carte[x][y].get(1) == null))){
+                this.m_carte[x][y].set(1,p);
                 return true;
             }
             else{

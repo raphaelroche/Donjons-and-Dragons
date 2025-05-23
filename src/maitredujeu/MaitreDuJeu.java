@@ -19,6 +19,8 @@ public class MaitreDuJeu {
         return d.positionnerElementCarte(e);
     }
 
-
+    public String commenter(String message){
+        return "Maitre Du Jeu - "+message;
+    }
 
 }

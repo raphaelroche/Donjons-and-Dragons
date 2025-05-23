@@ -17,6 +17,7 @@ public class Jeu {
     private ArrayList<Personnage> m_joueursEnVie;
     private ArrayList<Monstre> m_monstresEnVie;
     private ArrayList<Entite> m_entitesEnVie;
+    private ArrayList<Personnage> m_joueur;
     private Utils m_utils;
     private int m_nbJoueurs;
     private Scanner scanner;
@@ -37,6 +38,7 @@ public class Jeu {
         this.m_joueursEnVie = new ArrayList<>();
         this.m_monstresEnVie = new ArrayList<>();
         this.m_entitesEnVie = new ArrayList<>();
+        this.m_joueur = new ArrayList<>();
     }
 
     public void demarrerJeu() {
@@ -55,11 +57,21 @@ public class Jeu {
             Donjon d = initDonjon();
 
             for (int j = 0; j < this.m_nbJoueurs; j++) {
-                Personnage p = initJoueur(j + 1, d);
-                this.m_joueursEnVie.add(p);
-                m_entitesEnVie.add(p);
-                System.out.println("================================================================================");
+                if(i == 0){
+                    Personnage p = initJoueur(j + 1, d);
+                    this.m_joueur.add(p);
+                    System.out.println("================================================================================");
+                }
+                else{
+                    for(Personnage p : this.m_joueur){
+                        placerPersonnage(p, d);
+                    }
+                }
+
             }
+            this.m_joueursEnVie.addAll(this.m_joueur);
+            this.m_entitesEnVie.addAll(this.m_joueur);
+            this.m_entitesEnVie.addAll(this.m_monstresEnVie);
 
 
 
@@ -67,7 +79,9 @@ public class Jeu {
             d.afficherDonjon();
             deroulePartie(d);
             System.out.println("============================== FIN DU DONJON " + (i+1) + " =================================\n\n");
-            m_monstresEnVie.clear();
+            this.m_monstresEnVie.clear();
+            this.m_entitesEnVie.clear();
+            this.m_joueursEnVie.clear();
 
         }
     }
@@ -134,7 +148,7 @@ public class Jeu {
 
         }
         while(this.m_joueursEnVie.size() == this.m_nbJoueurs && !this.m_monstresEnVie.isEmpty()) {
-            for(Entite e : this.m_monstresEnVie) {
+            for(Entite e : this.m_entitesEnVie) {
                 System.out.println("Au tour de "+e.getIdentificationEntite());
                 for(int i = 0; i<3;i++){
                     demanderAction(e, d);
@@ -145,36 +159,101 @@ public class Jeu {
 
     public void demanderAction(Entite e, Donjon d) {
         int choixAction;
+        int nbchoix = 3;
         StringBuilder message = new StringBuilder("choississez votre action : \n0 - passer votre tour \n1 - se deplacer\n2 - attaquer");
         if(e.estMonstre()){
 
             choixAction = m_utils.demanderChoix(scanner,
                     message.toString(),
                     0, 2);
+            scanner.nextLine();
 
         }
         else{
+            message.append("\n3 - s'equiper \n4 - ramasser equipement (fonctionne uniquement si vous vous trouver sur une case d'equiupement)");
+            nbchoix+=2;
 
             if(((Personnage) e).estClerc() || ((Personnage) e).estMagicien()){
-                message.append("\n3 - jeter un sort");
+                message.append("\n5 - jeter un sort");
+                nbchoix++;
             }
-            if(d.getCarte()[e.getPositionX()][e.getPositionY()].get(1).estEquipement()) {
-                //arranger ca dans donjon
-                choixAction = m_utils.demanderChoix(scanner,
-                        message.toString(),
-                        0, 4);
+            choixAction = m_utils.demanderChoix(scanner,
+                    message.toString(),
+                    0, nbchoix);
+            scanner.nextLine();
+            if(d.getCarte()[e.getPositionX()][e.getPositionY()].get(1) == null && choixAction == 4){
+                while(choixAction == 4){
+                    System.out.println("Vous ne vous trouvez pas sur un equipement !");
+                    choixAction = m_utils.demanderChoix(scanner,
+                            message.toString(),
+                            0, nbchoix);
+                    scanner.nextLine();
+                }
             }
-            else{
-                choixAction = m_utils.demanderChoix(scanner,
-                        message.toString(),
-                        0, 3);
-            }
+
         }
-        faireActionEntite(choixAction);
+        faireActionEntite(e, choixAction);
     }
 
-    public void faireActionEntite(int choix){
+    public void faireActionEntite(Entite e, int choix){
+        switch (choix) {
+            case 0:
 
+
+                break;
+            case 1:
+
+
+                break;
+            case 2:
+
+
+                break;
+            case 3:
+
+
+                break;
+            case 4:
+
+
+                break;
+            case 5:
+
+
+                break;
+        }
+    }
+
+
+    public void placerPersonnage(Personnage p, Donjon d) {
+        int[] position = this.m_utils.demanderPositionCarte("Choisissez la position du joueur",
+                'A', d.getLettreMax(),
+                1, d.getHauteur(),
+                scanner);
+
+
+        boolean peutSePlacer = mdj.positionnerEntite(d, p);
+        if (position[0] == -1 || position[1] == -1) {
+            verificationPlacementjoueur(p, d, peutSePlacer);
+        } else {
+            while (!peutSePlacer) {
+                position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du joueur",
+                        'A', d.getLettreMax(),
+                        1, d.getHauteur(),
+                        scanner);
+                p.setLocation(position[0] - 1, position[1] - 1);
+                peutSePlacer = mdj.positionnerEntite(d, p);
+            }
+        }
+    }
+
+    private void verificationPlacementjoueur(Personnage p, Donjon d, boolean peutSePlacer) {
+        while (!peutSePlacer) {
+            p.setLocation(m_des.lancerDes(1, d.getHauteur() - 1),
+                    (m_des.lancerDes(1, d.getLargeur() - 1)));
+            peutSePlacer = mdj.positionnerEntite(d, p);
+        }
+        System.out.println(p.getNom() + " a été placé en " + alphabet[p.getPositionY()] + String.valueOf(p.getPositionX() + 1));
     }
 
     public Personnage initJoueur(int nJoueur, Donjon d) {
@@ -216,8 +295,6 @@ public class Jeu {
         scanner.nextLine();
 
 
-        int x = 0, y = 0;
-
         int[] position = this.m_utils.demanderPositionCarte("Choisissez la position du joueur",
                 'A', d.getLettreMax(),
                 1, d.getHauteur(),
@@ -228,12 +305,7 @@ public class Jeu {
         if (position[0] == -1 || position[1] == -1) {
             p = m_utils.creerPersonnageAleatoire(nom, race, classe, d);
             peutSePlacer = mdj.positionnerEntite(d, p);
-            while (!peutSePlacer) {
-                p.setLocation(m_des.lancerDes(1, d.getHauteur() - 1),
-                        (m_des.lancerDes(1, d.getLargeur() - 1)));
-                peutSePlacer = mdj.positionnerEntite(d, p);
-            }
-            System.out.println(p.getNom() + " a été placé en " + alphabet[p.getPositionY()] + String.valueOf(p.getPositionX() + 1));
+            verificationPlacementjoueur(p, d, peutSePlacer);
         } else {
             p = new Personnage(nom, race, classe, position[0], position[1]);
             peutSePlacer = mdj.positionnerEntite(d, p);
@@ -447,7 +519,6 @@ public class Jeu {
             }
         }
         m_monstresEnVie.add(m);
-        m_entitesEnVie.add(m);
     }
 
     public void creerEquipement(int type, int i, Donjon d) {

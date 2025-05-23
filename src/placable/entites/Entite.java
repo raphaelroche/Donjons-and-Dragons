@@ -1,6 +1,7 @@
 package placable.entites;
 
 import donjons.Donjon;
+import placable.CaseVide;
 import placable.Placable;
 import placable.equipements.Equipement;
 import placable.obstacle.Obstacle;
@@ -92,8 +93,18 @@ public abstract class Entite implements Placable {
         d.positionnerElementCarte(this);
 
     }
+    public void tuerCible(Donjon d, int x, int y){
+        ArrayList<Placable> caseCible = d.getCarte()[x][y];
+        if(caseCible.get(1).estEquipement()){
+            d.decalerAGauche(caseCible);
+        }
+        else{
+            d.positionnerEmplacementVide(x, y);
+        }
 
-    public abstract boolean attaquer(int x, int y, ArrayList<Placable>[][] carte);
+    }
+
+    public abstract boolean attaquer(int x, int y, Donjon d);
 
 
     public boolean estMonstre(){
