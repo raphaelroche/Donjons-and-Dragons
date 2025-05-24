@@ -184,16 +184,6 @@ public class Jeu {
                     message.toString(),
                     0, nbchoix);
             scanner.nextLine();
-            if(d.getCarte()[e.getPositionX()][e.getPositionY()].get(1) == null && choixAction == 4){
-                while(choixAction == 4){
-                    System.out.println("Vous ne vous trouvez pas sur un equipement !");
-                    choixAction = m_utils.demanderChoix(scanner,
-                            message.toString(),
-                            0, nbchoix-1);
-                    scanner.nextLine();
-                }
-            }
-
         }
         faireActionEntite(e, choixAction, d, message.toString(),nbchoix);
         return choixAction;
@@ -252,17 +242,17 @@ public class Jeu {
                         arme.toString(),
                         1, ((Personnage)e).getInventaire().size());
                 this.mdj.commenter("Vous venez d'equiper : "+((Personnage) e).getInventaire().get(equipementChoisi-1).getNomEquipement());
+
                 ((Personnage)e).sEquiper(((Personnage) e).getInventaire().get(equipementChoisi-1));
-
-
-
-
-
-
                 break;
             case 4:
-
-
+                boolean ramasser = ((Personnage)e).ramasserEquipement((Equipement)d.getCarte()[e.getPositionX()][e.getPositionY()].get(1), d.getCarte());
+                if(ramasser){
+                    this.mdj.commenter("vous avez ramasser "+((Personnage)e).getInventaire().getLast().getNomEquipement());
+                }
+                else{
+                    this.mdj.commenter("vous ne vous trouver pas sur une case d'équipement !");
+                }
                 break;
             case 5:
                 int nb = 1;
@@ -270,13 +260,12 @@ public class Jeu {
                 if(((Personnage) e).estMagicien()){
                     sort.append("\n2 - Boogie Woogie \n3 - Arme Magique");
                     nb = 3;
-
-
                 }
-                m_utils.demanderChoix(scanner,
+                int choixdusort = m_utils.demanderChoix(scanner,
                         sort.toString(),
                         1, nb);
                 scanner.nextLine();
+                choixSort(choixdusort);
                 break;
         }
         if(redemander){
