@@ -195,11 +195,12 @@ public class Jeu {
             }
 
         }
-        faireActionEntite(e, choixAction, d);
+        faireActionEntite(e, choixAction, d, message.toString(),nbchoix);
         return choixAction;
     }
 
-    public void faireActionEntite(Entite e, int choix, Donjon d){
+    public void faireActionEntite(Entite e, int choix, Donjon d ,String message, int nbchoix){
+        boolean redemander = false;
         switch (choix) {
             case 0:
                 this.mdj.commenter("Vous avez passer votre tour !");
@@ -213,15 +214,16 @@ public class Jeu {
                 e.seDeplacer(direction, d);
                 break;
             case 2:
-                boolean attaque = false;
-                while(!attaque){
+
+
                     int[] position = this.m_utils.demanderPositionCarte("Quelle case voulez vous attaquer ?",
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
-                    attaque = e.attaquer(position[0],position[1], d);
+                    boolean attaque = e.attaquer(position[0],position[1], d);
                     if(!attaque){
-                        System.out.println("Impossible d'attaquer la case "+position[0]+position[1]);
+                        System.out.println("Impossible d'attaquer cette case vous pouvez retenter une action");
+                        redemander = true;
                     }
                     else{
                         String nom = d.getCarte()[position[0]][position[1]].getFirst().getNomAffiche();
@@ -229,7 +231,7 @@ public class Jeu {
 
                         this.mdj.commenter("Attaque reussi, vous avez infligé "+degat+"dégat à "+nom);
                     }
-                }
+
 
 
                 break;
@@ -255,6 +257,13 @@ public class Jeu {
                         1, nb);
                 scanner.nextLine();
                 break;
+        }
+        if(redemander){
+            int choixAction = m_utils.demanderChoix(scanner,
+                    message,
+                    0, nbchoix);
+            scanner.nextLine();
+            faireActionEntite(e, choixAction, d, message, nbchoix);
         }
         d.afficherDonjon();
     }
