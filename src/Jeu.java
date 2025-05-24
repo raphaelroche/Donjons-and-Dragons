@@ -222,7 +222,7 @@ public class Jeu {
                             scanner);
                     boolean attaque = e.attaquer(position[0],position[1], d);
                     if(!attaque){
-                        System.out.println("Impossible d'attaquer cette case vous pouvez retenter une action");
+                        this.mdj.commenter("Impossible d'attaquer cette case vous pouvez retenter une action");
                         redemander = true;
                     }
                     else{
