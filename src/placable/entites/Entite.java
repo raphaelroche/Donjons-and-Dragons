@@ -62,24 +62,28 @@ public abstract class Entite implements Placable {
                 case 1: // Haut
                     if (newX - 1 < 0) break quitterBoucle;
                     if (contientObstacle(carte[newX - 1][newY])) break quitterBoucle;
+                    if(contientEntite(carte[newX - 1][newY])) break quitterBoucle;
                     newX--;
                     break;
 
                 case 2: // Bas
                     if (newX + 1 >= d.getHauteur()) break quitterBoucle;
                     if (contientObstacle(carte[newX + 1][newY])) break quitterBoucle;
+                    if(contientEntite(carte[newX + 1][newY])) break quitterBoucle;
                     newX++;
                     break;
 
                 case 3: // Gauche
                     if (newY - 1 < 0) break quitterBoucle;
                     if (contientObstacle(carte[newX][newY - 1])) break quitterBoucle;
+                    if(contientEntite(carte[newX][newY - 1])) break quitterBoucle;
                     newY--;
                     break;
 
                 case 4: // Droite
                     if (newY + 1 >= d.getLargeur()) break quitterBoucle;
                     if (contientObstacle(carte[newX][newY + 1])) break quitterBoucle;
+                    if(contientEntite(carte[newX][newY+1])) break quitterBoucle;
                     newY++;
                     break;
 
@@ -104,6 +108,7 @@ public abstract class Entite implements Placable {
 
     }
 
+    public abstract int getDegats();
     public abstract boolean attaquer(int x, int y, Donjon d);
 
 
@@ -197,7 +202,7 @@ public abstract class Entite implements Placable {
 
     public static boolean contientObstacle(ArrayList<Placable> liste) {
         for (Placable p : liste) {
-            if (p.estObstacle()) {
+            if (p != null && p.estObstacle()) {
                 return true;
             }
         }
@@ -205,13 +210,21 @@ public abstract class Entite implements Placable {
     }
     public static boolean contientEquipement(ArrayList<Placable> liste) {
         for (Placable p : liste) {
-            if (p.estEquipement()) {
+            if (p != null && p.estEquipement()) {
                 return true;
             }
         }
         return false;
     }
 
+    public static boolean contientEntite(ArrayList<Placable> liste) {
+        for (Placable p : liste) {
+            if (p != null && p.estEntite()) {
+                return true;
+            }
+        }
+        return false;
+    }
     public int getPvMax() {
         return this.m_pvMax;
     }

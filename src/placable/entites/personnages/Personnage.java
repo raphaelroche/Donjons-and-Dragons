@@ -108,6 +108,11 @@ public class Personnage extends Entite {
                 break;
         }
     }
+
+    @Override
+    public int getDegats(){
+        return this.m_armeEquipee.getDegats();
+    }
     public boolean estClerc(){
         return this.m_classe.estClerc();
     }
@@ -159,7 +164,7 @@ public class Personnage extends Entite {
                 double distanceJoueurCible = Math.sqrt(dX * dX + dY * dY);
 
 
-                if(this.m_armeEquipee.getPortee() >= distanceJoueurCible){
+                if(this.m_armeEquipee.getPortee() >= distanceJoueurCible && this.m_armeEquipee != null){
                     int degat = des.lancerDes(1, 20);
                     if(this.m_armeEquipee.getPortee() == 1){
                         degat += this.m_force;
@@ -229,6 +234,7 @@ public class Personnage extends Entite {
     public boolean estPerso(){
         return true;
     }
+
     @Override
     public String getIdentificationEntite(){
         return this.m_nom;

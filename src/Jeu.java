@@ -151,13 +151,16 @@ public class Jeu {
             for(Entite e : this.m_entitesEnVie) {
                 System.out.println("Au tour de "+e.getIdentificationEntite());
                 for(int i = 0; i<3;i++){
-                    demanderAction(e, d);
+                    int choix = demanderAction(e, d);
+                    if(choix == 0) {
+                        break;
+                    }
                 }
             }
         }
     }
 
-    public void demanderAction(Entite e, Donjon d) {
+    public int demanderAction(Entite e, Donjon d) {
         int choixAction;
         int nbchoix = 3;
         StringBuilder message = new StringBuilder("choississez votre action : \n0 - passer votre tour \n1 - se deplacer\n2 - attaquer");
@@ -192,20 +195,41 @@ public class Jeu {
             }
 
         }
-        faireActionEntite(e, choixAction);
+        faireActionEntite(e, choixAction, d);
+        return choixAction;
     }
 
-    public void faireActionEntite(Entite e, int choix){
+    public void faireActionEntite(Entite e, int choix, Donjon d){
         switch (choix) {
             case 0:
-
+                this.mdj.commenter("Vous avez passer votre tour !");
 
                 break;
             case 1:
-
-
+               int direction = m_utils.demanderChoix(scanner,
+                        "dans quelle direction voulez vous vous deplacer : \n1 - en haut \n2 - en bas \n3 - gauche \n4 - droite",
+                        1, 4);
+                scanner.nextLine();
+                e.seDeplacer(direction, d);
                 break;
             case 2:
+                boolean attaque = false;
+                while(!attaque){
+                    int[] position = this.m_utils.demanderPositionCarte("Quelle case voulez vous attaquer ?",
+                            'A', d.getLettreMax(),
+                            1, d.getHauteur(),
+                            scanner);
+                    attaque = e.attaquer(position[0],position[1], d);
+                    if(!attaque){
+                        System.out.println("Impossible d'attaquer la case "+position[0]+position[1]);
+                    }
+                    else{
+                        String nom = d.getCarte()[position[0]][position[1]].getFirst().getNomAffiche();
+                        int degat = e.getDegats();
+
+                        this.mdj.commenter("Attaque reussi, vous avez infligé "+degat+"dégat à "+nom);
+                    }
+                }
 
 
                 break;
@@ -218,9 +242,33 @@ public class Jeu {
 
                 break;
             case 5:
+                int nb = 1;
+                StringBuilder sort = new StringBuilder("quelle sort voulez vous jeter \n1 - Guérison");
+                if(((Personnage) e).estMagicien()){
+                    sort.append("\n2 - Boogie Woogie \n3 - Arme Magique");
+                    nb = 3;
 
+
+                }
+                m_utils.demanderChoix(scanner,
+                        sort.toString(),
+                        1, nb);
+                scanner.nextLine();
+                break;
+        }
+        d.afficherDonjon();
+    }
+
+    public void choixSort(int choix){
+        switch(choix){
+            case 1:
 
                 break;
+            case 2:
+                break;
+            case 3:
+               break;
+
         }
     }
 
@@ -434,6 +482,21 @@ public class Jeu {
                         scanner.nextLine(); // consomme l'entrée invalide
                     }
                 }
+
+                int vitesse = 0;
+                while (vitesse <= 0) {
+                    System.out.println("Donnez sa vitesse : ");
+                    if (scanner.hasNextInt()) {
+                        vitesse = scanner.nextInt();
+                        scanner.nextLine(); // consomme le \n
+                        if (vitesse <= 0) {
+                            System.out.println("La vitesse doit être un entier strictement positif !");
+                        }
+                    } else {
+                        System.out.println("Entrée invalide, entier requis !");
+                        scanner.nextLine(); // consomme l'entrée invalide
+                    }
+                }
                 String attaque = "";
                 while (attaque.isBlank() || !attaque.matches("[a-zA-Z]+")) {
                     System.out.println("Donnez le nom de l'attaque du monstre : ");
@@ -503,7 +566,7 @@ public class Jeu {
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
-                m = new Monstre(espece, portee, pv, attaque, armure, force, dexterite, initiative, position[0], position[1]);
+                m = new Monstre(espece, portee, pv,vitesse, attaque, armure, force, dexterite, initiative, position[0], position[1]);
                 boolean peutSePlacer = mdj.positionnerEntite(d, m);
                 while (!peutSePlacer) {
                     position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du Monstre",

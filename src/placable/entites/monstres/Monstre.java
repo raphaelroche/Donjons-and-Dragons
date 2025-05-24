@@ -49,8 +49,10 @@ public class Monstre extends Entite {
         }
         this.m_classeArmure = des.lancerDes(3, 5);
         this.m_degats = des.lancerDes(1, 6);
-        this.m_pv = des.lancerDes(4, 6);
+        this.m_pvMax = des.lancerDes(4, 6);
+        this.m_pv = m_pvMax;
         this.m_initiative = des.lancerDes(3, 6);
+        this.m_vitesse = des.lancerDes(2, 6);
 
 
 
@@ -59,17 +61,17 @@ public class Monstre extends Entite {
 
     }
 
-    public Monstre(String espece, int portee,int pv, String nomattaque,  int classeArmure, int force, int dexterite, int initiative, int x, int y) {
+    public Monstre(String espece, int portee,int pv,int vitesse, String nomattaque,  int classeArmure, int force, int dexterite, int initiative,  int x, int y) {
         des = new Des();
 
         if(monstres == null) {
             monstres = new ArrayList<>();
         }
-
+        this.m_vitesse = vitesse;
         this.m_espece = espece;
         this.m_portee = portee;
-        this.m_pv = pv;
         this.m_pvMax = pv;
+        this.m_pv = m_pvMax;
         this.m_nomAttaque = nomattaque;
         //degat min = 4, degat max = 10
         this.m_degats = 4 + des.lancerDes(1, 6);
@@ -140,6 +142,10 @@ public class Monstre extends Entite {
         }
 
         return false;
+    }
+    @Override
+    public int getDegats(){
+        return this.m_degats;
     }
 
     public String getEspece() {
