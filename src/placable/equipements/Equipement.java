@@ -41,4 +41,12 @@ public abstract class Equipement implements Placable {
     public boolean estEquipement(){
         return true;
     }
+
+    public boolean estArme(){
+        return false;
+    }
+
+    public boolean estArmure(){
+        return false;
+    }
 }

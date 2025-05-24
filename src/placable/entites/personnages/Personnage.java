@@ -163,24 +163,26 @@ public class Personnage extends Entite {
 
                 double distanceJoueurCible = Math.sqrt(dX * dX + dY * dY);
 
-
-                if(this.m_armeEquipee.getPortee() >= distanceJoueurCible && this.m_armeEquipee != null){
-                    int degat = des.lancerDes(1, 20);
-                    if(this.m_armeEquipee.getPortee() == 1){
-                        degat += this.m_force;
-                    }
-                    else{
-                        degat += this.m_dexterite;
-                    }
-                    if(degat >  cible.getclasseArmure()){
-                        this.m_armeEquipee.determinerDegat();
-                        cible.ajusterPv(-(this.m_armeEquipee.getDegats()));
-                        if(cible.getPv()<=0){
-                           tuerCible(d, x-1, y-1);
+                if(this.m_armeEquipee != null){
+                    if(this.m_armeEquipee.getPortee() >= Math.abs(distanceJoueurCible)){
+                        int degat = des.lancerDes(1, 20);
+                        if(this.m_armeEquipee.getPortee() == 1){
+                            degat += this.m_force;
                         }
-                        return true;
+                        else{
+                            degat += this.m_dexterite;
+                        }
+                        if(degat >  cible.getclasseArmure()){
+                            this.m_armeEquipee.determinerDegat();
+                            cible.ajusterPv(-(this.m_armeEquipee.getDegats()));
+                            if(cible.getPv()<=0){
+                                tuerCible(d, x-1, y-1);
+                            }
+                            return true;
+                        }
                     }
                 }
+
             }
         }
 
@@ -188,30 +190,32 @@ public class Personnage extends Entite {
 
     }
 
-    public void sEquiperArmure(Armures a){
-        if(this.m_armureEquipee != null){
-            this.m_inventaire.add(this.m_armureEquipee);
+    public void sEquiper(Equipement e){
+        if(e.estArme()){
+            if(this.m_armeEquipee != null){
+                this.m_inventaire.add(this.m_armeEquipee);
+            }
+            this.m_armeEquipee= (Armes)e;
+            this.m_inventaire.remove(this.m_armeEquipee);
 
+            if(m_armeEquipee.getChangeStat()){
+                this.m_vitesse -= 2;
+                this.m_force += 4;
+            }
         }
-        this.m_armureEquipee= a;
-        this.m_inventaire.remove(this.m_armureEquipee);
+        else{
+            if(this.m_armureEquipee != null){
+                this.m_inventaire.add(this.m_armureEquipee);
 
-        if(m_armureEquipee.getChangeStat()){
-            this.m_vitesse -= 4;
-        }
-    }
-    public void sEquiperArme(Armes a){
+            }
+            this.m_armureEquipee= (Armures)e;
+            this.m_inventaire.remove(this.m_armureEquipee);
 
-        if(this.m_armeEquipee != null){
-            this.m_inventaire.add(this.m_armeEquipee);
+            if(m_armureEquipee.getChangeStat()){
+                this.m_vitesse -= 4;
+            }
         }
-        this.m_armeEquipee= a;
-        this.m_inventaire.remove(this.m_armeEquipee);
 
-        if(m_armeEquipee.getChangeStat()){
-            this.m_vitesse -= 2;
-            this.m_force += 4;
-        }
 
     }
 
@@ -247,6 +251,10 @@ public class Personnage extends Entite {
 
     public Armes getArmeEquipee(){
         return m_armeEquipee;
+    }
+
+    public Armures getArmureEquipee(){
+        return m_armureEquipee;
     }
 
     public int getClasseArmure(){
@@ -285,6 +293,10 @@ public class Personnage extends Entite {
         if (this.m_vitesse < 0) {
             this.m_vitesse = 0;
         }
+    }
+
+    public ArrayList<Equipement> getInventaire() {
+        return this.m_inventaire;
     }
 
     public void ajouterEquipementInventaire(Equipement e){

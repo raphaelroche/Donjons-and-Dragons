@@ -99,11 +99,12 @@ public abstract class Entite implements Placable {
     }
     public void tuerCible(Donjon d, int x, int y){
         ArrayList<Placable> caseCible = d.getCarte()[x][y];
-        if(caseCible.get(1).estEquipement()){
-            d.decalerAGauche(caseCible);
+        if(caseCible.get(1) == null){
+
+            d.positionnerEmplacementVide(x, y);
         }
         else{
-            d.positionnerEmplacementVide(x, y);
+            d.decalerAGauche(caseCible);
         }
 
     }

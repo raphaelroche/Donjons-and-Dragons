@@ -22,4 +22,9 @@ public abstract class Armures extends Equipement {
         return this.m_classe;
     }
     public boolean getChangeStat() {return this.m_changeStat;}
+
+    @Override
+    public boolean estArmure(){
+        return true;
+    }
 }

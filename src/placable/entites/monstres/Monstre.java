@@ -30,7 +30,7 @@ public class Monstre extends Entite {
         monstres.add(this);
         if(monstres.size() > 1) {
             this.m_numero = monstres.indexOf(this)+1;
-            this.m_nomAffiche = "X " + this.m_numero+" ";
+            this.m_nomAffiche = "X" + this.m_numero+" ";
         }
         else{
             this.m_nomAffiche = " X ";
@@ -53,6 +53,7 @@ public class Monstre extends Entite {
         this.m_pv = m_pvMax;
         this.m_initiative = des.lancerDes(3, 6);
         this.m_vitesse = des.lancerDes(2, 6);
+
 
 
 
@@ -129,7 +130,7 @@ public class Monstre extends Entite {
                 int dY = this.m_positionY - cible.getPositionY();
 
                 double distanceMonstreCible = Math.sqrt(dX * dX + dY * dY);
-                if(this.m_portee >= distanceMonstreCible){
+                if(this.m_portee >= Math.abs(distanceMonstreCible)){
                     if(this.m_degats > cible.getClasseArmure()){
                         cible.ajusterPv(-(this.m_degats));
                         if(cible.getPv()<=0){

@@ -110,7 +110,7 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
         int x = des.lancerDes(1, d.getLargeur()-1);
         int y = des.lancerDes(1, d.getHauteur()-1);
         Monstre m = new Monstre("dragon");
-        m.setLocation(x, y);
+        m.setLocation(x-1, y-1);
         return m;
     }
 

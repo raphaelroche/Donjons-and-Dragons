@@ -220,22 +220,43 @@ public class Jeu {
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
+                    String nom = d.getCarte()[position[0]][position[1]].getFirst().getNomAffiche();
+                    int pv = ((Entite)d.getCarte()[position[0]][position[1]].getFirst()).getPv();
                     boolean attaque = e.attaquer(position[0],position[1], d);
                     if(!attaque){
                         this.mdj.commenter("Impossible d'attaquer cette case vous pouvez retenter une action");
                         redemander = true;
                     }
                     else{
-                        String nom = d.getCarte()[position[0]][position[1]].getFirst().getNomAffiche();
-                        int degat = e.getDegats();
 
-                        this.mdj.commenter("Attaque reussi, vous avez infligé "+degat+"dégat à "+nom);
+                        int degat = e.getDegats();
+                        this.mdj.commenter("Attaque reussi, vous avez infligé "+degat+" dégat à "+nom);
+                        if(pv <= 0){
+                            this.mdj.commenter("Vous avez tuer "+nom);
+                        }
                     }
 
 
 
                 break;
             case 3:
+                StringBuilder arme = new StringBuilder("Quelle Equipement voulez vous equiper ?");
+                for(int i = 0; i<((Personnage)e).getInventaire().size(); i++){
+                    arme.append("\n").append(i+1).append(" - ").append(((Personnage) e).getInventaire().get(i).getNomEquipement());
+
+                }
+
+
+
+                int equipementChoisi = m_utils.demanderChoix(scanner,
+                        arme.toString(),
+                        1, ((Personnage)e).getInventaire().size());
+                this.mdj.commenter("Vous venez d'equiper : "+((Personnage) e).getInventaire().get(equipementChoisi-1).getNomEquipement());
+                ((Personnage)e).sEquiper(((Personnage) e).getInventaire().get(equipementChoisi-1));
+
+
+
+
 
 
                 break;
@@ -575,17 +596,27 @@ public class Jeu {
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
-                m = new Monstre(espece, portee, pv,vitesse, attaque, armure, force, dexterite, initiative, position[0], position[1]);
+                int posX;
+                int posY;
+                if(position[0] == -1 || position[1] == -1){
+                    posX = m_des.lancerDes(1, d.getLargeur()-1);
+                    posY = m_des.lancerDes(1, d.getHauteur()-1);
+                }
+                else{
+                    posX = position[0];
+                    posY = position[1];
+                }
+                m = new Monstre(espece, portee, pv,vitesse, attaque, armure, force, dexterite, initiative, posX, posY);
                 boolean peutSePlacer = mdj.positionnerEntite(d, m);
                 while (!peutSePlacer) {
                     position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du Monstre",
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
-                    m.setLocation(position[0] - 1, position[1] - 1);
+                    m.setLocation(posX - 1, posY - 1);
                     peutSePlacer = mdj.positionnerEntite(d, m);
                 }
-                System.out.println("Monstre positionné en " + alphabet[position[1] - 1] + String.valueOf(position[0]));
+                System.out.println("Monstre positionné en " + alphabet[posY - 1] + String.valueOf(posX));
 
                 break;
             }
