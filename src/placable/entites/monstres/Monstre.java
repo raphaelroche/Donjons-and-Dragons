@@ -48,7 +48,7 @@ public class Monstre extends Entite {
             this.m_nomAttaque = "croc du dragon";
         }
         this.m_classeArmure = des.lancerDes(3, 6);
-        this.m_degats = des.lancerDes(3, 5);
+        this.m_degats = 4 + des.lancerDes(1, 6);
         this.m_pvMax = des.lancerDes(4, 7);
         this.m_pv = m_pvMax;
         this.m_initiative = des.lancerDes(3, 6);

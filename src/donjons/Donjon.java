@@ -122,7 +122,7 @@ public class Donjon {
                 this.m_carte[x][y].set(0,p);
                 return true;
             }
-            else if(this.m_carte[x][y].getFirst().estCaseVide() || this.m_carte[x][y].getFirst() == null){
+            else if(this.m_carte[x][y].getFirst() == null || this.m_carte[x][y].getFirst().estCaseVide()){
                 this.m_carte[x][y].set(0,p);
                 return true;
             }

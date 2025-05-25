@@ -17,6 +17,7 @@ import sorts.*;
 
 import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Personnage extends Entite {
     protected String m_nom;
@@ -146,6 +147,10 @@ public class Personnage extends Entite {
             if(this.m_classe.estMagicien()){
                 ContextSort cible = new ContextSort(e1,e2);
                 echange = this.m_sorts.get(1).lancerSort(cible);
+                d.getCarte()[x1-1][y1-1].set(0,new CaseVide(x1-1, y1-1));
+                d.getCarte()[x2-1][y2-1].set(0, new CaseVide(x2-1, y2-1));
+                d.positionnerElementCarte(e1);
+                d.positionnerElementCarte(e2);
             }
         }
 
@@ -169,6 +174,30 @@ public class Personnage extends Entite {
 
     }
 
+    public boolean enchanterArmeInventaire(Personnage p,int i){
+        boolean enchanter = false;
+        Armes arme = getArmeAtIndex(p.m_inventaire, i);
+        if(this.m_classe.estMagicien()){
+            ContextSort armeAEnchanter = new ContextSort(arme);
+            enchanter = this.m_sorts.get(2).lancerSort(armeAEnchanter);
+        }
+        return enchanter;
+    }
+
+
+
+public Armes getArmeAtIndex(ArrayList<Equipement> liste, int index) {
+    int compteur = -1;
+    for (Equipement e : liste) {
+        if (e.estArme()) {
+            compteur++;
+            if (compteur == index) {
+                return (Armes) e;
+            }
+        }
+    }
+    return null;
+}
 
 
     @Override

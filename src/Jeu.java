@@ -307,30 +307,73 @@ public class Jeu {
                 this.mdj.commenter("Vous avez redonner "+p.getEfficaciteGuerison()+" à "+d.getCarte()[position[0]-1][position[1]-1].getFirst().getNomAffiche());
                 break;
             case 2:
-                int[] position1 = this.m_utils.demanderPositionCarteObligatoire("Choisissez la position du 1er joueur : ",
+                int[] position1 = this.m_utils.demanderPositionCarteObligatoire("Entrez la position du 1er joueur ou monstre : ",
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
-                int[] position2 = this.m_utils.demanderPositionCarteObligatoire("Choisissez la position du 2eme joueur : ",
+                int[] position2 = this.m_utils.demanderPositionCarteObligatoire("Entrez la position du 2eme joueur ou monstre : ",
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
                 while (!sortLancer){
                     sortLancer = p.echangerPosition(position1[0], position1[1], position2[0], position2[1], d );
                     if(!sortLancer){
-                        position1 = this.m_utils.demanderPositionCarteObligatoire("Choisissez la position du 1er joueur : ",
+                        position1 = this.m_utils.demanderPositionCarteObligatoire("Entrez la position du 1er joueur ou monstre : ",
                                 'A', d.getLettreMax(),
                                 1, d.getHauteur(),
                                 scanner);
-                        position2 = this.m_utils.demanderPositionCarteObligatoire("Choisissez la position du 2eme joueur : ",
+                        position2 = this.m_utils.demanderPositionCarteObligatoire("Entrez la position du 2eme joueur ou monstre : ",
                                 'A', d.getLettreMax(),
                                 1, d.getHauteur(),
                                 scanner);
                     }
                 }
-
+                this.mdj.commenter("Position echangée avec succès ! ");
                 break;
             case 3:
+                int location = m_utils.demanderChoix(scanner,
+                        "Ou voulez vous enchanter votre arme ? : \n1 - sur la map \n2 - dans l'inventaire d'un joueur",
+                        1, 2);
+                scanner.nextLine();
+                if(location == 1){
+                    int[] positionArme = this.m_utils.demanderPositionCarteObligatoire("Entrez la position de l'arme a enchanter : ",
+                            'A', d.getLettreMax(),
+                            1, d.getHauteur(),
+                            scanner);
+                    while (!sortLancer){
+                        sortLancer = p.enchanterArme(positionArme[0], positionArme[1], d);
+                        if(!sortLancer){
+                            positionArme = this.m_utils.demanderPositionCarteObligatoire("Entrez la position de l'arme a enchanter : ",
+                                    'A', d.getLettreMax(),
+                                    1, d.getHauteur(),
+                                    scanner);
+                        }
+                    }
+                    this.mdj.commenter(((Equipement)d.getCarte()[positionArme[0]-1][positionArme[1]-1].getFirst()).getNomEquipement()+" enchantée ! ");
+                }
+                else{
+                    int[] postionJoueur = this.m_utils.demanderPositionCarteObligatoire("Entrez la position du joueur : ",
+                            'A', d.getLettreMax(),
+                            1, d.getHauteur(),
+                            scanner);
+                    int nbarme = 1;
+                    StringBuilder message = new StringBuilder("Quelle arme voulez vous enchanter ? : ");
+                    for(Equipement e : ((Personnage)d.getCarte()[postionJoueur[0]-1][postionJoueur[1]-1].getFirst()).getInventaire()){
+                        if(e.estArme()){
+                            message.append("\n").append(nbarme).append(" - ").append(e.getNomEquipement());
+                            nbarme++;
+                        }
+                    }
+                    int arme = m_utils.demanderChoix(scanner,
+                            message.toString(),
+                            1, nbarme);
+                    scanner.nextLine();
+                    while(!sortLancer){
+                        sortLancer = p.enchanterArmeInventaire(((Personnage)d.getCarte()[postionJoueur[0]-1][postionJoueur[1]-1].getFirst()),arme-1);
+                    }
+                    this.mdj.commenter("Arme enchantée !");
+                }
+
                break;
 
         }
@@ -675,7 +718,7 @@ public class Jeu {
         } else {
             int typeArme = this.m_utils.demanderChoix(scanner,
                     "Choisissez un type d'arme : \n1 - Arbalète\n2 - Arc\n3 - Baton\n4 - Epee longue\n5 - Fronde\n6 - Masse\n7 - Rapière\n8 - Epée 2 mains",
-                    1, 7);
+                    1, 8);
             scanner.nextLine();
             switch (typeArme) {
                 case 1 -> e = new Arbalete();
