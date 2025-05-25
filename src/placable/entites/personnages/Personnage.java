@@ -277,7 +277,10 @@ public class Personnage extends Entite {
     }
 
     public int getClasseArmure(){
-        return this.m_armureEquipee.getClasseArmure();
+        if(this.m_armureEquipee!=null){
+            return this.m_armureEquipee.getClasseArmure();
+        }
+       return 0;
     }
 
     public Race getRace() {
@@ -300,6 +303,9 @@ public class Personnage extends Entite {
         return this.m_vitesse;
     }
 
+    public int getEfficaciteGuerison(){
+        return ((Guerison)this.m_sorts.getFirst()).getEfficacite();
+    }
 
     // Setters
     public void setVitesse(int vitesse) {

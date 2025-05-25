@@ -80,29 +80,49 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
                 break;
             }
 
-            if (input.matches("[A-Z]+[0-9]+")) {
-                char lettre = input.charAt(0);
-                int numero;
-
-                try {
-                    numero = Integer.parseInt(input.substring(1));
-                    int indexLettre = alphabet.indexOf(lettre)+1;
-
-                    if (indexLettre >= (minLettre - 'A') && indexLettre <= (maxLettre - 'A') && numero >= minNumero && numero <= maxNumero) {
-                        position[0] = numero;
-                        position[1] = indexLettre;
-                        break;
-                    } else {
-                        System.out.println("Position hors plage. Veuillez entrer une position valide.");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Numéro invalide. Veuillez entrer une position valide.");
-                }
-            } else {
-                System.out.println("Format invalide. Veuillez entrer une position valide (ex. A1, B20).");
-            }
+            if (position(minLettre, maxLettre, minNumero, maxNumero, position, alphabet, input)) break;
         }
         return position;
+    }
+
+    public int[] demanderPositionCarteObligatoire(String message, char minLettre, char maxLettre, int minNumero, int maxNumero, Scanner scanner) {
+        int[] position = new int[2]; // [indexLettre, numero]
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        while (true) {
+            System.out.print(message + " (format: LettreNuméro, par exemple A1, B20... entre "
+                    + minLettre + minNumero + " et " + maxLettre + maxNumero + " : \n");
+            String input = scanner.nextLine().trim().toUpperCase();
+
+
+            if (position(minLettre, maxLettre, minNumero, maxNumero, position, alphabet, input)) break;
+        }
+        return position;
+    }
+
+    private boolean position(char minLettre, char maxLettre, int minNumero, int maxNumero, int[] position, String alphabet, String input) {
+        if (input.matches("[A-Z]+[0-9]+")) {
+            char lettre = input.charAt(0);
+            int numero;
+
+            try {
+                numero = Integer.parseInt(input.substring(1));
+                int indexLettre = alphabet.indexOf(lettre)+1;
+
+                if (indexLettre >= (minLettre - 'A') && indexLettre <= (maxLettre - 'A') && numero >= minNumero && numero <= maxNumero) {
+                    position[0] = numero;
+                    position[1] = indexLettre;
+                    return true;
+                } else {
+                    System.out.println("Position hors plage. Veuillez entrer une position valide.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Numéro invalide. Veuillez entrer une position valide.");
+            }
+        } else {
+            System.out.println("Format invalide. Veuillez entrer une position valide (ex. A1, B20).");
+        }
+        return false;
     }
 
     public Monstre creerMonstreAleatoire(Donjon d) {

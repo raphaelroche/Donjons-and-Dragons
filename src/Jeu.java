@@ -206,12 +206,13 @@ public class Jeu {
             case 2:
 
 
-                    int[] position = this.m_utils.demanderPositionCarte("Quelle case voulez vous attaquer ?",
+                    int[] position = this.m_utils.demanderPositionCarteObligatoire("Quelle case voulez vous attaquer ?",
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
-                    String nom = d.getCarte()[position[0]][position[1]].getFirst().getNomAffiche();
-                    int pv = ((Entite)d.getCarte()[position[0]][position[1]].getFirst()).getPv();
+                    String nom = d.getCarte()[position[0]-1][position[1]-1].getFirst().getNomAffiche();
+                    Entite cible = (Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst();
+                    int pv = 0;
                     boolean attaque = e.attaquer(position[0],position[1], d);
                     if(!attaque){
                         this.mdj.commenter("Impossible d'attaquer cette case vous pouvez retenter une action");
@@ -221,8 +222,15 @@ public class Jeu {
 
                         int degat = e.getDegats();
                         this.mdj.commenter("Attaque reussi, vous avez infligé "+degat+" dégat à "+nom);
-                        if(pv <= 0){
+                        if(d.getCarte()[position[0]-1][position[1]-1].getFirst().estCaseVide()){
                             this.mdj.commenter("Vous avez tuer "+nom);
+                            this.m_entitesEnVie.remove(cible);
+                            if(cible.estPerso()){
+                                this.m_joueursEnVie.remove((Personnage) cible);
+                            }
+                            else{
+                                this.m_monstresEnVie.remove((Monstre) cible);
+                            }
                         }
                     }
 
@@ -283,21 +291,44 @@ public class Jeu {
         boolean sortLancer = false;
         switch(choix){
             case 1:
-                int[] position = this.m_utils.demanderPositionCarte("Choisissez la position du joueur a guerir",
+                int[] position = this.m_utils.demanderPositionCarteObligatoire("Choisissez la position du joueur a guerir",
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
                 while (!sortLancer){
                     sortLancer = p.Guerir(position[0], position[1], d);
                     if(!sortLancer){
-                        position = this.m_utils.demanderPositionCarte("Position invalide, rechoisissez !",
+                        position = this.m_utils.demanderPositionCarteObligatoire("Position invalide, rechoisissez !",
                                 'A', d.getLettreMax(),
                                 1, d.getHauteur(),
                                 scanner);
                     }
                 }
+                this.mdj.commenter("Vous avez redonner "+p.getEfficaciteGuerison()+" à "+d.getCarte()[position[0]-1][position[1]-1].getFirst().getNomAffiche());
                 break;
             case 2:
+                int[] position1 = this.m_utils.demanderPositionCarteObligatoire("Choisissez la position du 1er joueur : ",
+                        'A', d.getLettreMax(),
+                        1, d.getHauteur(),
+                        scanner);
+                int[] position2 = this.m_utils.demanderPositionCarteObligatoire("Choisissez la position du 2eme joueur : ",
+                        'A', d.getLettreMax(),
+                        1, d.getHauteur(),
+                        scanner);
+                while (!sortLancer){
+                    sortLancer = p.echangerPosition(position1[0], position1[1], position2[0], position2[1], d );
+                    if(!sortLancer){
+                        position1 = this.m_utils.demanderPositionCarteObligatoire("Choisissez la position du 1er joueur : ",
+                                'A', d.getLettreMax(),
+                                1, d.getHauteur(),
+                                scanner);
+                        position2 = this.m_utils.demanderPositionCarteObligatoire("Choisissez la position du 2eme joueur : ",
+                                'A', d.getLettreMax(),
+                                1, d.getHauteur(),
+                                scanner);
+                    }
+                }
+
                 break;
             case 3:
                break;

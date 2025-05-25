@@ -36,23 +36,23 @@ public class Monstre extends Entite {
             this.m_nomAffiche = " X ";
         }
 
-        this.m_portee = des.lancerDes(1, 5);
+        this.m_portee = des.lancerDes(3, 5);
         if(m_portee > 1){
             this.m_force = 0;
-            this.m_dexterite = des.lancerDes(2, 6);
+            this.m_dexterite = des.lancerDes(3, 6);
             this.m_nomAttaque = "attaque de feu";
         }
         else{
-            this.m_force =  this.des.lancerDes(2, 6);
+            this.m_force =  this.des.lancerDes(4, 6);
             this.m_dexterite = 0;
             this.m_nomAttaque = "croc du dragon";
         }
-        this.m_classeArmure = des.lancerDes(3, 5);
-        this.m_degats = des.lancerDes(1, 6);
-        this.m_pvMax = des.lancerDes(4, 6);
+        this.m_classeArmure = des.lancerDes(3, 6);
+        this.m_degats = des.lancerDes(3, 5);
+        this.m_pvMax = des.lancerDes(4, 7);
         this.m_pv = m_pvMax;
         this.m_initiative = des.lancerDes(3, 6);
-        this.m_vitesse = des.lancerDes(2, 6);
+        this.m_vitesse = des.lancerDes(3, 6);
 
 
 
