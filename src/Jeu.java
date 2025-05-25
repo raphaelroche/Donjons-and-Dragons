@@ -252,6 +252,7 @@ public class Jeu {
                 }
                 else{
                     this.mdj.commenter("vous ne vous trouver pas sur une case d'équipement !");
+                    redemander = true;
                 }
                 break;
             case 5:
@@ -265,7 +266,7 @@ public class Jeu {
                         sort.toString(),
                         1, nb);
                 scanner.nextLine();
-                choixSort(choixdusort);
+                choixSort(choixdusort, d,(Personnage) e);
                 break;
         }
         if(redemander){
@@ -278,10 +279,23 @@ public class Jeu {
         d.afficherDonjon();
     }
 
-    public void choixSort(int choix){
+    public void choixSort(int choix, Donjon d, Personnage p){
+        boolean sortLancer = false;
         switch(choix){
             case 1:
-
+                int[] position = this.m_utils.demanderPositionCarte("Choisissez la position du joueur a guerir",
+                        'A', d.getLettreMax(),
+                        1, d.getHauteur(),
+                        scanner);
+                while (!sortLancer){
+                    sortLancer = p.Guerir(position[0], position[1], d);
+                    if(!sortLancer){
+                        position = this.m_utils.demanderPositionCarte("Position invalide, rechoisissez !",
+                                'A', d.getLettreMax(),
+                                1, d.getHauteur(),
+                                scanner);
+                    }
+                }
                 break;
             case 2:
                 break;

@@ -120,32 +120,51 @@ public class Personnage extends Entite {
         return this.m_classe.estMagicien();
     }
 
-    public boolean Guerir(Personnage p){
+    public boolean Guerir(int x, int y, Donjon d){
         boolean heal = false;
-
-        if(this.m_classe.estClerc() || this.m_classe.estMagicien()){
-            ContextSort cible = new ContextSort(p);
-             heal =  this.m_sorts.getFirst().lancerSort(cible);
-
+        Placable caseTableau = d.getCarte()[x-1][y-1].getFirst();
+        if(caseTableau.estEntite()){
+            if(((Entite)caseTableau).estPerso()){
+                Personnage p = (Personnage)caseTableau;
+                if(this.m_classe.estClerc() || this.m_classe.estMagicien()){
+                    ContextSort cible = new ContextSort(p);
+                    heal =  this.m_sorts.getFirst().lancerSort(cible);
+                }
+            }
         }
+
         return heal;
     }
 
-    public boolean echangerPosition(Entite e1, Entite e2){
+    public boolean echangerPosition(int x1, int y1, int x2, int y2, Donjon d){
         boolean echange = false;
-        if(this.m_classe.estMagicien()){
-            ContextSort cible = new ContextSort(e1,e2);
+        Placable caseTableau1 = d.getCarte()[x1-1][y1-1].getFirst();
+        Placable caseTableau2 = d.getCarte()[x2-1][y2-1].getFirst();
+        if(caseTableau1.estEntite() && caseTableau2.estEntite()){
+            Entite e1 = (Entite)caseTableau1;
+            Entite e2 = (Entite)caseTableau2;
+            if(this.m_classe.estMagicien()){
+                ContextSort cible = new ContextSort(e1,e2);
                 echange = this.m_sorts.get(1).lancerSort(cible);
+            }
         }
+
         return echange;
     }
 
-    public boolean enchanterArme(Armes arme){
+    public boolean enchanterArme(int x , int y, Donjon d){
         boolean enchanter = false;
-        if(this.m_classe.estMagicien()){
-            ContextSort armeAEnchanter = new ContextSort(arme);
-            enchanter = this.m_sorts.get(2).lancerSort(armeAEnchanter);
+        Placable caseTableau = d.getCarte()[x-1][y-1].getFirst();
+        if(caseTableau.estEquipement()){
+            if(((Equipement)caseTableau).estArme()){
+                Armes arme = (Armes)caseTableau;
+                if(this.m_classe.estMagicien()){
+                    ContextSort armeAEnchanter = new ContextSort(arme);
+                    enchanter = this.m_sorts.get(2).lancerSort(armeAEnchanter);
+                }
+            }
         }
+
         return enchanter;
 
     }
