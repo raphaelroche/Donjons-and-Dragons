@@ -149,6 +149,10 @@ public class Monstre extends Entite {
         return this.m_degats;
     }
 
+
+    public String getNomAttaque(){
+        return this.m_nomAttaque;
+    }
     public String getEspece() {
         return m_espece;
     }

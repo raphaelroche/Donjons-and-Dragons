@@ -11,6 +11,7 @@ import placable.obstacle.Obstacle;
 import utils.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Jeu {
@@ -147,8 +148,17 @@ public class Jeu {
             //demande d'equipé une arme et une armure
 
         }
+        for(Entite e : this.m_entitesEnVie) {
+            e.scorePourCommencer();
+            this.mdj.commenter("le score d'initiative ajouté a 1d20 de "+e.getIdentificationEntite()+" est de : "+e.getScoreInitiative());
+        }
+
+        this.m_entitesEnVie.sort((e1, e2) ->
+                Integer.compare(e2.getScoreInitiative(), e1.getScoreInitiative()));
         while(this.m_joueursEnVie.size() == this.m_nbJoueurs && !this.m_monstresEnVie.isEmpty()) {
             for(Entite e : this.m_entitesEnVie) {
+
+
                 System.out.println("Au tour de "+e.getIdentificationEntite());
                 for(int i = 0; i<3;i++){
                     int choix = demanderAction(e, d);
@@ -210,7 +220,7 @@ public class Jeu {
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
-                    String nom = d.getCarte()[position[0]-1][position[1]-1].getFirst().getNomAffiche();
+                    String nom = ((Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst()).getIdentificationEntite();
                     Entite cible = (Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst();
                     int pv = 0;
                     boolean attaque = e.attaquer(position[0],position[1], d);
@@ -221,6 +231,9 @@ public class Jeu {
                     else{
 
                         int degat = e.getDegats();
+                        if(e.estMonstre()){
+                            this.mdj.commenter("Vous lancer "+((Monstre)e).getNomAttaque()+" et infligé "+degat+" dégat à "+nom);
+                        }
                         this.mdj.commenter("Attaque reussi, vous avez infligé "+degat+" dégat à "+nom);
                         if(d.getCarte()[position[0]-1][position[1]-1].getFirst().estCaseVide()){
                             this.mdj.commenter("Vous avez tuer "+nom);
@@ -304,7 +317,7 @@ public class Jeu {
                                 scanner);
                     }
                 }
-                this.mdj.commenter("Vous avez redonner "+p.getEfficaciteGuerison()+" à "+d.getCarte()[position[0]-1][position[1]-1].getFirst().getNomAffiche());
+                this.mdj.commenter("Vous avez redonner "+p.getEfficaciteGuerison()+" à "+((Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst()).getIdentificationEntite());
                 break;
             case 2:
                 int[] position1 = this.m_utils.demanderPositionCarteObligatoire("Entrez la position du 1er joueur ou monstre : ",

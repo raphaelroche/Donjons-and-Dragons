@@ -1,10 +1,8 @@
 package placable.entites;
 
+import des.Des;
 import donjons.Donjon;
-import placable.CaseVide;
 import placable.Placable;
-import placable.equipements.Equipement;
-import placable.obstacle.Obstacle;
 
 import java.util.ArrayList;
 
@@ -20,6 +18,7 @@ public abstract class Entite implements Placable {
     protected int m_vitesse;
     protected String m_nomAffiche;
 
+    protected int scoreInitiative;
 
     @Override
     public void setLocation(int x, int y){
@@ -108,7 +107,14 @@ public abstract class Entite implements Placable {
         }
 
     }
+    public void scorePourCommencer(){
+        Des des = new Des();
+        scoreInitiative = des.lancerDes(1,20) + this.m_initiative;
+    }
 
+    public int getScoreInitiative(){
+        return this.scoreInitiative;
+    }
     public abstract int getDegats();
     public abstract boolean attaquer(int x, int y, Donjon d);
 
