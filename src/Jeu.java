@@ -88,10 +88,11 @@ public class Jeu {
     }
 
     public Donjon initDonjon() {
-        int hauteurD = this.m_utils.demanderChoixOuParDefaut("Entrez la hauteur du tableau", 15, 25, 15, scanner);
-        int largeurD = this.m_utils.demanderChoixOuParDefaut("Entrez la largeur du tableau", 15, 25, 15, scanner);
 
-        Donjon d = new Donjon(hauteurD, largeurD);
+        int largeurD = this.m_utils.demanderChoixOuParDefaut("Entrez la largeur du tableau", 15, 25, 15, scanner);
+        int hauteurD = this.m_utils.demanderChoixOuParDefaut("Entrez la hauteur du tableau", 15, 25, 15, scanner);
+
+        Donjon d = new Donjon(largeurD,hauteurD);
 
         this.m_nbObstacle = this.m_utils.demanderChoixOuParDefaut("Indiquez le nombre d'obstacle",
                 0, 10, 5,
@@ -215,13 +216,16 @@ public class Jeu {
                 break;
             case 2:
 
-
+                String nom = "";
+                Entite cible = null;
                     int[] position = this.m_utils.demanderPositionCarteObligatoire("Quelle case voulez vous attaquer ?",
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
-                    String nom = ((Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst()).getIdentificationEntite();
-                    Entite cible = (Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst();
+                    if(d.getCarte()[position[0]-1][position[1]-1].getFirst().estEntite()){
+                        nom = ((Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst()).getIdentificationEntite();
+                        cible = (Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst();
+                    }
                     int pv = 0;
                     boolean attaque = e.attaquer(position[0],position[1], d);
                     if(!attaque){
@@ -266,6 +270,8 @@ public class Jeu {
 
                 ((Personnage)e).sEquiper(((Personnage) e).getInventaire().get(equipementChoisi-1));
                 break;
+
+
             case 4:
                 boolean ramasser = ((Personnage)e).ramasserEquipement((Equipement)d.getCarte()[e.getPositionX()][e.getPositionY()].get(1), d.getCarte());
                 if(ramasser){
@@ -353,15 +359,12 @@ public class Jeu {
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
-                    while (!sortLancer){
+
                         sortLancer = p.enchanterArme(positionArme[0], positionArme[1], d);
                         if(!sortLancer){
-                            positionArme = this.m_utils.demanderPositionCarteObligatoire("Entrez la position de l'arme a enchanter : ",
-                                    'A', d.getLettreMax(),
-                                    1, d.getHauteur(),
-                                    scanner);
+                           choixSort(3, d, p);
                         }
-                    }
+
                     this.mdj.commenter(((Equipement)d.getCarte()[positionArme[0]-1][positionArme[1]-1].getFirst()).getNomEquipement()+" enchantée ! ");
                 }
                 else{
@@ -381,9 +384,9 @@ public class Jeu {
                             message.toString(),
                             1, nbarme);
                     scanner.nextLine();
-                    while(!sortLancer){
-                        sortLancer = p.enchanterArmeInventaire(((Personnage)d.getCarte()[postionJoueur[0]-1][postionJoueur[1]-1].getFirst()),arme-1);
-                    }
+
+                    p.enchanterArmeInventaire(((Personnage)d.getCarte()[postionJoueur[0]-1][postionJoueur[1]-1].getFirst()),arme-1);
+
                     this.mdj.commenter("Arme enchantée !");
                 }
 
@@ -400,17 +403,21 @@ public class Jeu {
                 scanner);
 
 
-        boolean peutSePlacer = mdj.positionnerEntite(d, p);
+        boolean peutSePlacer = false;
         if (position[0] == -1 || position[1] == -1) {
             verificationPlacementjoueur(p, d, peutSePlacer);
         } else {
             while (!peutSePlacer) {
-                position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du joueur",
-                        'A', d.getLettreMax(),
-                        1, d.getHauteur(),
-                        scanner);
                 p.setLocation(position[0] - 1, position[1] - 1);
                 peutSePlacer = mdj.positionnerEntite(d, p);
+                if(!peutSePlacer){
+                    position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du joueur",
+                            'A', d.getLettreMax(),
+                            1, d.getHauteur(),
+                            scanner);
+
+                }
+
             }
         }
     }
@@ -498,8 +505,8 @@ public class Jeu {
             Obstacle o = this.m_utils.creerObstacleAleatoire(d);
             boolean peutSePlacer = mdj.positionnerObstacle(d, o);
             while(!peutSePlacer) {
-                o.setLocation(m_des.lancerDes(1, d.getHauteur() - 1),
-                        (m_des.lancerDes(1, d.getLargeur() - 1)));
+                o.setLocation(m_des.lancerDes(1, d.getLargeur() - 1),
+                        (m_des.lancerDes(1, d.getHauteur() - 1)));
 
                 peutSePlacer = mdj.positionnerObstacle(d, o);
             }
@@ -527,8 +534,8 @@ public class Jeu {
         Equipement e = this.m_utils.creerEquipementAleatoire(d);
         boolean peutSePlacer = mdj.positionnerEquipement(d, e);
         while(!peutSePlacer){
-            e.setLocation(m_des.lancerDes(1, d.getHauteur() - 1),
-                    (m_des.lancerDes(1, d.getLargeur() - 1)));
+            e.setLocation(m_des.lancerDes(1, d.getLargeur() - 1),
+                    (m_des.lancerDes(1, d.getHauteur() - 1)));
            peutSePlacer =  mdj.positionnerEquipement(d, e);
         }
         System.out.println("Equipement aléatoirement positionné\n");

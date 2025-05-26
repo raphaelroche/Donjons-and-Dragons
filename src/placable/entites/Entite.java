@@ -59,31 +59,33 @@ public abstract class Entite implements Placable {
         for(int i = 0; i < distance; i++){
             switch(direction){
                 case 1: // Haut
-                    if (newX - 1 < 0) break quitterBoucle;
-                    if (contientObstacle(carte[newX - 1][newY])) break quitterBoucle;
-                    if(contientEntite(carte[newX - 1][newY])) break quitterBoucle;
-                    newX--;
-                    break;
-
-                case 2: // Bas
-                    if (newX + 1 >= d.getHauteur()) break quitterBoucle;
-                    if (contientObstacle(carte[newX + 1][newY])) break quitterBoucle;
-                    if(contientEntite(carte[newX + 1][newY])) break quitterBoucle;
-                    newX++;
-                    break;
-
-                case 3: // Gauche
                     if (newY - 1 < 0) break quitterBoucle;
                     if (contientObstacle(carte[newX][newY - 1])) break quitterBoucle;
                     if(contientEntite(carte[newX][newY - 1])) break quitterBoucle;
                     newY--;
                     break;
 
-                case 4: // Droite
-                    if (newY + 1 >= d.getLargeur()) break quitterBoucle;
+
+                case 2: // Bas
+                    if (newY + 1 >= d.getHauteur()-1) break quitterBoucle;
                     if (contientObstacle(carte[newX][newY + 1])) break quitterBoucle;
                     if(contientEntite(carte[newX][newY+1])) break quitterBoucle;
                     newY++;
+                    break;
+
+
+                case 3: // Gauche
+                    if (newX - 1 < 0) break quitterBoucle;
+                    if (contientObstacle(carte[newX - 1][newY])) break quitterBoucle;
+                    if(contientEntite(carte[newX - 1][newY])) break quitterBoucle;
+                    newX--;
+                    break;
+
+                case 4: // Droite
+                    if (newX + 1 >= d.getLargeur()-1) break quitterBoucle;
+                    if (contientObstacle(carte[newX + 1][newY])) break quitterBoucle;
+                    if(contientEntite(carte[newX + 1][newY])) break quitterBoucle;
+                    newX++;
                     break;
 
                 default:

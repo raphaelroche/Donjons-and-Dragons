@@ -22,18 +22,19 @@ public class Donjon {
         this(15, 15);
     }
 
-    public Donjon(int hauteur, int largeur){
+
+    public Donjon(int largeur,int hauteur){
         this.m_hauteur = hauteur;
         this.m_largeur = largeur;
-        this.m_carte = new ArrayList[m_hauteur][m_largeur];
+        this.m_carte = new ArrayList[m_largeur][m_hauteur];
         this.m_alphabet = new char[] {
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         };
 
         // Initialiser la carte avec des "." initaliser la 2 eme case a null
-        for (int x = 0; x < m_hauteur; x++) {
-            for (int y = 0; y < m_largeur; y++) {
+        for (int x = 0; x < m_largeur; x++) {
+            for (int y = 0; y < m_hauteur; y++) {
                 m_carte[x][y] = new ArrayList<>();
                 positionnerEmplacementVide(x,y);
                 m_carte[x][y].add(null);
@@ -62,7 +63,7 @@ public class Donjon {
                 System.out.print(i+1 + " |");
             }
             for (int j = 0; j < this.m_largeur; j++) {
-                System.out.print(" " + this.m_carte[i][j].getFirst().getNomAffiche());
+                System.out.print(" " + this.m_carte[j][i].getFirst().getNomAffiche());
             }
             System.out.print("  |");
             System.out.println();
@@ -81,7 +82,6 @@ public class Donjon {
             this.m_carte[x][y].set(0, new CaseVide(x, y));
         }
     }
-
     public void decalerADroite(ArrayList<Placable> l){
 
         Placable p = l.getFirst();

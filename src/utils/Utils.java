@@ -91,7 +91,7 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
 
         while (true) {
             System.out.print(message + " (format: LettreNuméro, par exemple A1, B20... entre "
-                    + minLettre + minNumero + " et " + maxLettre + maxNumero + " : \n");
+                    + minLettre + minNumero + " et " + maxLettre + (maxNumero-1) + " : \n");
             String input = scanner.nextLine().trim().toUpperCase();
 
 
@@ -110,8 +110,8 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
                 int indexLettre = alphabet.indexOf(lettre)+1;
 
                 if (indexLettre >= (minLettre - 'A') && indexLettre <= (maxLettre - 'A') && numero >= minNumero && numero <= maxNumero) {
-                    position[0] = numero;
-                    position[1] = indexLettre;
+                    position[1] = numero;
+                    position[0] = indexLettre;
                     return true;
                 } else {
                     System.out.println("Position hors plage. Veuillez entrer une position valide.");
