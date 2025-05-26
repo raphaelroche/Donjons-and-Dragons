@@ -11,13 +11,12 @@ import placable.obstacle.Obstacle;
 import utils.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class Jeu {
     private ArrayList<Personnage> m_joueursEnVie;
     private ArrayList<Monstre> m_monstresEnVie;
-    private ArrayList<Entite> m_entitesEnVie;
+    private ArrayList<Entite> m_entites;
     private ArrayList<Personnage> m_joueur;
     private Utils m_utils;
     private int m_nbJoueurs;
@@ -38,7 +37,7 @@ public class Jeu {
                 "U", "V", "W", "X", "Y", "Z"};
         this.m_joueursEnVie = new ArrayList<>();
         this.m_monstresEnVie = new ArrayList<>();
-        this.m_entitesEnVie = new ArrayList<>();
+        this.m_entites = new ArrayList<>();
         this.m_joueur = new ArrayList<>();
     }
 
@@ -71,8 +70,8 @@ public class Jeu {
 
             }
             this.m_joueursEnVie.addAll(this.m_joueur);
-            this.m_entitesEnVie.addAll(this.m_joueur);
-            this.m_entitesEnVie.addAll(this.m_monstresEnVie);
+            this.m_entites.addAll(this.m_joueur);
+            this.m_entites.addAll(this.m_monstresEnVie);
 
 
 
@@ -81,7 +80,7 @@ public class Jeu {
             deroulePartie(d);
             System.out.println("============================== FIN DU DONJON " + (i+1) + " =================================\n\n");
             this.m_monstresEnVie.clear();
-            this.m_entitesEnVie.clear();
+            this.m_entites.clear();
             this.m_joueursEnVie.clear();
 
         }
@@ -149,22 +148,23 @@ public class Jeu {
             //demande d'equipé une arme et une armure
 
         }
-        for(Entite e : this.m_entitesEnVie) {
+        for(Entite e : this.m_entites) {
             e.scorePourCommencer();
             this.mdj.commenter("le score d'initiative ajouté a 1d20 de "+e.getIdentificationEntite()+" est de : "+e.getScoreInitiative());
         }
 
-        this.m_entitesEnVie.sort((e1, e2) ->
+        this.m_entites.sort((e1, e2) ->
                 Integer.compare(e2.getScoreInitiative(), e1.getScoreInitiative()));
         while(this.m_joueursEnVie.size() == this.m_nbJoueurs && !this.m_monstresEnVie.isEmpty()) {
-            for(Entite e : this.m_entitesEnVie) {
+            for(Entite e : this.m_entites) {
 
-
-                System.out.println("Au tour de "+e.getIdentificationEntite());
-                for(int i = 0; i<3;i++){
-                    int choix = demanderAction(e, d);
-                    if(choix == 0) {
-                        break;
+                if((e.estMonstre() && this.m_monstresEnVie.contains((Monstre)e)) || (e.estPerso() && this.m_joueursEnVie.contains((Personnage)e))) {
+                    System.out.println("Au tour de "+e.getIdentificationEntite());
+                    for(int i = 0; i<3;i++){
+                        int choix = demanderAction(e, d);
+                        if(choix == 0) {
+                            break;
+                        }
                     }
                 }
             }
@@ -216,8 +216,8 @@ public class Jeu {
                 break;
             case 2:
 
-                String nom = "";
-                Entite cible = null;
+                String nom;
+                Entite cible;
                     int[] position = this.m_utils.demanderPositionCarteObligatoire("Quelle case voulez vous attaquer ?",
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
@@ -225,30 +225,30 @@ public class Jeu {
                     if(d.getCarte()[position[0]-1][position[1]-1].getFirst().estEntite()){
                         nom = ((Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst()).getIdentificationEntite();
                         cible = (Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst();
-                    }
-                    int pv = 0;
-                    boolean attaque = e.attaquer(position[0],position[1], d);
-                    if(!attaque){
-                        this.mdj.commenter("Impossible d'attaquer cette case vous pouvez retenter une action");
-                        redemander = true;
-                    }
-                    else{
+                        int pv = 0;
+                        boolean attaque = e.attaquer(position[0],position[1], d);
+                        if(!attaque){
+                            this.mdj.commenter("Impossible d'attaquer cette case vous pouvez retenter une action");
+                            redemander = true;
+                        }
+                        else{
 
-                        int degat = e.getDegats();
-                        if(e.estMonstre()){
-                            this.mdj.commenter("Vous lancer "+((Monstre)e).getNomAttaque()+" et infligé "+degat+" dégat à "+nom);
-                        }
-                        this.mdj.commenter("Attaque reussi, vous avez infligé "+degat+" dégat à "+nom);
-                        if(d.getCarte()[position[0]-1][position[1]-1].getFirst().estCaseVide()){
-                            this.mdj.commenter("Vous avez tuer "+nom);
-                            this.m_entitesEnVie.remove(cible);
-                            if(cible.estPerso()){
-                                this.m_joueursEnVie.remove((Personnage) cible);
+                            int degat = e.getDegats();
+                            if(e.estMonstre()){
+                                this.mdj.commenter("Vous lancer "+((Monstre)e).getNomAttaque()+" et infligé "+degat+" dégat à "+nom);
                             }
-                            else{
-                                this.m_monstresEnVie.remove((Monstre) cible);
+                            this.mdj.commenter("Attaque reussi, vous avez infligé "+degat+" dégat à "+nom);
+                            if(d.getCarte()[position[0]-1][position[1]-1].getFirst().estCaseVide()){
+                                this.mdj.commenter("Vous avez tuer "+nom);
+                                if(cible.estPerso()){
+                                    this.m_joueursEnVie.remove((Personnage) cible);
+                                }
+                                else{
+                                    this.m_monstresEnVie.remove((Monstre) cible);
+                                }
                             }
                         }
+
                     }
 
 
