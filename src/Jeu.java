@@ -76,7 +76,7 @@ public class Jeu {
 
 
 
-            afficherEntites(d);
+            afficherEntites();
             d.afficherDonjon();
             deroulePartie(d);
             System.out.println("============================== FIN DU DONJON " + (i+1) + " =================================\n\n");
@@ -771,13 +771,13 @@ public class Jeu {
         }
     }
 
-    public void afficherEntites(Donjon d) {
+    public void afficherEntites() {
         for (Personnage p : this.m_joueursEnVie) {
             System.out.println("\t" + p.getNomAffiche() + " " + p.getNom() +
                     " (" + p.getNomRace() + " " + p.getNomClasse() + ", " + p.getPv() + "/" + p.getPvMax() + ")");
         }
-        if (d.getListeMonstre() != null) {
-            for (Monstre m : d.getListeMonstre()) {
+        if (this.m_monstresEnVie != null) {
+            for (Monstre m : this.m_monstresEnVie) {
                 System.out.println(m.getNomAffiche() + " " + m.getEspece() +
                         " (" + m.getPv() + "/" + m.getPvMax() + ")");
             }

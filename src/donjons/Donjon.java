@@ -14,8 +14,6 @@ public class Donjon {
     private final ArrayList<Placable>[][] m_carte;
     private int m_hauteur;
     private int m_largeur;
-    private CaseVide m_casevide;
-    private Monstre[] m_listeMonstre;
 
 
     public Donjon(){
@@ -157,9 +155,5 @@ public class Donjon {
 
     public void separer() {
         System.out.println("\t*" + "-".repeat(this.getLargeur()*4) + "*");
-    }
-
-    public Monstre[] getListeMonstre() {
-        return m_listeMonstre;
     }
 }
