@@ -67,7 +67,7 @@ public abstract class Entite implements Placable {
 
 
                 case 2: // Bas
-                    if (newY + 1 >= d.getHauteur()-1) break quitterBoucle;
+                    if (newY + 1 >= d.getHauteur()) break quitterBoucle;
                     if (contientObstacle(carte[newX][newY + 1])) break quitterBoucle;
                     if(contientEntite(carte[newX][newY+1])) break quitterBoucle;
                     newY++;
@@ -82,7 +82,7 @@ public abstract class Entite implements Placable {
                     break;
 
                 case 4: // Droite
-                    if (newX + 1 >= d.getLargeur()-1) break quitterBoucle;
+                    if (newX + 1 >= d.getLargeur()) break quitterBoucle;
                     if (contientObstacle(carte[newX + 1][newY])) break quitterBoucle;
                     if(contientEntite(carte[newX + 1][newY])) break quitterBoucle;
                     newX++;

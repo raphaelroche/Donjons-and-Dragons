@@ -130,7 +130,7 @@ public class Jeu {
                 creerEquipement(type, i, d);
             } else if (creationEquipement == 2) {
                 System.out.println("Vous avez choisi de créer les équipement aléatoirement.");
-                initEquipementAleatoire(i, d);
+                initEquipementAleatoire(d);
             }
         }
         this.m_nb_monstres = this.m_utils.demanderChoixOuParDefaut("Indiquez le nombre de monstres",
@@ -164,7 +164,7 @@ public class Jeu {
                 if((e.estMonstre() && this.m_monstresEnVie.contains((Monstre)e)) || (e.estPerso() && this.m_joueursEnVie.contains((Personnage)e))) {
                     System.out.println("Au tour de "+e.getIdentificationEntite());
                     for(int i = 0; i<3;i++){
-                        if(this.m_joueursEnVie.size() == this.m_nbJoueurs && !this.m_monstresEnVie.isEmpty()){
+                        if(this.m_joueursEnVie.size() != this.m_nbJoueurs || this.m_monstresEnVie.isEmpty()){
                             break quitterwhile;
                         }
                         int choix = demanderAction(e, d);
@@ -443,7 +443,7 @@ public class Jeu {
                     (m_des.lancerDes(1, d.getLargeur() - 1)));
             peutSePlacer = mdj.positionnerEntite(d, p);
         }
-        System.out.println(p.getNom() + " a été placé en " + alphabet[p.getPositionX()] + String.valueOf(p.getPositionY()+1));
+        System.out.println(p.getNom() + " a été placé en " + alphabet[p.getPositionX()-1] + String.valueOf(p.getPositionY()));
     }
 
     public Personnage initJoueur(int nJoueur, Donjon d) {
@@ -540,13 +540,13 @@ public class Jeu {
                 o.setLocation(position[0]-1,position[1]-1);
                 peutSePlacer = mdj.positionnerObstacle(d, o);
             }
-                System.out.println("Obstacle positionné en " + alphabet[position[0]] + String.valueOf(position[1]+1));
+                System.out.println("Obstacle positionné en " + alphabet[position[0]-1] + String.valueOf(position[1]));
 
 
         }
     }
 
-    public void initEquipementAleatoire(int i, Donjon d) {
+    public void initEquipementAleatoire(Donjon d) {
 
         Equipement e = this.m_utils.creerEquipementAleatoire(d);
         boolean peutSePlacer = mdj.positionnerEquipement(d, e);
@@ -629,18 +629,26 @@ public class Jeu {
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
-                int posX;
-                int posY;
+
+                int posX = 0;
+                int posY = 0;
+                m = new Monstre(espece, portee, pv,vitesse, attaque, armure, force, dexterite, initiative, posX, posY);
+                boolean peutSePlacer = false;
                 if(position[0] == -1 || position[1] == -1){
-                    posX = m_des.lancerDes(1, d.getLargeur()-1);
-                    posY = m_des.lancerDes(1, d.getHauteur()-1);
+                    while(!peutSePlacer){
+                        posX = m_des.lancerDes(1, d.getLargeur());
+                        posY = m_des.lancerDes(1, d.getHauteur());
+                        m.setLocation(posX-1, posY-1);
+                        peutSePlacer = mdj.positionnerEntite(d, m);
+                        System.out.println("Monstre positionné en " + alphabet[posX-1] + String.valueOf(posY));
+                    }
                 }
                 else{
                     posX = position[0];
                     posY = position[1];
                 }
-                m = new Monstre(espece, portee, pv,vitesse, attaque, armure, force, dexterite, initiative, posX, posY);
-                boolean peutSePlacer = mdj.positionnerEntite(d, m);
+
+                peutSePlacer = mdj.positionnerEntite(d, m);
                 while (!peutSePlacer) {
                     position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du Monstre",
                             'A', d.getLettreMax(),
@@ -651,7 +659,7 @@ public class Jeu {
                     m.setLocation(posX - 1, posY - 1);
                     peutSePlacer = mdj.positionnerEntite(d, m);
                 }
-                System.out.println("Monstre positionné en " + alphabet[posX] + String.valueOf(posY+1));
+                System.out.println("Monstre positionné en " + alphabet[posX-1] + String.valueOf(posY));
 
                 break;
             }
@@ -693,6 +701,17 @@ public class Jeu {
                 1, d.getHauteur(),
                 scanner);
         boolean peutSePlacer = false;
+        if(position[0] == -1 || position[1] == -1){
+            while(!peutSePlacer){
+                position[0] = m_des.lancerDes(1, d.getLargeur());
+                position[1] = m_des.lancerDes(1, d.getHauteur());
+                assert e != null;
+                e.setLocation(position[0]-1, position[1]-1);
+                peutSePlacer = mdj.positionnerEquipement(d, e);
+            }
+
+        }
+
         while(!peutSePlacer){
 
 
@@ -707,6 +726,7 @@ public class Jeu {
             }
 
         }
+        System.out.println("Equipement positionné en " + alphabet[position[0]-1] + String.valueOf(position[1]));
     }
 
     public void afficherEntites() {
