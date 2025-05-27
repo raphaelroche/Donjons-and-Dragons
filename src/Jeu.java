@@ -258,7 +258,7 @@ public class Jeu {
 
                         }
                         catch(ArmureException | PorteeException ex){
-                            mdj.commenter("Erreur : "+ex.getMessage());
+                            mdj.commenter("Impossible d'attaquer : "+ex.getMessage());
                         }
 
 
