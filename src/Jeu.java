@@ -63,10 +63,12 @@ public class Jeu {
                     Personnage p = initJoueur(j + 1, d);
                     this.m_joueur.add(p);
                     System.out.println("================================================================================");
+
                 }
                 else{
                     for(Personnage p : this.m_joueur){
                         placerPersonnage(p, d);
+                        this.demanderEquipement(p);
                     }
                 }
 
@@ -402,7 +404,6 @@ public class Jeu {
 
                     this.mdj.commenter("Arme enchantée !");
                 }
-
                break;
 
         }
@@ -506,6 +507,8 @@ public class Jeu {
                 peutSePlacer = mdj.positionnerEntite(d, p);
             }
         }
+        this.demanderEquipement(p);
+
         return p;
     }
 
@@ -797,6 +800,20 @@ public class Jeu {
         }
         System.out.println();
 
+    }
+
+    public void demanderEquipement(Personnage p) {
+        if (!p.getInventaire().isEmpty()) {
+            int choixEquipement = -1;
+            while (choixEquipement != 0) {
+                choixEquipement = this.m_utils.demanderChoixOuParDefaut(p.getNom() + " peut choisir un équipement à équiper : " + p.afficherInventaire(),
+                        0, p.getInventaire().size(), 0, scanner);
+                if (choixEquipement != 0) {
+                    System.out.println(p.getNom() + "s'est équipé de " + p.getInventaire().get(choixEquipement - 1).getNomEquipement() + ".");
+                    p.sEquiper(p.getInventaire().get(choixEquipement - 1));
+                }
+            }
+        }
     }
 
 
