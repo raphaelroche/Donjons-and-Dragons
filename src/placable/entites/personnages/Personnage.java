@@ -1,6 +1,7 @@
 package placable.entites.personnages;
 
 import donjons.Donjon;
+import exception.PorteeException;
 import placable.CaseVide;
 import placable.Placable;
 import placable.entites.Entite;
@@ -228,6 +229,9 @@ public Armes getArmeAtIndex(ArrayList<Equipement> liste, int index) {
                             }
                             return true;
                         }
+                    }
+                    else{
+                        throw new PorteeException();
                     }
                 }
 
