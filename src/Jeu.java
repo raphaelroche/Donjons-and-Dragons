@@ -1,5 +1,7 @@
 import des.Des;
 import donjons.*;
+import exception.ArmureException;
+import exception.PorteeException;
 import maitredujeu.MaitreDuJeu;
 import placable.entites.Entite;
 import placable.entites.monstres.Monstre;
@@ -227,28 +229,38 @@ public class Jeu {
                         nom = ((Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst()).getIdentificationEntite();
                         cible = (Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst();
                         int pv = 0;
-                        boolean attaque = e.attaquer(position[0],position[1], d);
-                        if(!attaque){
-                            this.mdj.commenter("Impossible d'attaquer cette case vous pouvez retenter une action");
-                            redemander = true;
-                        }
-                        else{
+                        try{
+                            boolean attaque = e.attaquer(position[0],position[1], d);
+                            if(!attaque){
+                                this.mdj.commenter("Impossible d'attaquer, vous vous tromper de cible ou n'avez pas d'arme equipée !");
+                                redemander = true;
+                            }
+                            else{
 
-                            int degat = e.getDegats();
-                            if(e.estMonstre()){
-                                this.mdj.commenter("Vous lancer "+((Monstre)e).getNomAttaque()+" et infligé "+degat+" dégat à "+nom);
-                            }
-                            this.mdj.commenter("Attaque reussi, vous avez infligé "+degat+" dégat à "+nom);
-                            if(d.getCarte()[position[0]-1][position[1]-1].getFirst().estCaseVide()){
-                                this.mdj.commenter("Vous avez tuer "+nom);
-                                if(cible.estPerso()){
-                                    this.m_joueursEnVie.remove((Personnage) cible);
+                                int degat = e.getDegats();
+                                if(e.estMonstre()){
+                                    this.mdj.commenter("Vous lancer "+((Monstre)e).getNomAttaque()+" et infligé "+degat+" dégat à "+nom);
                                 }
-                                else{
-                                    this.m_monstresEnVie.remove((Monstre) cible);
+                                else {
+                                    this.mdj.commenter("Attaque reussi, vous avez infligé "+degat+" dégat à "+nom);
+                                }
+
+                                if(d.getCarte()[position[0]-1][position[1]-1].getFirst().estCaseVide()){
+                                    this.mdj.commenter("Vous avez tuer "+nom);
+                                    if(cible.estPerso()){
+                                        this.m_joueursEnVie.remove((Personnage) cible);
+                                    }
+                                    else{
+                                        this.m_monstresEnVie.remove((Monstre) cible);
+                                    }
                                 }
                             }
+
                         }
+                        catch(ArmureException | PorteeException ex){
+                            System.out.println("Erreur : "+ex.getMessage());
+                        }
+
 
                     }
 
