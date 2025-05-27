@@ -441,7 +441,7 @@ public class Jeu {
                     (m_des.lancerDes(1, d.getLargeur() - 1)));
             peutSePlacer = mdj.positionnerEntite(d, p);
         }
-        System.out.println(p.getNom() + " a été placé en " + alphabet[p.getPositionY()] + String.valueOf(p.getPositionX() + 1));
+        System.out.println(p.getNom() + " a été placé en " + alphabet[p.getPositionX()-1] + String.valueOf(p.getPositionY()));
     }
 
     public Personnage initJoueur(int nJoueur, Donjon d) {
@@ -536,7 +536,7 @@ public class Jeu {
                 o.setLocation(position[0]-1,position[1]-1);
                 peutSePlacer = mdj.positionnerObstacle(d, o);
             }
-                System.out.println("Obstacle positionné en " + alphabet[position[1]-1] + String.valueOf(position[0]));
+                System.out.println("Obstacle positionné en " + alphabet[position[0]-1] + String.valueOf(position[1]));
 
 
         }
@@ -726,7 +726,7 @@ public class Jeu {
                     m.setLocation(posX - 1, posY - 1);
                     peutSePlacer = mdj.positionnerEntite(d, m);
                 }
-                System.out.println("Monstre positionné en " + alphabet[posY - 1] + String.valueOf(posX));
+                System.out.println("Monstre positionné en " + alphabet[posX - 1] + String.valueOf(posY));
 
                 break;
             }
