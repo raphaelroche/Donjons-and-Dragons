@@ -258,7 +258,7 @@ public class Jeu {
 
                         }
                         catch(ArmureException | PorteeException ex){
-                            System.out.println("Erreur : "+ex.getMessage());
+                            mdj.commenter("Erreur : "+ex.getMessage());
                         }
 
 

@@ -203,7 +203,7 @@ public Armes getArmeAtIndex(ArrayList<Equipement> liste, int index) {
 
 
     @Override
-    public boolean attaquer(int x, int y, Donjon d){
+    public boolean attaquer(int x, int y, Donjon d)throws ArmureException, PorteeException {
         Placable p = d.getCarte()[x-1][y-1].getFirst();
         if(p.estEntite()){
             if(((Entite) p).estMonstre()){
