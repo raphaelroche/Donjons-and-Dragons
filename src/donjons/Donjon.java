@@ -151,7 +151,7 @@ public class Donjon {
         return this.m_largeur;
     }
 
-    public char getLettreMax() { return this.m_alphabet[m_largeur]; }
+    public char getLettreMax() { return this.m_alphabet[m_largeur-1]; }
 
     public void separer() {
         System.out.println("\t*" + "-".repeat(this.getLargeur()*4) + "*");

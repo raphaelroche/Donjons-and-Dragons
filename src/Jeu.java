@@ -77,6 +77,7 @@ public class Jeu {
 
             afficherEntites();
             d.afficherDonjon();
+            System.out.println();
             deroulePartie(d);
             System.out.println("============================== FIN DU DONJON " + (i+1) + " =================================\n\n");
             this.m_monstresEnVie.clear();
