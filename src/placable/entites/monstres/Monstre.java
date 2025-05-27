@@ -48,18 +48,11 @@ public class Monstre extends Entite {
             this.m_nomAttaque = "croc du dragon";
         }
         this.m_classeArmure = des.lancerDes(3, 6);
-        this.m_degats = 4 + des.lancerDes(1, 6);
+        this.m_degats = 3 + des.lancerDes(1, 4);
         this.m_pvMax = des.lancerDes(4, 7);
         this.m_pv = m_pvMax;
         this.m_initiative = des.lancerDes(3, 6);
         this.m_vitesse = des.lancerDes(3, 6);
-
-
-
-
-
-
-
     }
 
     public Monstre(String espece, int portee,int pv,int vitesse, String nomattaque,  int classeArmure, int force, int dexterite, int initiative,  int x, int y) {
@@ -75,7 +68,7 @@ public class Monstre extends Entite {
         this.m_pv = m_pvMax;
         this.m_nomAttaque = nomattaque;
         //degat min = 4, degat max = 10
-        this.m_degats = 4 + des.lancerDes(1, 6);
+        this.m_degats = 3 + des.lancerDes(1, 4);
         this.m_classeArmure = classeArmure;
         this.m_initiative = initiative;
         monstres.add(this);
