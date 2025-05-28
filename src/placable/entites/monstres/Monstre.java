@@ -119,11 +119,10 @@ public class Monstre extends Entite {
         if(p.estEntite()){
             if(((Entite)p).estPerso()){
                 Personnage cible = (Personnage)p;
-                int dX = this.m_positionX - cible.getPositionX();
-                int dY = this.m_positionY - cible.getPositionY();
-
-                double distanceMonstreCible = Math.sqrt(dX * dX + dY * dY);
-                if(this.m_portee >= Math.abs(distanceMonstreCible)){
+                int dX = Math.abs(this.m_positionX - (x-1));
+                int dY = Math.abs(this.m_positionY - (y-1));
+                int distanceMonstreCible = Math.max(dX, dY);
+                if(this.m_portee >= distanceMonstreCible){
                     if(this.m_degats > cible.getClasseArmure()){
                         cible.ajusterPv(-(this.m_degats));
                         if(cible.getPv()<=0){

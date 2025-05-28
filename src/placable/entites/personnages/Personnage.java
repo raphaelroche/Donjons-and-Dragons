@@ -208,12 +208,12 @@ public Armes getArmeAtIndex(ArrayList<Equipement> liste, int index) {
         if(p.estEntite()){
             if(((Entite) p).estMonstre()){
                 Monstre cible = (Monstre)p;
-                int dX = this.m_positionX - (x-1);
-                int dY = this.m_positionY - (y-1);
-                double distanceJoueurCible = Math.sqrt((dX * dX) + (dY * dY));
+                int dX = Math.abs(this.m_positionX - (x-1));
+                int dY = Math.abs(this.m_positionY - (y-1));
+                int distanceJoueurCible = Math.max(dX, dY);//on utilise math.max pour avoir les diagonal = 1
 
                 if(this.m_armeEquipee != null){
-                    if((this.m_armeEquipee.getPortee()+0.01) >= (int)(Math.abs(distanceJoueurCible))){//Maths.sqrt n'est pas precis donc renvoi 1,00001 alors que c'est egal a 1
+                    if((this.m_armeEquipee.getPortee()) >=distanceJoueurCible){
                         int degat = des.lancerDes(1, 20);
                         if(this.m_armeEquipee.getPortee() == 1){
                             degat += this.m_force;

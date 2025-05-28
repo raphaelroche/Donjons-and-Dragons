@@ -54,11 +54,11 @@ public abstract class Entite implements Placable {
             d.positionnerEmplacementVide(this.m_positionX, this.m_positionY);
         }
 
-        int dX = this.m_positionX - x;
-        int dY = this.m_positionY - y;
-        double distanceDeplacement = Math.sqrt((dX * dX) + (dY * dY));
+        int dX = Math.abs(this.m_positionX - x);
+        int dY = Math.abs(this.m_positionY - y);
+        int distanceDeplacement = Math.max(dX, dY);
 
-       if((int)Math.abs(distanceDeplacement) <= distance){
+       if(distanceDeplacement <= distance){
            this.setLocation(x, y);
            //mettre a jour la carte du donjon
            etrePlace = d.positionnerElementCarte(this);
