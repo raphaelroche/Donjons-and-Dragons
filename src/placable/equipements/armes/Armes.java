@@ -48,6 +48,6 @@ public abstract class Armes extends Equipement {
 
     @Override
     public String toString() {
-        return this.m_nom + " : portée = " + this.m_portee + ", dégats = " + this.m_degats;
+        return this.m_nom + " : portée = " + this.m_portee;
     }
 }

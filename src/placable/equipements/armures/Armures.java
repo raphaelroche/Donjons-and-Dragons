@@ -27,4 +27,9 @@ public abstract class Armures extends Equipement {
     public boolean estArmure(){
         return true;
     }
+
+    @Override
+    public String toString() {
+        return this.m_nom + " : classe d'armure = " + this.m_classe;
+    }
 }

@@ -371,8 +371,10 @@ public Armes getArmeAtIndex(ArrayList<Equipement> liste, int index) {
 
         StringBuilder contenu = new StringBuilder();
         for (int i = 0; i < this.m_inventaire.size(); i++) {
-            contenu.append("  [").append(i + 1).append("] ").append(this.m_inventaire.get(i).getNomEquipement());
+            contenu.append("\n");
+            contenu.append("  [").append(i + 1).append("] ").append(this.m_inventaire.get(i));
         }
+        contenu.append("\n");
         return contenu.toString();
     }
 

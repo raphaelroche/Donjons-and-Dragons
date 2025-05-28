@@ -929,7 +929,7 @@ public class Jeu {
                 choixEquipement = this.m_interact.demanderChoixOuParDefaut(p.getNom() + " peut choisir un équipement à équiper : " + p.afficherInventaire(),
                         0, p.getInventaire().size(), 0, scanner);
                 if (choixEquipement != 0) {
-                    System.out.println(p.getNom() + "s'est équipé de " + p.getInventaire().get(choixEquipement - 1).getNomEquipement() + ".");
+                    System.out.println(p.getNom() + " s'est équipé de " + p.getInventaire().get(choixEquipement - 1).getNomEquipement() + ".");
                     p.sEquiper(p.getInventaire().get(choixEquipement - 1));
                 }
             }
