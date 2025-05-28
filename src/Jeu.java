@@ -293,13 +293,14 @@ public class Jeu {
                 }
                 break;
             case 3:
-                boolean placer = false;
+
                 int nbObstacles = m_utils.demanderChoix(scanner,
                         "Combien d'obstacles voulez vous ajouter ?",
                         0, 5);
                 scanner.nextLine();
                 for(int j = 0; j<nbObstacles; j++){
-                    int[] positionObstacle = this.m_utils.demanderPositionCarteObligatoire(" Sur quelle case voulez vous placer l'obstacle " + j+1,
+                    boolean placer = false;
+                    int[] positionObstacle = this.m_utils.demanderPositionCarteObligatoire(" Sur quelle case voulez vous placer l'obstacle " + (j+1),
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
@@ -324,7 +325,7 @@ public class Jeu {
     public int demanderAction(Entite e, Donjon d) {
         int choixAction;
         int nbchoix = 3;
-        StringBuilder message = new StringBuilder("choississez votre action : Entrer - laisser le mdj commenter l'action precedente \n0 - passer votre tour \n1 - se deplacer\n2 - attaquer");
+        StringBuilder message = new StringBuilder(e.getIdentificationEntite()+" - choississez votre action : Entrer - laisser le mdj commenter l'action precedente \n0 - passer votre tour \n1 - se deplacer\n2 - attaquer");
         if(e.estMonstre()){
 
             choixAction = m_utils.demanderChoix(scanner,
