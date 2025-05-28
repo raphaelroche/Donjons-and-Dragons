@@ -3,6 +3,7 @@ import donjons.*;
 import exception.ArmureException;
 import exception.PorteeException;
 import maitredujeu.MaitreDuJeu;
+import placable.CaseVide;
 import placable.entites.Entite;
 import placable.entites.monstres.Monstre;
 import placable.entites.personnages.*;
@@ -168,6 +169,7 @@ public class Jeu {
                             break quitterwhile;
                         }
                         int choix = demanderAction(e, d);
+                        mdjIntervenir(d);
                         if(choix == 0) {
                             break;
                         }
@@ -177,10 +179,152 @@ public class Jeu {
         }
     }
 
+    public void mdjIntervenir(Donjon d){
+        Des des = new Des();
+        int choixAction;
+        String message = ("Au tour du maitre du jeu : que voulez vous faire ? : \n0 - ne rien faire\n1 - infliger des dégats\n2 - deplacer un monstre ou un personnage\n3 - ajouter des obstacles dans le donjon");
+        choixAction = m_utils.demanderChoix(scanner,
+                message,
+                0, 3);
+        scanner.nextLine();
+        switch(choixAction){
+            case 0:
+
+                System.out.println("vous choisissez de ne rien faire.");
+                break;
+            case 1:
+                int nbDes = m_utils.demanderChoix(scanner,
+                        "combien de dès voulez vous lancer ?",
+                        1, 3);
+                scanner.nextLine();
+                int nbFaces = m_utils.demanderChoix(scanner,
+                        "combien de faces ont vos dès ?",
+                        1, 4);
+                scanner.nextLine();
+                int degat = des.lancerDes(nbDes,nbFaces);
+                String choixEntite ="Voulez vous attaquer : \n1 - un monstre \n2 - un personnage";
+                int choix = m_utils.demanderChoix(scanner,
+                        choixEntite,
+                        1, 2);
+                scanner.nextLine();
+                StringBuilder chx = new StringBuilder();
+                int i = 1;
+                if(choix == 1){
+                    chx.append("A quelle monstre voulez vous infliger des dégats : ");
+                    for(Monstre m : this.m_monstresEnVie){
+                        chx.append("\n").append(i).append(" - ").append(m.getIdentificationEntite());
+                        i++;
+                        int c = m_utils.demanderChoix(scanner,
+                                chx.toString(),
+                                1, i);
+                        scanner.nextLine();
+                        this.m_monstresEnVie.get(c-1).ajusterPv(degat);
+                        System.out.println("vous avez infligé " + degat + " degat  à "+ m.getIdentificationEntite());
+                    }
+                }
+                else if(choix == 2){
+                    chx.append("A quelle personnage voulez vous infliger des dégats : ");
+                    for(Personnage p : this.m_joueursEnVie) {
+                        chx.append("\n").append(i).append(" - ").append(p.getIdentificationEntite());
+                        i++;
+                        int c = m_utils.demanderChoix(scanner,
+                                chx.toString(),
+                                1, i);
+                        scanner.nextLine();
+                        this.m_joueursEnVie.get(c-1).ajusterPv(degat);
+                        System.out.println("vous avez infligé " + degat + " degat  à "+ p.getIdentificationEntite());
+                    }
+                }
+                break;
+            case 2:
+                int posX = 0;
+                int posY = 0;
+                int[] position = new int[0];
+                String choixDeplacer ="Voulez vous deplacer : \n1 - un monstre \n2 - un personnage";
+                int choixEntiteADeplace = m_utils.demanderChoix(scanner,
+                        choixDeplacer,
+                        1, 2);
+                scanner.nextLine();
+                StringBuilder deplacer = new StringBuilder();
+                int f = 1;
+                if(choixEntiteADeplace == 1){
+                    deplacer.append("Quelle monstre voulez vous deplacer : ");
+                    for(Monstre m : this.m_monstresEnVie){
+                        deplacer.append("\n").append(f).append(" - ").append(m.getIdentificationEntite());
+                        f++;
+                        int depl = m_utils.demanderChoix(scanner,
+                                deplacer.toString(),
+                                1, f);
+                        scanner.nextLine();
+                        position = this.m_utils.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le monstre ? :",
+                                'A', d.getLettreMax(),
+                                1, d.getHauteur(),
+                                scanner);
+                        posX = this.m_monstresEnVie.get(depl-1).getPositionX();
+                        posY = this.m_monstresEnVie.get(depl-1).getPositionY();
+                        this.m_monstresEnVie.get(depl-1).setLocation(position[0]-1, position[1]-1);
+                        this.mdj.positionnerEntite(d, m);
+                    }
+                }
+                else if(choixEntiteADeplace == 2) {
+                    deplacer.append("Quelle personnage voulez vous deplacer : ");
+                    for(Personnage p : this.m_joueursEnVie){
+                        deplacer.append("\n").append(f).append(" - ").append(p.getIdentificationEntite());
+                        f++;
+                        int depl = m_utils.demanderChoix(scanner,
+                                deplacer.toString(),
+                                1, f);
+                        scanner.nextLine();
+                        position = this.m_utils.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le personnage ? :",
+                                'A', d.getLettreMax(),
+                                1, d.getHauteur(),
+                                scanner);
+                        posX = this.m_joueursEnVie.get(depl-1).getPositionX();
+                        posY = this.m_joueursEnVie.get(depl-1).getPositionY();
+                        this.m_joueursEnVie.get(depl-1).setLocation(position[0]-1, position[1]-1);
+                        this.mdj.positionnerEntite(d, p);
+                    }
+                }
+                if(d.getCarte()[posX][posY].get(1) != null && d.getCarte()[posX][posY].get(1).estEquipement()){
+                    d.decalerAGauche(d.getCarte()[posX][posY]);
+                }
+                else{
+                    d.positionnerEmplacementVide(posX,posY);
+                }
+                break;
+            case 3:
+                boolean placer = false;
+                int nbObstacles = m_utils.demanderChoix(scanner,
+                        "Combien d'obstacles voulez vous ajouter ?",
+                        0, 5);
+                scanner.nextLine();
+                for(int j = 0; j<nbObstacles; j++){
+                    int[] positionObstacle = this.m_utils.demanderPositionCarteObligatoire(" Sur quelle case voulez vous placer l'obstacle " + j+1,
+                            'A', d.getLettreMax(),
+                            1, d.getHauteur(),
+                            scanner);
+                    Obstacle o = new Obstacle(0,0);
+                    while(!placer){
+
+                        o.setLocation(positionObstacle[0]-1,positionObstacle[1]-1);
+                        placer = this.mdj.positionnerObstacle(d, o);
+                        if(!placer){
+                            positionObstacle = this.m_utils.demanderPositionCarteObligatoire(" Impossible de placer l'obstacle sur cette case ! Réessayez :",
+                                    'A', d.getLettreMax(),
+                                    1, d.getHauteur(),
+                                    scanner);
+                        }
+                    }
+                }
+
+
+                break;
+        }
+    }
     public int demanderAction(Entite e, Donjon d) {
         int choixAction;
         int nbchoix = 3;
-        StringBuilder message = new StringBuilder("choississez votre action : \n0 - passer votre tour \n1 - se deplacer\n2 - attaquer");
+        StringBuilder message = new StringBuilder("choississez votre action : Entrer - laisser le mdj commenter l'action precedente \n0 - passer votre tour \n1 - se deplacer\n2 - attaquer");
         if(e.estMonstre()){
 
             choixAction = m_utils.demanderChoix(scanner,
@@ -231,7 +375,6 @@ public class Jeu {
                     if(d.getCarte()[position[0]-1][position[1]-1].getFirst().estEntite()){
                         nom = ((Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst()).getIdentificationEntite();
                         cible = (Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst();
-                        int pv = 0;
                         try{
                             boolean attaque = e.attaquer(position[0],position[1], d);
                             if(!attaque){
@@ -265,6 +408,10 @@ public class Jeu {
                         }
 
 
+                    }
+                    else{
+                        this.mdj.commenter("Aucune entite n'est présente sur la case que vous avez entrée !");
+                        redemander = true;
                     }
 
 

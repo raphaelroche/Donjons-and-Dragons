@@ -6,7 +6,6 @@ public class CaseVide implements Placable{
     private int m_positionX;
     private int m_positionY;
     private final String m_nomAffiche;
-    private Des des;
 
 
     public CaseVide(int x, int y){

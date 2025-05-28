@@ -55,7 +55,7 @@ public class Personnage extends Entite {
     }
 
 
-    public void attribuerRaceClasse(int race, int classe) {
+    private void attribuerRaceClasse(int race, int classe) {
         switch(race) {      //attribue la race
             case 1:
                 this.m_race = new Humain();
