@@ -45,4 +45,9 @@ public abstract class Armes extends Equipement {
     public boolean estArme(){
         return true;
     }
+
+    @Override
+    public String toString() {
+        return this.m_nom + " : portée = " + this.m_portee + ", dégats = " + this.m_degats;
+    }
 }
