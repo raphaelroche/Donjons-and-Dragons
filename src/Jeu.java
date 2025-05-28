@@ -1,6 +1,7 @@
 import des.Des;
 import donjons.*;
 import exception.ArmureException;
+import exception.CaseTtropLointaineException;
 import exception.PorteeException;
 import maitredujeu.MaitreDuJeu;
 import placable.entites.Entite;
@@ -360,11 +361,23 @@ public class Jeu {
 
                 break;
             case 1:
-               int direction = this.m_interact.demanderChoix(scanner,
-                        "dans quelle direction voulez vous vous deplacer : \n1 - en haut \n2 - en bas \n3 - gauche \n4 - droite",
-                        1, 4);
-                scanner.nextLine();
-                e.seDeplacer(direction, d);
+                boolean deplacement = false;
+                int[] positionDeplacement = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous vous deplacer ?",
+                        'A', d.getLettreMax(),
+                        1, d.getHauteur(),
+                        scanner);
+                while(!deplacement){
+                    try{
+                        deplacement = e.seDeplacer(positionDeplacement[0]-1,positionDeplacement[1]-1, d);
+                        if(!deplacement){
+                            this.mdj.commenter("Cette case est deja occupée");
+                        }
+                    }catch(CaseTtropLointaineException ex){
+                        this.mdj.commenter(ex.getMessage());
+                    }
+                }
+                this.mdj.commenter("Deplacement effectué !");
+
                 break;
             case 2:
 
