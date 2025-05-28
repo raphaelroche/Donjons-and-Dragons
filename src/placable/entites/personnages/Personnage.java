@@ -213,7 +213,7 @@ public Armes getArmeAtIndex(ArrayList<Equipement> liste, int index) {
                 double distanceJoueurCible = Math.sqrt((dX * dX) + (dY * dY));
 
                 if(this.m_armeEquipee != null){
-                    if((this.m_armeEquipee.getPortee() + 0.5) >= Math.abs(distanceJoueurCible)){//Maths.sqrt n'est pas precis donc renvoi 1,00001 alors que c'est egal a 1
+                    if((this.m_armeEquipee.getPortee()+0.01) >= (int)(Math.abs(distanceJoueurCible))){//Maths.sqrt n'est pas precis donc renvoi 1,00001 alors que c'est egal a 1
                         int degat = des.lancerDes(1, 20);
                         if(this.m_armeEquipee.getPortee() == 1){
                             degat += this.m_force;

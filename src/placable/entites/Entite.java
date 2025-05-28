@@ -2,6 +2,7 @@ package placable.entites;
 
 import des.Des;
 import donjons.Donjon;
+import exception.CaseTtropLointaineException;
 import placable.Placable;
 
 import java.util.ArrayList;
@@ -36,12 +37,13 @@ public abstract class Entite implements Placable {
         return m_positionY;
     }
 
-    public void seDeplacer(int direction, Donjon d){
+    public boolean seDeplacer(int x, int y, Donjon d){
         int distance = this.m_vitesse / 3;
-
+        boolean etrePlace;
         //mettre un point sur la case ou se trouvai le perso
 
         ArrayList<Placable>[][] carte = d.getCarte();
+
 
         //si la case contient un equipement et que le joueur ne la pas recuperé alors on met l'equipement a l'index 0 pour l'afficher
         if(contientEquipement(carte[this.m_positionX][this.m_positionY])){
@@ -51,51 +53,22 @@ public abstract class Entite implements Placable {
         else{
             d.positionnerEmplacementVide(this.m_positionX, this.m_positionY);
         }
-        int newX = this.m_positionX;
-        int newY = this.m_positionY;
 
-        //label pour quitter directement le for et le switch d'un coup
-        quitterBoucle:
-        for(int i = 0; i < distance; i++){
-            switch(direction){
-                case 1: // Haut
-                    if (newY - 1 < 0) break quitterBoucle;
-                    if (contientObstacle(carte[newX][newY - 1])) break quitterBoucle;
-                    if(contientEntite(carte[newX][newY - 1])) break quitterBoucle;
-                    newY--;
-                    break;
+        int dX = this.m_positionX - x;
+        int dY = this.m_positionY - y;
+        double distanceDeplacement = Math.sqrt((dX * dX) + (dY * dY));
 
+       if((int)Math.abs(distanceDeplacement) <= distance){
+           this.setLocation(x, y);
+           //mettre a jour la carte du donjon
+           etrePlace = d.positionnerElementCarte(this);
 
-                case 2: // Bas
-                    if (newY + 1 >= d.getHauteur()) break quitterBoucle;
-                    if (contientObstacle(carte[newX][newY + 1])) break quitterBoucle;
-                    if(contientEntite(carte[newX][newY+1])) break quitterBoucle;
-                    newY++;
-                    break;
+       }
+       else{
+           throw new CaseTtropLointaineException();
+       }
 
-
-                case 3: // Gauche
-                    if (newX - 1 < 0) break quitterBoucle;
-                    if (contientObstacle(carte[newX - 1][newY])) break quitterBoucle;
-                    if(contientEntite(carte[newX - 1][newY])) break quitterBoucle;
-                    newX--;
-                    break;
-
-                case 4: // Droite
-                    if (newX + 1 >= d.getLargeur()) break quitterBoucle;
-                    if (contientObstacle(carte[newX + 1][newY])) break quitterBoucle;
-                    if(contientEntite(carte[newX + 1][newY])) break quitterBoucle;
-                    newX++;
-                    break;
-
-                default:
-                    // Direction invalide, on ne fait rien
-                    return;
-            }
-        }
-        this.setLocation(newX, newY);
-        //mettre a jour la carte du donjon
-        d.positionnerElementCarte(this);
+        return etrePlace;
 
     }
     public void tuerCible(Donjon d, int x, int y){
