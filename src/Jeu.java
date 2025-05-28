@@ -170,9 +170,12 @@ public class Jeu {
                         if(this.m_joueursEnVie.size() != this.m_nbJoueurs || this.m_monstresEnVie.isEmpty()){
                             break quitterwhile;
                         }
-                        int choix = demanderAction(e, d);
+                        int choix = demanderAction(e, d, (i+1));
                         mdjIntervenir(d);
-                        if(choix == 0) {
+                        if(choix == 0){
+                            i--;
+                        }
+                        if(choix == 1) {
                             break;
                         }
                     }
@@ -324,24 +327,33 @@ public class Jeu {
                 break;
         }
     }
-    public int demanderAction(Entite e, Donjon d) {
+    public int demanderAction(Entite e, Donjon d, int action) {
         int choixAction;
+        int min;
         int nbchoix = 3;
-        StringBuilder message = new StringBuilder(e.getIdentificationEntite()+" - choississez votre action : Entrer - laisser le mdj commenter l'action precedente \n0 - passer votre tour \n1 - se deplacer\n2 - attaquer");
+        StringBuilder message = new StringBuilder(e.getIdentificationEntite()+" - choississez votre action : ");
+        if(action > 1){
+            message.append("\n0 - laisser le mdj commenter l'action precedente");
+            min = 0;
+        }
+        else{
+            min = 1;
+        }
+        message.append("\n1 - passer votre tour \n2 - se deplacer\n3 - attaquer");
         if(e.estMonstre()){
 
             choixAction = this.m_interact.demanderChoix(scanner,
                     message.toString(),
-                    0, 2);
+                    min, 2);
             scanner.nextLine();
 
         }
         else{
-            message.append("\n3 - s'equiper \n4 - ramasser equipement (fonctionne uniquement si vous vous trouver sur une case d'equiupement)");
+            message.append("\n4 - s'equiper \n5 - ramasser equipement (fonctionne uniquement si vous vous trouver sur une case d'equiupement)");
             nbchoix+=2;
 
             if(((Personnage) e).estClerc() || ((Personnage) e).estMagicien()){
-                message.append("\n5 - jeter un sort");
+                message.append("\n6 - jeter un sort");
                 nbchoix++;
             }
             choixAction = this.m_interact.demanderChoix(scanner,
@@ -357,10 +369,14 @@ public class Jeu {
         boolean redemander = false;
         switch (choix) {
             case 0:
+                System.out.println("entrez votre commentaire !");
+                String comm = scanner.nextLine();
+                this.mdj.commenter(comm);
+            case 1:
                 this.mdj.commenter("Vous avez passer votre tour !");
 
                 break;
-            case 1:
+            case 2:
                 boolean deplacement = false;
                 int[] positionDeplacement = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous vous deplacer ?",
                         'A', d.getLettreMax(),
@@ -379,7 +395,7 @@ public class Jeu {
                 this.mdj.commenter("Deplacement effectué !");
 
                 break;
-            case 2:
+            case 3:
 
                 String nom;
                 Entite cible;
@@ -432,7 +448,7 @@ public class Jeu {
 
 
                 break;
-            case 3:
+            case 4:
                 StringBuilder arme = new StringBuilder("Quelle Equipement voulez vous equiper ?");
                 for(int i = 0; i<((Personnage)e).getInventaire().size(); i++){
                     arme.append("\n").append(i+1).append(" - ").append(((Personnage) e).getInventaire().get(i).getNomEquipement());
@@ -450,7 +466,7 @@ public class Jeu {
                 break;
 
 
-            case 4:
+            case 5:
                 boolean ramasser = ((Personnage)e).ramasserEquipement((Equipement)d.getCarte()[e.getPositionX()][e.getPositionY()].get(1), d.getCarte());
                 if(ramasser){
                     this.mdj.commenter("vous avez ramasser "+((Personnage)e).getInventaire().getLast().getNomEquipement());
@@ -460,7 +476,7 @@ public class Jeu {
                     redemander = true;
                 }
                 break;
-            case 5:
+            case 6:
                 int nb = 1;
                 StringBuilder sort = new StringBuilder("quelle sort voulez vous jeter \n1 - Guérison");
                 if(((Personnage) e).estMagicien()){
