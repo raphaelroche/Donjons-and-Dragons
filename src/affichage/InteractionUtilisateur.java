@@ -1,8 +1,58 @@
-package utils;
+package affichage;
+
+import donjons.Donjon;
 
 import java.util.Scanner;
 
 public class InteractionUtilisateur {
+
+    private char[] m_alphabet;
+
+    public InteractionUtilisateur() {
+        this.m_alphabet = new char[] {
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+        };
+    }
+
+
+    public void afficherDonjon(Donjon d){
+        //affichage des lettres
+        System.out.print("\t");
+        for (int i = 0; i < d.getLargeur(); i++) {
+            System.out.print("  ");
+            System.out.print(this.m_alphabet[i] + " ");
+        }
+        System.out.println();
+
+        //ligne de séparation
+        this.separerParLigne(d);
+
+        //affichage des lignes
+        for (int i = 0; i < d.getHauteur(); i++) {
+            if (i+1 < 10) {
+                System.out.print(i+1 + "  |");
+            }
+            else {
+                System.out.print(i+1 + " |");
+            }
+            for (int j = 0; j < d.getLargeur(); j++) {
+                System.out.print(" " + d.getCarte()[j][i].getFirst().getNomAffiche());
+            }
+            System.out.print("  |");
+            System.out.println();
+        }
+        //ligne de séparation
+        this.separerParLigne(d);
+
+        //légende de la carte
+        System.out.println("\t* Equipement\t|\t[ ] Obstacle\t|\tM Monstre");
+    }
+
+    public void separerParLigne(Donjon d) {
+        System.out.println("\t*" + "-".repeat(d.getLargeur()*4) + "*");
+    }
+
     //vérifie qu'on donne un entier compris entre min et max
     // sert beaucoup lors des choix
 

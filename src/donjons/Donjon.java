@@ -40,38 +40,7 @@ public class Donjon {
         }
     }
 
-    public void afficherDonjon(){
-        //affichage des lettres
-        System.out.print("\t");
-        for (int i = 0; i < this.m_largeur; i++) {
-            System.out.print("  ");
-            System.out.print(this.m_alphabet[i] + " ");
-        }
-        System.out.println();
 
-        //ligne de séparation
-        this.separer();
-
-        //affichage des lignes
-        for (int i = 0; i < this.m_hauteur; i++) {
-            if (i+1 < 10) {
-                System.out.print(i+1 + "  |");
-            }
-            else {
-                System.out.print(i+1 + " |");
-            }
-            for (int j = 0; j < this.m_largeur; j++) {
-                System.out.print(" " + this.m_carte[j][i].getFirst().getNomAffiche());
-            }
-            System.out.print("  |");
-            System.out.println();
-        }
-        //ligne de séparation
-        this.separer();
-
-        //légende de la carte
-        System.out.println("\t* Equipement\t|\t[ ] Obstacle\t|\tM Monstre");
-    }
 
     public void positionnerEmplacementVide(int x, int y){
         if (this.m_carte[x][y].isEmpty()) {
@@ -152,8 +121,4 @@ public class Donjon {
     }
 
     public char getLettreMax() { return this.m_alphabet[m_largeur-1]; }
-
-    public void separer() {
-        System.out.println("\t*" + "-".repeat(this.getLargeur()*4) + "*");
-    }
 }

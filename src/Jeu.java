@@ -3,7 +3,6 @@ import donjons.*;
 import exception.ArmureException;
 import exception.PorteeException;
 import maitredujeu.MaitreDuJeu;
-import placable.CaseVide;
 import placable.entites.Entite;
 import placable.entites.monstres.Monstre;
 import placable.entites.personnages.*;
@@ -11,7 +10,7 @@ import placable.equipements.Equipement;
 import placable.equipements.armes.*;
 import placable.equipements.armures.*;
 import placable.obstacle.Obstacle;
-import utils.*;
+import affichage.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -21,7 +20,6 @@ public class Jeu {
     private ArrayList<Monstre> m_monstresEnVie;
     private ArrayList<Entite> m_entites;
     private ArrayList<Personnage> m_joueur;
-    private Utils m_utils;
     private int m_nbJoueurs;
     private Scanner scanner;
     private MaitreDuJeu mdj;
@@ -30,6 +28,8 @@ public class Jeu {
     private int m_nbObstacle;
     private int m_nbEquipements;
     private int m_nb_monstres;
+    private Creation m_creation;
+    private InteractionUtilisateur m_interact;
 
     public Jeu() {
         scanner = new Scanner(System.in);
@@ -42,12 +42,13 @@ public class Jeu {
         this.m_monstresEnVie = new ArrayList<>();
         this.m_entites = new ArrayList<>();
         this.m_joueur = new ArrayList<>();
+        this.m_interact = new InteractionUtilisateur();
+        this.m_creation = new Creation();
     }
 
     public void demarrerJeu() {
         System.out.println("Bienvenue dans DOOnjon et Dragons");
-        m_utils = new Utils();
-        m_nbJoueurs = m_utils.demanderChoix(this.scanner, "Indiquez le nombre de joueurs (entre 1 et 5) : ", 1, 5);
+        m_nbJoueurs = m_interact.demanderChoix(this.scanner, "Indiquez le nombre de joueurs (entre 1 et 5) : ", 1, 5);
 
         scanner.nextLine();
 
@@ -81,7 +82,7 @@ public class Jeu {
 
 
             afficherEntites();
-            d.afficherDonjon();
+            this.m_interact.afficherDonjon(d);
             System.out.println();
             deroulePartie(d);
             System.out.println("============================== FIN DU DONJON " + (i+1) + " =================================\n\n");
@@ -94,12 +95,12 @@ public class Jeu {
 
     public Donjon initDonjon() {
 
-        int largeurD = this.m_utils.demanderChoixOuParDefaut("Entrez la largeur du tableau", 15, 25, 15, scanner);
-        int hauteurD = this.m_utils.demanderChoixOuParDefaut("Entrez la hauteur du tableau", 15, 25, 15, scanner);
+        int largeurD = this.m_interact.demanderChoixOuParDefaut("Entrez la largeur du tableau", 15, 25, 15, scanner);
+        int hauteurD = this.m_interact.demanderChoixOuParDefaut("Entrez la hauteur du tableau", 15, 25, 15, scanner);
 
         Donjon d = new Donjon(largeurD,hauteurD);
 
-        this.m_nbObstacle = this.m_utils.demanderChoixOuParDefaut("Indiquez le nombre d'obstacle",
+        this.m_nbObstacle = this.m_interact.demanderChoixOuParDefaut("Indiquez le nombre d'obstacle",
                 0, 10, 5,
                 this.scanner);
 
@@ -113,18 +114,18 @@ public class Jeu {
             creerObstacleAleatoire(i, d);
         }
 
-        this.m_nbEquipements = this.m_utils.demanderChoixOuParDefaut("Indiquez le nombre d'équipements",
+        this.m_nbEquipements = this.m_interact.demanderChoixOuParDefaut("Indiquez le nombre d'équipements",
                 0, 10, 5,
                 this.scanner);
 
         for (i = 0; i<this.m_nbEquipements; i++) {
             System.out.println("Choisissez l'équipement " + String.valueOf(i+1));
-            int creationEquipement = this.m_utils.demanderChoixOuParDefaut("Voulez-vous créer un équipement manuellement ? 1 - Oui | 2 - Non",
+            int creationEquipement = this.m_interact.demanderChoixOuParDefaut("Voulez-vous créer un équipement manuellement ? 1 - Oui | 2 - Non",
                     1, 2, 2, scanner);
 
 
             if (creationEquipement == 1) {
-                int type = this.m_utils.demanderChoix(scanner, "Choisissez un type d'équipement :\n1 - Armures\n2 - Armes",
+                int type = this.m_interact.demanderChoix(scanner, "Choisissez un type d'équipement :\n1 - Armures\n2 - Armes",
                         1, 2);
                 scanner.nextLine();
 
@@ -134,7 +135,7 @@ public class Jeu {
                 initEquipementAleatoire(d);
             }
         }
-        this.m_nb_monstres = this.m_utils.demanderChoixOuParDefaut("Indiquez le nombre de monstres",
+        this.m_nb_monstres = this.m_interact.demanderChoixOuParDefaut("Indiquez le nombre de monstres",
                 1, 5, 2,
                 this.scanner);
 
@@ -183,7 +184,7 @@ public class Jeu {
         Des des = new Des();
         int choixAction;
         String message = ("Au tour du maitre du jeu : que voulez vous faire ? : \n0 - ne rien faire\n1 - infliger des dégats\n2 - deplacer un monstre ou un personnage\n3 - ajouter des obstacles dans le donjon");
-        choixAction = m_utils.demanderChoix(scanner,
+        choixAction = this.m_interact.demanderChoix(scanner,
                 message,
                 0, 3);
         scanner.nextLine();
@@ -193,17 +194,17 @@ public class Jeu {
                 System.out.println("vous choisissez de ne rien faire.");
                 break;
             case 1:
-                int nbDes = m_utils.demanderChoix(scanner,
+                int nbDes = this.m_interact.demanderChoix(scanner,
                         "combien de dès voulez vous lancer ?",
                         1, 3);
                 scanner.nextLine();
-                int nbFaces = m_utils.demanderChoix(scanner,
+                int nbFaces = this.m_interact.demanderChoix(scanner,
                         "combien de faces ont vos dès ?",
                         1, 4);
                 scanner.nextLine();
                 int degat = des.lancerDes(nbDes,nbFaces);
                 String choixEntite ="Voulez vous attaquer : \n1 - un monstre \n2 - un personnage";
-                int choix = m_utils.demanderChoix(scanner,
+                int choix = this.m_interact.demanderChoix(scanner,
                         choixEntite,
                         1, 2);
                 scanner.nextLine();
@@ -214,7 +215,7 @@ public class Jeu {
                     for(Monstre m : this.m_monstresEnVie){
                         chx.append("\n").append(i).append(" - ").append(m.getIdentificationEntite());
                         i++;
-                        int c = m_utils.demanderChoix(scanner,
+                        int c = this.m_interact.demanderChoix(scanner,
                                 chx.toString(),
                                 1, i);
                         scanner.nextLine();
@@ -227,7 +228,7 @@ public class Jeu {
                     for(Personnage p : this.m_joueursEnVie) {
                         chx.append("\n").append(i).append(" - ").append(p.getIdentificationEntite());
                         i++;
-                        int c = m_utils.demanderChoix(scanner,
+                        int c = this.m_interact.demanderChoix(scanner,
                                 chx.toString(),
                                 1, i);
                         scanner.nextLine();
@@ -241,7 +242,7 @@ public class Jeu {
                 int posY = 0;
                 int[] position = new int[0];
                 String choixDeplacer ="Voulez vous deplacer : \n1 - un monstre \n2 - un personnage";
-                int choixEntiteADeplace = m_utils.demanderChoix(scanner,
+                int choixEntiteADeplace = this.m_interact.demanderChoix(scanner,
                         choixDeplacer,
                         1, 2);
                 scanner.nextLine();
@@ -252,11 +253,11 @@ public class Jeu {
                     for(Monstre m : this.m_monstresEnVie){
                         deplacer.append("\n").append(f).append(" - ").append(m.getIdentificationEntite());
                         f++;
-                        int depl = m_utils.demanderChoix(scanner,
+                        int depl = this.m_interact.demanderChoix(scanner,
                                 deplacer.toString(),
                                 1, f);
                         scanner.nextLine();
-                        position = this.m_utils.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le monstre ? :",
+                        position = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le monstre ? :",
                                 'A', d.getLettreMax(),
                                 1, d.getHauteur(),
                                 scanner);
@@ -271,11 +272,11 @@ public class Jeu {
                     for(Personnage p : this.m_joueursEnVie){
                         deplacer.append("\n").append(f).append(" - ").append(p.getIdentificationEntite());
                         f++;
-                        int depl = m_utils.demanderChoix(scanner,
+                        int depl = this.m_interact.demanderChoix(scanner,
                                 deplacer.toString(),
                                 1, f);
                         scanner.nextLine();
-                        position = this.m_utils.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le personnage ? :",
+                        position = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le personnage ? :",
                                 'A', d.getLettreMax(),
                                 1, d.getHauteur(),
                                 scanner);
@@ -294,13 +295,13 @@ public class Jeu {
                 break;
             case 3:
 
-                int nbObstacles = m_utils.demanderChoix(scanner,
+                int nbObstacles = this.m_interact.demanderChoix(scanner,
                         "Combien d'obstacles voulez vous ajouter ?",
                         0, 5);
                 scanner.nextLine();
                 for(int j = 0; j<nbObstacles; j++){
                     boolean placer = false;
-                    int[] positionObstacle = this.m_utils.demanderPositionCarteObligatoire(" Sur quelle case voulez vous placer l'obstacle " + (j+1),
+                    int[] positionObstacle = this.m_interact.demanderPositionCarteObligatoire(" Sur quelle case voulez vous placer l'obstacle " + (j+1),
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
@@ -310,7 +311,7 @@ public class Jeu {
                         o.setLocation(positionObstacle[0]-1,positionObstacle[1]-1);
                         placer = this.mdj.positionnerObstacle(d, o);
                         if(!placer){
-                            positionObstacle = this.m_utils.demanderPositionCarteObligatoire(" Impossible de placer l'obstacle sur cette case ! Réessayez :",
+                            positionObstacle = this.m_interact.demanderPositionCarteObligatoire(" Impossible de placer l'obstacle sur cette case ! Réessayez :",
                                     'A', d.getLettreMax(),
                                     1, d.getHauteur(),
                                     scanner);
@@ -328,7 +329,7 @@ public class Jeu {
         StringBuilder message = new StringBuilder(e.getIdentificationEntite()+" - choississez votre action : Entrer - laisser le mdj commenter l'action precedente \n0 - passer votre tour \n1 - se deplacer\n2 - attaquer");
         if(e.estMonstre()){
 
-            choixAction = m_utils.demanderChoix(scanner,
+            choixAction = this.m_interact.demanderChoix(scanner,
                     message.toString(),
                     0, 2);
             scanner.nextLine();
@@ -342,7 +343,7 @@ public class Jeu {
                 message.append("\n5 - jeter un sort");
                 nbchoix++;
             }
-            choixAction = m_utils.demanderChoix(scanner,
+            choixAction = this.m_interact.demanderChoix(scanner,
                     message.toString(),
                     0, nbchoix);
             scanner.nextLine();
@@ -359,7 +360,7 @@ public class Jeu {
 
                 break;
             case 1:
-               int direction = m_utils.demanderChoix(scanner,
+               int direction = this.m_interact.demanderChoix(scanner,
                         "dans quelle direction voulez vous vous deplacer : \n1 - en haut \n2 - en bas \n3 - gauche \n4 - droite",
                         1, 4);
                 scanner.nextLine();
@@ -369,7 +370,7 @@ public class Jeu {
 
                 String nom;
                 Entite cible;
-                    int[] position = this.m_utils.demanderPositionCarteObligatoire("Quelle case voulez vous attaquer ?",
+                    int[] position = this.m_interact.demanderPositionCarteObligatoire("Quelle case voulez vous attaquer ?",
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
@@ -427,7 +428,7 @@ public class Jeu {
 
 
 
-                int equipementChoisi = m_utils.demanderChoix(scanner,
+                int equipementChoisi = this.m_interact.demanderChoix(scanner,
                         arme.toString(),
                         1, ((Personnage)e).getInventaire().size());
                 this.mdj.commenter("Vous venez d'equiper : "+((Personnage) e).getInventaire().get(equipementChoisi-1).getNomEquipement());
@@ -453,7 +454,7 @@ public class Jeu {
                     sort.append("\n2 - Boogie Woogie \n3 - Arme Magique");
                     nb = 3;
                 }
-                int choixdusort = m_utils.demanderChoix(scanner,
+                int choixdusort = this.m_interact.demanderChoix(scanner,
                         sort.toString(),
                         1, nb);
                 scanner.nextLine();
@@ -461,27 +462,27 @@ public class Jeu {
                 break;
         }
         if(redemander){
-            int choixAction = m_utils.demanderChoix(scanner,
+            int choixAction = this.m_interact.demanderChoix(scanner,
                     message,
                     0, nbchoix);
             scanner.nextLine();
             faireActionEntite(e, choixAction, d, message, nbchoix);
         }
-        d.afficherDonjon();
+        this.m_interact.afficherDonjon(d);
     }
 
     public void choixSort(int choix, Donjon d, Personnage p){
         boolean sortLancer = false;
         switch(choix){
             case 1:
-                int[] position = this.m_utils.demanderPositionCarteObligatoire("Choisissez la position du joueur a guerir",
+                int[] position = this.m_interact.demanderPositionCarteObligatoire("Choisissez la position du joueur a guerir",
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
                 while (!sortLancer){
                     sortLancer = p.Guerir(position[0], position[1], d);
                     if(!sortLancer){
-                        position = this.m_utils.demanderPositionCarteObligatoire("Position invalide, rechoisissez !",
+                        position = this.m_interact.demanderPositionCarteObligatoire("Position invalide, rechoisissez !",
                                 'A', d.getLettreMax(),
                                 1, d.getHauteur(),
                                 scanner);
@@ -490,22 +491,22 @@ public class Jeu {
                 this.mdj.commenter("Vous avez redonner "+p.getEfficaciteGuerison()+" à "+((Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst()).getIdentificationEntite());
                 break;
             case 2:
-                int[] position1 = this.m_utils.demanderPositionCarteObligatoire("Entrez la position du 1er joueur ou monstre : ",
+                int[] position1 = this.m_interact.demanderPositionCarteObligatoire("Entrez la position du 1er joueur ou monstre : ",
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
-                int[] position2 = this.m_utils.demanderPositionCarteObligatoire("Entrez la position du 2eme joueur ou monstre : ",
+                int[] position2 = this.m_interact.demanderPositionCarteObligatoire("Entrez la position du 2eme joueur ou monstre : ",
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
                 while (!sortLancer){
                     sortLancer = p.echangerPosition(position1[0], position1[1], position2[0], position2[1], d );
                     if(!sortLancer){
-                        position1 = this.m_utils.demanderPositionCarteObligatoire("Entrez la position du 1er joueur ou monstre : ",
+                        position1 = this.m_interact.demanderPositionCarteObligatoire("Entrez la position du 1er joueur ou monstre : ",
                                 'A', d.getLettreMax(),
                                 1, d.getHauteur(),
                                 scanner);
-                        position2 = this.m_utils.demanderPositionCarteObligatoire("Entrez la position du 2eme joueur ou monstre : ",
+                        position2 = this.m_interact.demanderPositionCarteObligatoire("Entrez la position du 2eme joueur ou monstre : ",
                                 'A', d.getLettreMax(),
                                 1, d.getHauteur(),
                                 scanner);
@@ -514,12 +515,12 @@ public class Jeu {
                 this.mdj.commenter("Position echangée avec succès ! ");
                 break;
             case 3:
-                int location = m_utils.demanderChoix(scanner,
+                int location = this.m_interact.demanderChoix(scanner,
                         "Ou voulez vous enchanter votre arme ? : \n1 - sur la map \n2 - dans l'inventaire d'un joueur",
                         1, 2);
                 scanner.nextLine();
                 if(location == 1){
-                    int[] positionArme = this.m_utils.demanderPositionCarteObligatoire("Entrez la position de l'arme a enchanter : ",
+                    int[] positionArme = this.m_interact.demanderPositionCarteObligatoire("Entrez la position de l'arme a enchanter : ",
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
@@ -532,7 +533,7 @@ public class Jeu {
                     this.mdj.commenter(((Equipement)d.getCarte()[positionArme[0]-1][positionArme[1]-1].getFirst()).getNomEquipement()+" enchantée ! ");
                 }
                 else{
-                    int[] postionJoueur = this.m_utils.demanderPositionCarteObligatoire("Entrez la position du joueur : ",
+                    int[] postionJoueur = this.m_interact.demanderPositionCarteObligatoire("Entrez la position du joueur : ",
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
@@ -544,7 +545,7 @@ public class Jeu {
                             nbarme++;
                         }
                     }
-                    int arme = m_utils.demanderChoix(scanner,
+                    int arme = this.m_interact.demanderChoix(scanner,
                             message.toString(),
                             1, nbarme);
                     scanner.nextLine();
@@ -560,7 +561,7 @@ public class Jeu {
 
 
     public void placerPersonnage(Personnage p, Donjon d) {
-        int[] position = this.m_utils.demanderPositionCarte("Choisissez la position du joueur",
+        int[] position = this.m_interact.demanderPositionCarte("Choisissez la position du joueur",
                 'A', d.getLettreMax(),
                 1, d.getHauteur(),
                 scanner);
@@ -574,7 +575,7 @@ public class Jeu {
                 p.setLocation(position[0] - 1, position[1] - 1);
                 peutSePlacer = mdj.positionnerEntite(d, p);
                 if(!peutSePlacer){
-                    position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du joueur",
+                    position = this.m_interact.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du joueur",
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
@@ -621,19 +622,19 @@ public class Jeu {
             }
         }
 
-        int race = this.m_utils.demanderChoix(scanner,
+        int race = this.m_interact.demanderChoix(scanner,
                 "Choisissez une race :\n1 - Humain\n2 - Nain\n3 - Elfe\n4 - Halfelin",
                 1, 4);
         scanner.nextLine();
 
 
-        int classe = this.m_utils.demanderChoix(scanner,
+        int classe = this.m_interact.demanderChoix(scanner,
                 "Choisissez une classe :\n1 - Clerc\n2 - Guerrier\n3 - Magicien\n4 - Roublard",
                 1, 4);
         scanner.nextLine();
 
 
-        int[] position = this.m_utils.demanderPositionCarte("Choisissez la position du joueur",
+        int[] position = this.m_interact.demanderPositionCarte("Choisissez la position du joueur",
                 'A', d.getLettreMax(),
                 1, d.getHauteur(),
                 scanner);
@@ -641,14 +642,14 @@ public class Jeu {
         boolean peutSePlacer = false;
         Personnage p;
         if (position[0] == -1 || position[1] == -1) {
-            p = m_utils.creerPersonnageAleatoire(nom, race, classe, d);
+            p = this.m_creation.creerPersonnageAleatoire(nom, race, classe, d);
             peutSePlacer = mdj.positionnerEntite(d, p);
             verificationPlacementjoueur(p, d, peutSePlacer);
         } else {
             p = new Personnage(nom, race, classe, position[0], position[1]);
             peutSePlacer = mdj.positionnerEntite(d, p);
             while (!peutSePlacer) {
-                position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du joueur",
+                position = this.m_interact.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du joueur",
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
@@ -662,12 +663,12 @@ public class Jeu {
     }
 
     public void creerObstacleAleatoire(int i, Donjon d) {
-        int[] position = this.m_utils.demanderPositionCarte("Choisissez la position de l'obstacle " + String.valueOf(i+1),
+        int[] position = this.m_interact.demanderPositionCarte("Choisissez la position de l'obstacle " + String.valueOf(i+1),
                 'A', d.getLettreMax(),
                 1, d.getHauteur(),
                 scanner);
         if (position[0] == -1 || position[1] == -1) {
-            Obstacle o = this.m_utils.creerObstacleAleatoire(d);
+            Obstacle o = this.m_creation.creerObstacleAleatoire(d);
             boolean peutSePlacer = mdj.positionnerObstacle(d, o);
             while(!peutSePlacer) {
                 o.setLocation(m_des.lancerDes(1, d.getLargeur() - 1),
@@ -681,7 +682,7 @@ public class Jeu {
             Obstacle o = new Obstacle(position[0], position[1]);
             boolean peutSePlacer = mdj.positionnerObstacle(d, o);
             while(!peutSePlacer) {
-                position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position de l'obstacle",
+                position = this.m_interact.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position de l'obstacle",
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
@@ -696,7 +697,7 @@ public class Jeu {
 
     public void initEquipementAleatoire(Donjon d) {
 
-        Equipement e = this.m_utils.creerEquipementAleatoire(d);
+        Equipement e = this.m_creation.creerEquipementAleatoire(d);
         boolean peutSePlacer = mdj.positionnerEquipement(d, e);
         while(!peutSePlacer){
             e.setLocation(m_des.lancerDes(1, d.getLargeur() - 1),
@@ -726,7 +727,7 @@ public class Jeu {
         switch (choix) {
 
             case 1: {
-                m = this.m_utils.creerMonstreAleatoire(d);
+                m = this.m_creation.creerMonstreAleatoire(d);
                 boolean peutSePlacer = mdj.positionnerEntite(d, m);
                 while (!peutSePlacer) {
                     m.setLocation(m_des.lancerDes(1, d.getHauteur() - 1),
@@ -745,13 +746,13 @@ public class Jeu {
                     espece = scanner.nextLine();
                 }
 
-                int portee = this.m_utils.demanderChoix(scanner,"Donnez sa portée : ", 1, 10);
+                int portee = this.m_interact.demanderChoix(scanner,"Donnez sa portée : ", 1, 10);
                 scanner.nextLine(); // consomme le \n
 
-                int pv = this.m_utils.demanderChoix(scanner,"Donnez son nombre de pv max : ", 10, 30);
+                int pv = this.m_interact.demanderChoix(scanner,"Donnez son nombre de pv max : ", 10, 30);
                 scanner.nextLine(); // consomme le \n
 
-                int vitesse = this.m_utils.demanderChoix(scanner,"Donnez sa vitesse : ", 8, 20);
+                int vitesse = this.m_interact.demanderChoix(scanner,"Donnez sa vitesse : ", 8, 20);
                 scanner.nextLine(); // consomme le \n
 
                 String attaque = "";
@@ -761,19 +762,19 @@ public class Jeu {
 
                 }
 
-                int armure = this.m_utils.demanderChoix(scanner,"Donnez sa classe d'armure : ", 6, 14);
+                int armure = this.m_interact.demanderChoix(scanner,"Donnez sa classe d'armure : ", 6, 14);
                 scanner.nextLine(); // consomme le \n
 
-                int force = this.m_utils.demanderChoix(scanner,"Donnez sa force : ", 5, 15);
+                int force = this.m_interact.demanderChoix(scanner,"Donnez sa force : ", 5, 15);
                 scanner.nextLine(); // consomme le \n
 
-                int dexterite = this.m_utils.demanderChoix(scanner,"Donnez sa dexterite : ", 5, 20);
+                int dexterite = this.m_interact.demanderChoix(scanner,"Donnez sa dexterite : ", 5, 20);
                 scanner.nextLine();
 
-                int initiative = this.m_utils.demanderChoix(scanner,"Donnez son initiative : ", 5, 15);
+                int initiative = this.m_interact.demanderChoix(scanner,"Donnez son initiative : ", 5, 15);
                 scanner.nextLine();
 
-                int[] position = this.m_utils.demanderPositionCarte("Choisissez la position du Monstre " + String.valueOf(i + 1),
+                int[] position = this.m_interact.demanderPositionCarte("Choisissez la position du Monstre " + String.valueOf(i + 1),
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
@@ -798,7 +799,7 @@ public class Jeu {
 
                 peutSePlacer = mdj.positionnerEntite(d, m);
                 while (!peutSePlacer) {
-                    position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du Monstre",
+                    position = this.m_interact.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du Monstre",
                             'A', d.getLettreMax(),
                             1, d.getHauteur(),
                             scanner);
@@ -819,7 +820,7 @@ public class Jeu {
         Equipement e = null;
         if (type == 1) {
 
-            int typeArmure = this.m_utils.demanderChoix(scanner,
+            int typeArmure = this.m_interact.demanderChoix(scanner,
                     "Choisissez un type d'armure :\n1 - Cotte de mailles\n2 - Demi-plaque\n3 - Ecailles\n4 - Harnois",
                     1, 4);
             scanner.nextLine();
@@ -830,7 +831,7 @@ public class Jeu {
                 case 4 -> e =  new Harnois();
             }
         } else {
-            int typeArme = this.m_utils.demanderChoix(scanner,
+            int typeArme = this.m_interact.demanderChoix(scanner,
                     "Choisissez un type d'arme : \n1 - Arbalète\n2 - Arc\n3 - Baton\n4 - Epee longue\n5 - Fronde\n6 - Masse\n7 - Rapière\n8 - Epée 2 mains",
                     1, 8);
             scanner.nextLine();
@@ -845,7 +846,7 @@ public class Jeu {
                 case 8 -> e = new EpeeDeuxMain();
             }
         }
-        int[] position = this.m_utils.demanderPositionCarte("Choisissez la position de l'équipement " + String.valueOf(i+1), 'A', d.getLettreMax(),
+        int[] position = this.m_interact.demanderPositionCarte("Choisissez la position de l'équipement " + String.valueOf(i+1), 'A', d.getLettreMax(),
                 1, d.getHauteur(),
                 scanner);
         boolean peutSePlacer = false;
@@ -867,7 +868,7 @@ public class Jeu {
             e.setLocation(position[0]-1, position[1]-1);
             peutSePlacer = mdj.positionnerEquipement(d, e);
             if(!peutSePlacer){
-                position = this.m_utils.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position de l'equipement",
+                position = this.m_interact.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position de l'equipement",
                         'A', d.getLettreMax(),
                         1, d.getHauteur(),
                         scanner);
@@ -896,7 +897,7 @@ public class Jeu {
         if (!p.getInventaire().isEmpty()) {
             int choixEquipement = -1;
             while (choixEquipement != 0) {
-                choixEquipement = this.m_utils.demanderChoixOuParDefaut(p.getNom() + " peut choisir un équipement à équiper : " + p.afficherInventaire(),
+                choixEquipement = this.m_interact.demanderChoixOuParDefaut(p.getNom() + " peut choisir un équipement à équiper : " + p.afficherInventaire(),
                         0, p.getInventaire().size(), 0, scanner);
                 if (choixEquipement != 0) {
                     System.out.println(p.getNom() + "s'est équipé de " + p.getInventaire().get(choixEquipement - 1).getNomEquipement() + ".");

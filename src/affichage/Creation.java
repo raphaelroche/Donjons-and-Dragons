@@ -1,4 +1,4 @@
-package utils;
+package affichage;
 
 import des.Des;
 import donjons.Donjon;
