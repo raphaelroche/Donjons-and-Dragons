@@ -108,10 +108,12 @@ public class Utils {        //vérifie qu'on donne un entier compris entre min e
             try {
                 numero = Integer.parseInt(input.substring(1));
                 int indexLettre = alphabet.indexOf(lettre)+1;
+                int minLettreIndex = alphabet.indexOf(minLettre)+1;
+                int maxLettreIndex = alphabet.indexOf(maxLettre)+1;
 
-                if (indexLettre >= (minLettre - 'A') && indexLettre <= (maxLettre - 'A') && numero >= minNumero && numero <= maxNumero) {
-                    position[1] = numero;
+                if (indexLettre >= minLettreIndex && indexLettre <= maxLettreIndex && numero >= minNumero && numero <= maxNumero) {
                     position[0] = indexLettre;
+                    position[1] = numero;
                     return true;
                 } else {
                     System.out.println("Position hors plage. Veuillez entrer une position valide.");

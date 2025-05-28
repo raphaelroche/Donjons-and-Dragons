@@ -443,7 +443,7 @@ public class Jeu {
                     (m_des.lancerDes(1, d.getLargeur() - 1)));
             peutSePlacer = mdj.positionnerEntite(d, p);
         }
-        System.out.println(p.getNom() + " a été placé en " + alphabet[p.getPositionX()-1] + String.valueOf(p.getPositionY()));
+        System.out.println(p.getNom() + " a été placé en " + alphabet[p.getPositionX()] + String.valueOf(p.getPositionY()+1));
     }
 
     public Personnage initJoueur(int nJoueur, Donjon d) {
