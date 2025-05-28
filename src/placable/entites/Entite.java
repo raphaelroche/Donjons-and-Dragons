@@ -121,6 +121,10 @@ public abstract class Entite implements Placable {
         return this.m_dexterite;
     }
 
+    public int getVitesse(){
+        return this.m_vitesse;
+    }
+
     public int getInitiative() {
         return this.m_initiative;
     }

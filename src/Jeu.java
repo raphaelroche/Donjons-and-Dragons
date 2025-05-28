@@ -373,7 +373,7 @@ public class Jeu {
                             this.mdj.commenter("Cette case est deja occupée");
                         }
                     }catch(CaseTtropLointaineException ex){
-                        this.mdj.commenter(ex.getMessage());
+                        this.mdj.commenter(ex.getMessage()+" vous pouvez seulement vous deplacer de "+e.getVitesse()/3 + " case au maximum");
                     }
                 }
                 this.mdj.commenter("Deplacement effectué !");
