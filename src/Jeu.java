@@ -548,7 +548,7 @@ public class Jeu {
                 boolean enchanter = false;
                 int nb = 1;
                 int nbArme = 0;
-                int nbArmure = 0;
+                int indexArme = -1;
                StringBuilder perso = new StringBuilder("Choisissez un personnage a qui vous aller enchanter une arme : ");
                for(Personnage per : this.m_joueursEnVie){
                    perso.append("\n").append(nb).append(" - ").append(per.getIdentificationEntite());
@@ -561,11 +561,10 @@ public class Jeu {
                 Personnage pChoisi = this.m_joueursEnVie.get(personnage-1);
                 StringBuilder armeChoisi = new StringBuilder("Quelle arme voulez vous enchanter : ");
                 for(Equipement armes : pChoisi.getInventaire()){
+                    indexArme++;
                     if(armes.estArme()){
                         nbArme++;
                         armeChoisi.append("\n").append(nbArme).append(" - ").append(armes.getNomEquipement());
-                    }else {
-                        nbArmure++;
                     }
                 }
                 if(pChoisi.getArmeEquipee() !=null){
@@ -577,11 +576,11 @@ public class Jeu {
                         armeChoisi.toString(),
                         1, nbArme);
                 scanner.nextLine();
-                if(a==nbArme){
+                if(a==nbArme && pChoisi.getArmeEquipee() !=null){
                     enchanter = pChoisi.enchanterArme(pChoisi.getArmeEquipee());
                 }
                 else{
-                    enchanter = pChoisi.enchanterArme((Armes)pChoisi.getInventaire().get((nbArme-1)+nbArmure));
+                    enchanter = pChoisi.enchanterArme((Armes)pChoisi.getInventaire().get(indexArme));
                 }
                 if(enchanter){
                     this.mdj.commenter("arme enchantée avec succès !");
