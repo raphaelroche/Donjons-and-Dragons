@@ -378,11 +378,12 @@ public class Jeu {
                 break;
             case 2:
                 boolean deplacement = false;
-                int[] positionDeplacement = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous vous deplacer ?",
-                        'A', d.getLettreMax(),
-                        1, d.getHauteur(),
-                        scanner);
+
                 while(!deplacement){
+                    int[] positionDeplacement = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous vous deplacer ?",
+                            'A', d.getLettreMax(),
+                            1, d.getHauteur(),
+                            scanner);
                     try{
                         deplacement = e.seDeplacer(positionDeplacement[0]-1,positionDeplacement[1]-1, d);
                         if(!deplacement){
