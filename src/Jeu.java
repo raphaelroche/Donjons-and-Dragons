@@ -545,44 +545,46 @@ public class Jeu {
                 this.mdj.commenter("Position echangée avec succès ! ");
                 break;
             case 3:
-                int location = this.m_interact.demanderChoix(scanner,
-                        "Ou voulez vous enchanter votre arme ? : \n1 - sur la map \n2 - dans l'inventaire d'un joueur",
-                        1, 2);
+                boolean enchanter = false;
+                int nb = 1;
+                int nbArme = 0;
+                int nbArmure = 0;
+               StringBuilder perso = new StringBuilder("Choisissez un personnage a qui vous aller enchanter une arme : ");
+               for(Personnage per : this.m_joueursEnVie){
+                   perso.append("\n").append(nb).append(" - ").append(per.getIdentificationEntite());
+                   nb++;
+               }
+                int personnage = this.m_interact.demanderChoix(scanner,
+                        perso.toString(),
+                        1, nb);
                 scanner.nextLine();
-                if(location == 1){
-                    int[] positionArme = this.m_interact.demanderPositionCarteObligatoire("Entrez la position de l'arme a enchanter : ",
-                            'A', d.getLettreMax(),
-                            1, d.getHauteur(),
-                            scanner);
+                Personnage pChoisi = this.m_joueursEnVie.get(personnage-1);
+                StringBuilder armeChoisi = new StringBuilder("Quelle arme voulez vous enchanter : ");
+                for(Equipement armes : pChoisi.getInventaire()){
+                    if(armes.estArme()){
+                        nbArme++;
+                        armeChoisi.append("\n").append(nbArme).append(" - ").append(armes.getNomEquipement());
+                    }else {
+                        nbArmure++;
+                    }
+                }
+                if(pChoisi.getArmeEquipee() !=null){
+                    armeChoisi.append("\n").append(nbArme + 1).append(" - ").append(pChoisi.getArmeEquipee().getNomEquipement());
+                    nbArme++;
+                }
 
-                        sortLancer = p.enchanterArme(positionArme[0], positionArme[1], d);
-                        if(!sortLancer){
-                           choixSort(3, d, p);
-                        }
-
-                    this.mdj.commenter(((Equipement)d.getCarte()[positionArme[0]-1][positionArme[1]-1].getFirst()).getNomEquipement()+" enchantée ! ");
+                int a = this.m_interact.demanderChoix(scanner,
+                        armeChoisi.toString(),
+                        1, nbArme);
+                scanner.nextLine();
+                if(a==nbArme){
+                    enchanter = pChoisi.enchanterArme(pChoisi.getArmeEquipee());
                 }
                 else{
-                    int[] postionJoueur = this.m_interact.demanderPositionCarteObligatoire("Entrez la position du joueur : ",
-                            'A', d.getLettreMax(),
-                            1, d.getHauteur(),
-                            scanner);
-                    int nbarme = 1;
-                    StringBuilder message = new StringBuilder("Quelle arme voulez vous enchanter ? : ");
-                    for(Equipement e : ((Personnage)d.getCarte()[postionJoueur[0]-1][postionJoueur[1]-1].getFirst()).getInventaire()){
-                        if(e.estArme()){
-                            message.append("\n").append(nbarme).append(" - ").append(e.getNomEquipement());
-                            nbarme++;
-                        }
-                    }
-                    int arme = this.m_interact.demanderChoix(scanner,
-                            message.toString(),
-                            1, nbarme);
-                    scanner.nextLine();
-
-                    p.enchanterArmeInventaire(((Personnage)d.getCarte()[postionJoueur[0]-1][postionJoueur[1]-1].getFirst()),arme-1);
-
-                    this.mdj.commenter("Arme enchantée !");
+                    enchanter = pChoisi.enchanterArme((Armes)pChoisi.getInventaire().get((nbArme-1)+nbArmure));
+                }
+                if(enchanter){
+                    this.mdj.commenter("arme enchantée avec succès !");
                 }
                break;
 

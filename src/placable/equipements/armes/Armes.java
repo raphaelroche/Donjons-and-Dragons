@@ -41,6 +41,9 @@ public abstract class Armes extends Equipement {
     }
 
 
+    public boolean estEnchanter() {
+        return this.estEnchanter;
+    }
     @Override
     public boolean estArme(){
         return true;

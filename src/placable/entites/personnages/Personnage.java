@@ -159,48 +159,14 @@ public class Personnage extends Entite {
         return echange;
     }
 
-    public boolean enchanterArme(int x , int y, Donjon d){
+    public boolean enchanterArme(Armes a){
         boolean enchanter = false;
-        Placable caseTableau = d.getCarte()[x-1][y-1].getFirst();
-        if(caseTableau.estEquipement()){
-            if(((Equipement)caseTableau).estArme()){
-                Armes arme = (Armes)caseTableau;
-                if(this.m_classe.estMagicien()){
-                    ContextSort armeAEnchanter = new ContextSort(arme);
-                    enchanter = this.m_sorts.get(2).lancerSort(armeAEnchanter);
-                }
-            }
-        }
-
-        return enchanter;
-
-    }
-
-    public boolean enchanterArmeInventaire(Personnage p,int i){
-        boolean enchanter = false;
-        Armes arme = getArmeAtIndex(p.m_inventaire, i);
         if(this.m_classe.estMagicien()){
-            ContextSort armeAEnchanter = new ContextSort(arme);
+            ContextSort armeAEnchanter = new ContextSort(a);
             enchanter = this.m_sorts.get(2).lancerSort(armeAEnchanter);
         }
         return enchanter;
     }
-
-
-
-public Armes getArmeAtIndex(ArrayList<Equipement> liste, int index) {
-    int compteur = -1;
-    for (Equipement e : liste) {
-        if (e.estArme()) {
-            compteur++;
-            if (compteur == index) {
-                return (Armes) e;
-            }
-        }
-    }
-    return null;
-}
-
 
     @Override
     public boolean attaquer(int x, int y, Donjon d)throws ArmureException, PorteeException {
@@ -220,6 +186,9 @@ public Armes getArmeAtIndex(ArrayList<Equipement> liste, int index) {
                         }
                         else{
                             degat += this.m_dexterite;
+                        }
+                        if(this.m_armeEquipee.estEnchanter()){
+                            degat +=1;
                         }
                         if(degat >  cible.getclasseArmure()){
                             this.m_armeEquipee.determinerDegat();
