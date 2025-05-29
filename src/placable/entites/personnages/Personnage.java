@@ -17,18 +17,18 @@ import placable.entites.personnages.races.*;
 import des.Des;
 import sorts.*;
 
-import java.awt.geom.GeneralPath;
+
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Personnage extends Entite {
     protected String m_nom;
     private Race m_race;
     private Classe m_classe;
-    private Des des;
+    private final Des des;
 
-    private ArrayList<Equipement> m_inventaire;
-    private ArrayList<Sort> m_sorts;
+    private final ArrayList<Equipement> m_inventaire;
+    private final ArrayList<Sort> m_sorts;
     private Armes m_armeEquipee;
     private Armures m_armureEquipee;
 
@@ -277,9 +277,6 @@ public class Personnage extends Entite {
         return m_armeEquipee;
     }
 
-    public Armures getArmureEquipee(){
-        return m_armureEquipee;
-    }
 
     public int getClasseArmure(){
         if(this.m_armureEquipee!=null){
@@ -304,19 +301,11 @@ public class Personnage extends Entite {
         return m_classe.getNom();
     }
 
-    public int getVitesse() {
-        return this.m_vitesse;
-    }
-
     public int getEfficaciteGuerison(){
         return ((Guerison)this.m_sorts.getFirst()).getEfficacite();
     }
 
     // Setters
-    public void setVitesse(int vitesse) {
-        this.m_vitesse = vitesse;
-    }
-
 
     public void ajusterVitesse(int valeur) {
         this.m_vitesse += valeur;

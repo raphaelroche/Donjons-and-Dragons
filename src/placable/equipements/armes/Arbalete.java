@@ -1,8 +1,5 @@
 package placable.equipements.armes;
 
-import des.Des;
-import donjons.Donjon;
-import placable.entites.personnages.Personnage;
 
 //dans l'inventaire
 public class Arbalete extends Distance{

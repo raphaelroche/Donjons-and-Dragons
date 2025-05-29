@@ -10,10 +10,10 @@ import placable.obstacle.Obstacle;
 import java.util.ArrayList;
 
 public class Donjon {
-    private char[] m_alphabet;
+    private final char[] m_alphabet;
     private final ArrayList<Placable>[][] m_carte;
-    private int m_hauteur;
-    private int m_largeur;
+    private final int m_hauteur;
+    private final int m_largeur;
 
 
     public Donjon(){

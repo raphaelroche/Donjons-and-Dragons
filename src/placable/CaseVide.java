@@ -1,6 +1,5 @@
 package placable;
 
-import des.Des;
 
 public class CaseVide implements Placable{
     private int m_positionX;

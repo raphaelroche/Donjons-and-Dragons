@@ -17,20 +17,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Jeu {
-    private ArrayList<Personnage> m_joueursEnVie;
-    private ArrayList<Monstre> m_monstresEnVie;
-    private ArrayList<Entite> m_entites;
-    private ArrayList<Personnage> m_joueur;
+    private final ArrayList<Personnage> m_joueursEnVie;
+    private final ArrayList<Monstre> m_monstresEnVie;
+    private final ArrayList<Entite> m_entites;
+    private final ArrayList<Personnage> m_joueur;
     private int m_nbJoueurs;
-    private Scanner scanner;
-    private MaitreDuJeu mdj;
-    private Des m_des;
-    private String[] alphabet;
-    private int m_nbObstacle;
-    private int m_nbEquipements;
-    private int m_nb_monstres;
-    private Creation m_creation;
-    private InteractionUtilisateur m_interact;
+    private final Scanner scanner;
+    private final MaitreDuJeu mdj;
+    private final Des m_des;
+    private final String[] alphabet;
+    private final Creation m_creation;
+    private final InteractionUtilisateur m_interact;
 
     public Jeu() {
         scanner = new Scanner(System.in);
@@ -101,25 +98,25 @@ public class Jeu {
 
         Donjon d = new Donjon(largeurD,hauteurD);
 
-        this.m_nbObstacle = this.m_interact.demanderChoixOuParDefaut("Indiquez le nombre d'obstacle",
+        int m_nbObstacle = this.m_interact.demanderChoixOuParDefaut("Indiquez le nombre d'obstacle",
                 0, 10, 5,
                 this.scanner);
 
-        if(this.m_nbObstacle > 0) {
-            System.out.println("Vous avez choisi de placer " + this.m_nbObstacle + " obstacles");
+        if(m_nbObstacle > 0) {
+            System.out.println("Vous avez choisi de placer " + m_nbObstacle + " obstacles");
         } else {
             System.out.println("Vous n'avez pas choisi d'obstacles");
         }
         int i;
-        for (i = 0; i < this.m_nbObstacle; i++) {
+        for (i = 0; i < m_nbObstacle; i++) {
             creerObstacleAleatoire(i, d);
         }
 
-        this.m_nbEquipements = this.m_interact.demanderChoixOuParDefaut("Indiquez le nombre d'équipements",
+        int m_nbEquipements = this.m_interact.demanderChoixOuParDefaut("Indiquez le nombre d'équipements",
                 0, 10, 5,
                 this.scanner);
 
-        for (i = 0; i<this.m_nbEquipements; i++) {
+        for (i = 0; i< m_nbEquipements; i++) {
             System.out.println("Choisissez l'équipement " + String.valueOf(i+1));
             int creationEquipement = this.m_interact.demanderChoixOuParDefaut("Voulez-vous créer un équipement manuellement ? 1 - Oui | 2 - Non",
                     1, 2, 2, scanner);
@@ -136,14 +133,14 @@ public class Jeu {
                 initEquipementAleatoire(d);
             }
         }
-        this.m_nb_monstres = this.m_interact.demanderChoixOuParDefaut("Indiquez le nombre de monstres",
+        int m_nb_monstres = this.m_interact.demanderChoixOuParDefaut("Indiquez le nombre de monstres",
                 1, 5, 2,
                 this.scanner);
 
-        System.out.println("Vous avez choisi de placer " + this.m_nb_monstres + " monstres");
+        System.out.println("Vous avez choisi de placer " + m_nb_monstres + " monstres");
 
 
-        for (i = 0; i < this.m_nb_monstres; i++) {
+        for (i = 0; i < m_nb_monstres; i++) {
             creerMonstres(i, d);
         }
 
@@ -249,7 +246,7 @@ public class Jeu {
             case 2:
                 int posX = 0;
                 int posY = 0;
-                int[] position = new int[0];
+                int[] position;
                 String choixDeplacer ="Voulez vous deplacer : \n1 - un monstre \n2 - un personnage";
                 int choixEntiteADeplace = this.m_interact.demanderChoix(scanner,
                         choixDeplacer,
@@ -550,7 +547,7 @@ public class Jeu {
                 this.mdj.commenter("Position echangée avec succès ! ");
                 break;
             case 3:
-                boolean enchanter = false;
+                boolean enchanter;
                 int nb = 1;
                 int nbArme = 0;
                 int indexArme = -1;
@@ -605,7 +602,7 @@ public class Jeu {
 
         boolean peutSePlacer = false;
         if (position[0] == -1 || position[1] == -1) {
-            verificationPlacementjoueur(p, d, peutSePlacer);
+            verificationPlacementjoueur(p, d, false);
         } else {
             while (!peutSePlacer) {
                 p.setLocation(position[0] - 1, position[1] - 1);
@@ -675,7 +672,7 @@ public class Jeu {
                 1, d.getHauteur(),
                 scanner);
 
-        boolean peutSePlacer = false;
+        boolean peutSePlacer;
         Personnage p;
         if (position[0] == -1 || position[1] == -1) {
             p = this.m_creation.creerPersonnageAleatoire(nom, race, classe, d);
@@ -919,11 +916,9 @@ public class Jeu {
             System.out.println("\t" + p.getNomAffiche() + " " + p.getNom() +
                     " (" + p.getNomRace() + " " + p.getNomClasse() + ", " + p.getPv() + "/" + p.getPvMax() + ")");
         }
-        if (this.m_monstresEnVie != null) {
-            for (Monstre m : this.m_monstresEnVie) {
-                System.out.println(m.getNomAffiche() + " " + m.getEspece() +
-                        " (" + m.getPv() + "/" + m.getPvMax() + ")");
-            }
+        for (Monstre m : this.m_monstresEnVie) {
+            System.out.println(m.getNomAffiche() + " " + m.getEspece() +
+                    " (" + m.getPv() + "/" + m.getPvMax() + ")");
         }
         System.out.println();
 

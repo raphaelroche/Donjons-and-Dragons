@@ -38,7 +38,7 @@ public abstract class Entite implements Placable {
     }
 
     public boolean seDeplacer(int x, int y, Donjon d){
-        int distance = this.m_vitesse / 3;
+        int distanceMax = this.m_vitesse / 3;
         boolean etrePlace;
         //mettre un point sur la case ou se trouvai le perso
 
@@ -58,7 +58,7 @@ public abstract class Entite implements Placable {
         int dY = Math.abs(this.m_positionY - y);
         int distanceDeplacement = Math.max(dX, dY);
 
-       if(distanceDeplacement <= distance){
+       if(distanceDeplacement <= distanceMax){
            this.setLocation(x, y);
            //mettre a jour la carte du donjon
            etrePlace = d.positionnerElementCarte(this);
@@ -113,37 +113,14 @@ public abstract class Entite implements Placable {
         return this.m_pv;
     }
 
-    public int getForce() {
-        return this.m_force;
-    }
-
-    public int getDexterite() {
-        return this.m_dexterite;
-    }
-
     public int getVitesse(){
         return this.m_vitesse;
-    }
-
-    public int getInitiative() {
-        return this.m_initiative;
     }
 
     public void setPv(int pv) {
         this.m_pv = pv; this.m_pvMax = pv;
     }
 
-    public void setForce(int force) {
-        this.m_force = force;
-    }
-
-    public void setDexterite(int dexterite) {
-        this.m_dexterite = dexterite;
-    }
-
-    public void setInitiative(int initiative) {
-        this.m_initiative = initiative;
-    }
 
     //fonctions pour ajuster stat : à chaque ajustement, vérifie si positif, sinon met à 0
 
@@ -179,21 +156,6 @@ public abstract class Entite implements Placable {
         }
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) return false;
-        return this.getClass() == obj.getClass();
-        //verifie si this est de la meme classe que obj
-    }
-
-    public static boolean contientObstacle(ArrayList<Placable> liste) {
-        for (Placable p : liste) {
-            if (p != null && p.estObstacle()) {
-                return true;
-            }
-        }
-        return false;
-    }
     public static boolean contientEquipement(ArrayList<Placable> liste) {
         for (Placable p : liste) {
             if (p != null && p.estEquipement()) {
@@ -203,14 +165,6 @@ public abstract class Entite implements Placable {
         return false;
     }
 
-    public static boolean contientEntite(ArrayList<Placable> liste) {
-        for (Placable p : liste) {
-            if (p != null && p.estEntite()) {
-                return true;
-            }
-        }
-        return false;
-    }
     public int getPvMax() {
         return this.m_pvMax;
     }

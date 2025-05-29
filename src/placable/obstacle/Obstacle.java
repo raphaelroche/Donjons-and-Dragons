@@ -1,14 +1,12 @@
 package placable.obstacle;
 
 import des.Des;
-import donjons.Donjon;
 import placable.Placable;
 
 public class Obstacle implements Placable {
     private int m_positionX;
     private int m_positionY;
-    private String m_nomAffiche;
-    private Des des;
+    private final String m_nomAffiche;
 
     public Obstacle(int x, int y){
         this.m_nomAffiche = "[ ]";

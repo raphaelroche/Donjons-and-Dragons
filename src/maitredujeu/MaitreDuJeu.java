@@ -7,8 +7,9 @@ import placable.obstacle.Obstacle;
 
 public class MaitreDuJeu {
 
+    private final String m_nom;
     public MaitreDuJeu(){
-        String m_nom = "Maitre Du Jeu";
+        m_nom = "Maitre Du Jeu";
     }
 
     public boolean positionnerObstacle(Donjon d, Obstacle o){return d.positionnerElementCarte(o);}
@@ -20,7 +21,7 @@ public class MaitreDuJeu {
     }
 
     public void commenter(String message){
-        System.out.println("Maitre Du Jeu - "+message);
+        System.out.println(this.m_nom + " - "+message);
     }
 
 }

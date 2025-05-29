@@ -1,11 +1,10 @@
 package sorts;
 
 import des.Des;
-import placable.entites.personnages.Personnage;
 
 public class Guerison extends Sort {
     private int m_efficacite;
-    private Des des;
+    private final Des des;
 
     public Guerison(){
         this.des = new Des();
