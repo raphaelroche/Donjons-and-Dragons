@@ -167,7 +167,12 @@ public class Jeu {
                 if((e.estMonstre() && this.m_monstresEnVie.contains((Monstre)e)) || (e.estPerso() && this.m_joueursEnVie.contains((Personnage)e))) {
                     System.out.println("Au tour de "+e.getIdentificationEntite());
                     for(int i = 0; i<3;i++){
-                        if(this.m_joueursEnVie.size() != this.m_nbJoueurs || this.m_monstresEnVie.isEmpty()){
+                        if(this.m_joueursEnVie.size() != this.m_nbJoueurs){
+                            mdj.commenter("Vous avez perdu !");
+                            break quitterwhile;
+                        }
+                        if(this.m_monstresEnVie.isEmpty()){
+                            mdj.commenter("Vous avez gagné !");
                             break quitterwhile;
                         }
                         int choix = demanderAction(e, d, (i+1));
