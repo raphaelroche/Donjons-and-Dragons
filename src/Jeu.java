@@ -167,6 +167,8 @@ public class Jeu {
                 if((e.estMonstre() && this.m_monstresEnVie.contains((Monstre)e)) || (e.estPerso() && this.m_joueursEnVie.contains((Personnage)e))) {
                     System.out.println("Au tour de "+e.getIdentificationEntite());
                     for(int i = 0; i<3;i++){
+
+                        int choix = demanderAction(e, d, (i+1));
                         if(this.m_joueursEnVie.size() != this.m_nbJoueurs){
                             mdj.commenter("Vous avez perdu !");
                             return 1;
@@ -175,7 +177,7 @@ public class Jeu {
                             mdj.commenter("Vous avez gagné !");
                             break quitterwhile;
                         }
-                        int choix = demanderAction(e, d, (i+1));
+
                         mdjIntervenir(d);
                         if(choix == 0){
                             i--;
@@ -183,6 +185,7 @@ public class Jeu {
                         if(choix == 1) {
                             break;
                         }
+
                     }
                 }
             }
@@ -225,26 +228,38 @@ public class Jeu {
                     for(Monstre m : this.m_monstresEnVie){
                         chx.append("\n").append(i).append(" - ").append(m.getIdentificationEntite());
                         i++;
-                        int c = this.m_interact.demanderChoix(scanner,
-                                chx.toString(),
-                                1, i);
-                        scanner.nextLine();
-                        this.m_monstresEnVie.get(c-1).ajusterPv(degat);
-                        System.out.println("vous avez infligé " + degat + " degat  à "+ m.getIdentificationEntite());
+
                     }
+                    int c = this.m_interact.demanderChoix(scanner,
+                            chx.toString(),
+                            1, i);
+                    scanner.nextLine();
+                    Monstre m = this.m_monstresEnVie.get(c-1);
+                    m.ajusterPv(-(degat));
+                    System.out.println("vous avez infligé " + degat + " degat  à "+ m.getIdentificationEntite());
+                    if(m.getPv()<=0){
+                        this.m_monstresEnVie.remove(m);
+                    }
+                    System.out.println(m.getIdentificationEntite() + " : "+ m.getPv()+"/"+m.getPvMax());
                 }
                 else if(choix == 2){
                     chx.append("A quelle personnage voulez vous infliger des dégats : ");
                     for(Personnage p : this.m_joueursEnVie) {
                         chx.append("\n").append(i).append(" - ").append(p.getIdentificationEntite());
                         i++;
-                        int c = this.m_interact.demanderChoix(scanner,
-                                chx.toString(),
-                                1, i);
-                        scanner.nextLine();
-                        this.m_joueursEnVie.get(c-1).ajusterPv(degat);
-                        System.out.println("vous avez infligé " + degat + " degat  à "+ p.getIdentificationEntite());
+
                     }
+                    int c = this.m_interact.demanderChoix(scanner,
+                            chx.toString(),
+                            1, i);
+                    scanner.nextLine();
+                    Personnage p = this.m_joueursEnVie.get(c-1);
+                    p.ajusterPv(-(degat));
+                    System.out.println("vous avez infligé " + degat + " degat  à "+ p.getIdentificationEntite());
+                    if(p.getPv()<=0){
+                        this.m_joueursEnVie.remove(p);
+                    }
+                    System.out.println(p.getIdentificationEntite() + " : "+ p.getPv()+"/"+p.getPvMax());
                 }
                 break;
             case 2:
@@ -350,7 +365,7 @@ public class Jeu {
 
             choixAction = this.m_interact.demanderChoix(scanner,
                     message.toString(),
-                    min, 2);
+                    min, nbchoix);
             scanner.nextLine();
 
         }
@@ -378,6 +393,7 @@ public class Jeu {
                 System.out.println("entrez votre commentaire !");
                 String comm = scanner.nextLine();
                 this.mdj.commenter(comm);
+                break;
             case 1:
                 this.mdj.commenter("Vous avez passer votre tour !");
 
@@ -428,6 +444,7 @@ public class Jeu {
                                 else {
                                     this.mdj.commenter("Attaque reussi, vous avez infligé "+degat+" dégat à "+nom);
                                 }
+                                System.out.println(cible.getIdentificationEntite() + " : "+ cible.getPv()+"/"+cible.getPvMax());
 
                                 if(d.getCarte()[position[0]-1][position[1]-1].getFirst().estCaseVide()){
                                     this.mdj.commenter("Vous avez tuer "+nom);
