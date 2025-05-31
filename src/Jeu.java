@@ -347,6 +347,7 @@ public class Jeu {
 
                 break;
         }
+        this.m_interact.afficherDonjon(d);
     }
     public int demanderAction(Entite e, Donjon d, int action) {
         int choixAction;
