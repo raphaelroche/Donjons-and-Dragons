@@ -51,7 +51,7 @@ public class Jeu {
         scanner.nextLine();
 
         int i;
-
+        finirpartie:
         for (i = 0; i < 3; i ++) {
             System.out.println("================================== DONJON " + (i+1) + " ===================================");
 
@@ -82,11 +82,14 @@ public class Jeu {
             afficherEntites();
             this.m_interact.afficherDonjon(d);
             System.out.println();
-            deroulePartie(d);
+            int partie = deroulePartie(d);
             System.out.println("============================== FIN DU DONJON " + (i+1) + " =================================\n\n");
             this.m_monstresEnVie.clear();
             this.m_entites.clear();
             this.m_joueursEnVie.clear();
+            if(partie == 1){
+                break finirpartie;
+            }
 
         }
     }
@@ -147,7 +150,7 @@ public class Jeu {
         return d;
     }
 
-    public void deroulePartie(Donjon d) {
+    public int deroulePartie(Donjon d) {
         for (Personnage p : this.m_joueursEnVie) {
             System.out.println(p);
         }
@@ -166,7 +169,7 @@ public class Jeu {
                     for(int i = 0; i<3;i++){
                         if(this.m_joueursEnVie.size() != this.m_nbJoueurs){
                             mdj.commenter("Vous avez perdu !");
-                            break quitterwhile;
+                            return 1;
                         }
                         if(this.m_monstresEnVie.isEmpty()){
                             mdj.commenter("Vous avez gagné !");
@@ -184,6 +187,7 @@ public class Jeu {
                 }
             }
         }
+        return 0;
     }
 
     public void mdjIntervenir(Donjon d){
