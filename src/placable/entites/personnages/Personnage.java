@@ -149,8 +149,8 @@ public class Personnage extends Entite {
             if(this.m_classe.estMagicien()){
                 ContextSort cible = new ContextSort(e1,e2);
                 echange = this.m_sorts.get(1).lancerSort(cible);
-                d.getCarte()[x1-1][y1-1].set(0,new CaseVide(x1-1, y1-1));
-                d.getCarte()[x2-1][y2-1].set(0, new CaseVide(x2-1, y2-1));
+                d.positionnerEmplacementVide(x1-1, y1-1);
+                d.positionnerEmplacementVide(x2-1, y2-1);
                 d.positionnerElementCarte(e1);
                 d.positionnerElementCarte(e2);
             }
