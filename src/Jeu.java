@@ -4,6 +4,7 @@ import exception.ArmureException;
 import exception.CaseTtropLointaineException;
 import exception.PorteeException;
 import maitredujeu.MaitreDuJeu;
+import placable.Placable;
 import placable.entites.Entite;
 import placable.entites.monstres.Monstre;
 import placable.entites.personnages.*;
@@ -158,7 +159,7 @@ public class Jeu {
             e.scorePourCommencer();
             this.mdj.commenter("le score d'initiative ajouté a 1d20 de "+e.getIdentificationEntite()+" est de : "+e.getScoreInitiative());
         }
-
+        System.out.print("\n");
         this.m_entites.sort((e1, e2) ->
                 Integer.compare(e2.getScoreInitiative(), e1.getScoreInitiative()));
         quitterwhile:
@@ -225,16 +226,8 @@ public class Jeu {
                 int i = 1;
                 if(choix == 1){
                     chx.append("A quelle monstre voulez vous infliger des dégats : ");
-                    for(Monstre m : this.m_monstresEnVie){
-                        chx.append("\n").append(i).append(" - ").append(m.getIdentificationEntite());
-                        i++;
+                    Monstre m = choisirCible(chx, i);
 
-                    }
-                    int c = this.m_interact.demanderChoix(scanner,
-                            chx.toString(),
-                            1, i);
-                    scanner.nextLine();
-                    Monstre m = this.m_monstresEnVie.get(c-1);
                     m.ajusterPv(-(degat));
                     System.out.println("vous avez infligé " + degat + " degat  à "+ m.getIdentificationEntite());
                     if(m.getPv()<=0){
@@ -244,16 +237,7 @@ public class Jeu {
                 }
                 else if(choix == 2){
                     chx.append("A quelle personnage voulez vous infliger des dégats : ");
-                    for(Personnage p : this.m_joueursEnVie) {
-                        chx.append("\n").append(i).append(" - ").append(p.getIdentificationEntite());
-                        i++;
-
-                    }
-                    int c = this.m_interact.demanderChoix(scanner,
-                            chx.toString(),
-                            1, i);
-                    scanner.nextLine();
-                    Personnage p = this.m_joueursEnVie.get(c-1);
+                    Personnage p = choisirPerso(chx, i);
                     p.ajusterPv(-(degat));
                     System.out.println("vous avez infligé " + degat + " degat  à "+ p.getIdentificationEntite());
                     if(p.getPv()<=0){
@@ -275,43 +259,32 @@ public class Jeu {
                 int f = 1;
                 if(choixEntiteADeplace == 1){
                     deplacer.append("Quelle monstre voulez vous deplacer : ");
-                    for(Monstre m : this.m_monstresEnVie){
-                        deplacer.append("\n").append(f).append(" - ").append(m.getIdentificationEntite());
-                        f++;
-                        int depl = this.m_interact.demanderChoix(scanner,
-                                deplacer.toString(),
-                                1, f);
-                        scanner.nextLine();
-                        position = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le monstre ? :",
-                                'A', d.getLettreMax(),
-                                1, d.getHauteur(),
-                                scanner);
-                        posX = this.m_monstresEnVie.get(depl-1).getPositionX();
-                        posY = this.m_monstresEnVie.get(depl-1).getPositionY();
-                        this.m_monstresEnVie.get(depl-1).setLocation(position[0]-1, position[1]-1);
-                        this.mdj.positionnerEntite(d, m);
-                    }
+                    Monstre m = choisirCible(deplacer, f);
+                    position = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le monstre ? :",
+                            'A', d.getLettreMax(),
+                            1, d.getHauteur(),
+                            scanner);
+
+                    posX = m.getPositionX();
+                    posY = m.getPositionY();
+                    m.setLocation(position[0]-1, position[1]-1);
+                    this.mdj.positionnerEntite(d, m);
                 }
                 else if(choixEntiteADeplace == 2) {
                     deplacer.append("Quelle personnage voulez vous deplacer : ");
-                    for(Personnage p : this.m_joueursEnVie){
-                        deplacer.append("\n").append(f).append(" - ").append(p.getIdentificationEntite());
-                        f++;
-                        int depl = this.m_interact.demanderChoix(scanner,
-                                deplacer.toString(),
-                                1, f);
-                        scanner.nextLine();
-                        position = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le personnage ? :",
-                                'A', d.getLettreMax(),
-                                1, d.getHauteur(),
-                                scanner);
-                        posX = this.m_joueursEnVie.get(depl-1).getPositionX();
-                        posY = this.m_joueursEnVie.get(depl-1).getPositionY();
-                        this.m_joueursEnVie.get(depl-1).setLocation(position[0]-1, position[1]-1);
-                        this.mdj.positionnerEntite(d, p);
-                    }
+                    Personnage p =choisirPerso(deplacer, f);
+
+                    position = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le personnage ? :",
+                            'A', d.getLettreMax(),
+                            1, d.getHauteur(),
+                            scanner);
+                    posX = p.getPositionX();
+                    posY = p.getPositionY();
+                    p.setLocation(position[0]-1, position[1]-1);
+                    this.mdj.positionnerEntite(d, p);
                 }
-                if(d.getCarte()[posX][posY].get(1) != null && d.getCarte()[posX][posY].get(1).estEquipement()){
+                ArrayList<Placable> caseContenue = d.getCarte()[posX][posY];
+                if(caseContenue.size() >1 && caseContenue.get(1) != null && caseContenue.get(1).estEquipement()){
                     d.decalerAGauche(d.getCarte()[posX][posY]);
                 }
                 else{
@@ -349,6 +322,32 @@ public class Jeu {
         }
         this.m_interact.afficherDonjon(d);
     }
+
+    private Personnage choisirPerso(StringBuilder deplacer, int f) {
+        for(Personnage p : this.m_joueursEnVie){
+            deplacer.append("\n").append(f).append(" - ").append(p.getIdentificationEntite());
+            f++;
+        }
+        int depl = this.m_interact.demanderChoix(scanner,
+                deplacer.toString(),
+                1, f);
+        scanner.nextLine();
+        return this.m_joueursEnVie.get(depl-1);
+    }
+
+    private Monstre choisirCible(StringBuilder chx, int i) {
+        for(Monstre m : this.m_monstresEnVie){
+            chx.append("\n").append(i).append(" - ").append(m.getIdentificationEntite());
+            i++;
+
+        }
+        int c = this.m_interact.demanderChoix(scanner,
+                chx.toString(),
+                1, i);
+        scanner.nextLine();
+        return this.m_monstresEnVie.get(c-1);
+    }
+
     public int demanderAction(Entite e, Donjon d, int action) {
         int choixAction;
         int min;
@@ -469,9 +468,6 @@ public class Jeu {
                         this.mdj.commenter("Aucune entite n'est présente sur la case que vous avez entrée !");
                         redemander = true;
                     }
-
-
-
                 break;
             case 4:
                 StringBuilder arme = new StringBuilder("Quelle Equipement voulez vous equiper ?");
@@ -543,6 +539,7 @@ public class Jeu {
                     }
                 }
                 this.mdj.commenter("Vous avez redonner "+p.getEfficaciteGuerison()+" à "+((Entite)d.getCarte()[position[0]-1][position[1]-1].getFirst()).getIdentificationEntite());
+                this.mdj.commenter(p.getIdentificationEntite() + " a maintenant "+p.getPv()+"/"+p.getPvMax()+" pv.");
                 break;
             case 2:
                 int[] position1 = this.m_interact.demanderPositionCarteObligatoire("Entrez la position du 1er joueur ou monstre : ",
