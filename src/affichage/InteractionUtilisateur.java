@@ -46,7 +46,7 @@ public class InteractionUtilisateur {
         this.separerParLigne(d);
 
         //légende de la carte
-        System.out.println("\t* Equipement\t|\t[ ] Obstacle\t|\tM Monstre");
+        System.out.println("\t* Equipement\t|\t[ ] Obstacle\t|\tX Monstre");
     }
 
     public void separerParLigne(Donjon d) {
