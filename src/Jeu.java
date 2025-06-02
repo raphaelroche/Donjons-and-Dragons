@@ -54,7 +54,6 @@ public class Jeu {
         scanner.nextLine();
 
         int i;
-        finirpartie:
         for (i = 0; i < 3; i ++) {
             System.out.println("================================== DONJON " + (i+1) + " ===================================");
 
@@ -87,11 +86,14 @@ public class Jeu {
             System.out.println();
             int partie = deroulePartie(d);
             System.out.println("============================== FIN DU DONJON " + (i+1) + " =================================\n\n");
+            for(Personnage p : this.m_joueur){
+                p.setPv(p.getPvMax());
+            }
             this.m_monstresEnVie.clear();
             this.m_entites.clear();
             this.m_joueursEnVie.clear();
             if(partie == 1){
-                break finirpartie;
+                break;
             }
 
         }
@@ -798,7 +800,7 @@ public class Jeu {
         switch (choix) {
 
             case 1: {
-                m = this.m_creation.creerMonstreAleatoire(d);
+                m = this.m_creation.creerMonstreAleatoire(d, m_monstresEnVie.size());
                 boolean peutSePlacer = mdj.positionnerEntite(d, m);
                 while (!peutSePlacer) {
                     m.setLocation(m_des.lancerDes(1, d.getHauteur() - 1),
@@ -852,7 +854,7 @@ public class Jeu {
 
                 int posX = 0;
                 int posY = 0;
-                m = new Monstre(espece, portee, pv,vitesse, attaque, armure, force, dexterite, initiative, posX, posY);
+                m = new Monstre(espece, portee, pv,vitesse, attaque, armure,this.m_monstresEnVie.size(), force, dexterite, initiative, posX, posY);
                 boolean peutSePlacer = false;
                 if(position[0] == -1 || position[1] == -1){
                     while(!peutSePlacer){

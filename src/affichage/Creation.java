@@ -15,11 +15,11 @@ import placable.equipements.armures.Harnois;
 import placable.obstacle.Obstacle;
 
 public class Creation {
-    public Monstre creerMonstreAleatoire(Donjon d) {
+    public Monstre creerMonstreAleatoire(Donjon d, int numero) {
         Des des = new Des();
         int x = des.lancerDes(1, d.getLargeur()-1);
         int y = des.lancerDes(1, d.getHauteur()-1);
-        Monstre m = new Monstre("dragon");
+        Monstre m = new Monstre("dragon", numero);
         m.setLocation(x-1, y-1);
         return m;
     }

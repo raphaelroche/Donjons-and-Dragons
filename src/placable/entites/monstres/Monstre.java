@@ -10,31 +10,27 @@ import java.util.ArrayList;
 
 public class Monstre extends Entite {
     private final String m_espece;
-    private int m_numero;
+    private final int m_numero;
     private final String m_nomAttaque;
     private final int m_portee;
     private final int m_degats;
     private final int m_classeArmure;
     private final Des des;
 
-    private static ArrayList<Monstre> monstres;
-
     //par default
-    public Monstre(String espece) {
+    public Monstre(String espece, int numero) {
         this.des = new Des();
-        if(monstres == null) {
-            monstres = new ArrayList<>();
-        }
-
         this.m_espece = espece;
-        monstres.add(this);
-        if(monstres.size() > 1) {
-            this.m_numero = monstres.indexOf(this)+1;
-            this.m_nomAffiche = "X" + this.m_numero+" ";
-        }
-        else{
+        this.m_numero = numero;
+        if(this.m_numero == 0){
             this.m_nomAffiche = " X ";
         }
+        else{
+            this.m_nomAffiche = "X" + this.m_numero+" ";
+        }
+
+
+
 
         this.m_portee = des.lancerDes(3, 5);
         if(m_portee > 1){
@@ -55,12 +51,9 @@ public class Monstre extends Entite {
         this.m_vitesse = des.lancerDes(3, 6);
     }
 
-    public Monstre(String espece, int portee,int pv,int vitesse, String nomattaque,  int classeArmure, int force, int dexterite, int initiative,  int x, int y) {
+    public Monstre(String espece, int portee,int pv,int vitesse, String nomattaque,  int classeArmure,int numero, int force, int dexterite, int initiative,  int x, int y) {
         des = new Des();
 
-        if(monstres == null) {
-            monstres = new ArrayList<>();
-        }
         this.m_vitesse = vitesse;
         this.m_espece = espece;
         this.m_portee = portee;
@@ -71,16 +64,18 @@ public class Monstre extends Entite {
         this.m_degats = 3 + des.lancerDes(1, 4);
         this.m_classeArmure = classeArmure;
         this.m_initiative = initiative;
-        monstres.add(this);
         setLocation(x-1, y-1);
 
-        if(monstres.size() > 1) {
-            this.m_numero = monstres.indexOf(this)+1;
-            this.m_nomAffiche = "X" + this.m_numero+" ";
-        }
-        else{
+
+        this.m_numero = numero;
+        if(this.m_numero == 0){
             this.m_nomAffiche = " X ";
         }
+        else{
+            this.m_nomAffiche = "X" + this.m_numero+" ";
+        }
+
+
         if(portee > 1){
             this.m_force = 0;
             this.m_dexterite = dexterite;
@@ -96,14 +91,6 @@ public class Monstre extends Entite {
         return this.m_classeArmure;
     }
 
-    @Override
-    public void ajusterPv(int valeur) {
-        this.m_pv += valeur;
-        if (this.m_pv < 0) {
-            this.m_pv = 0;
-            monstres.remove(this);
-        }
-    }
     @Override
     public boolean estMonstre(){
         return true;
