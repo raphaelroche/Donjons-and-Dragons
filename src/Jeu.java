@@ -8,6 +8,8 @@ import placable.Placable;
 import placable.entites.Entite;
 import placable.entites.monstres.Monstre;
 import placable.entites.personnages.*;
+import placable.entites.personnages.enums.TypeClasse;
+import placable.entites.personnages.enums.TypeRace;
 import placable.equipements.Equipement;
 import placable.equipements.armes.*;
 import placable.equipements.armures.*;
@@ -685,6 +687,23 @@ public class Jeu {
                 1, 4);
         scanner.nextLine();
 
+        TypeRace typeRace = switch (race) {
+            case 1 -> TypeRace.HUMAIN;
+            case 2 -> TypeRace.NAIN;
+            case 3 -> TypeRace.ELFE;
+            case 4 -> TypeRace.HALFELIN;
+            default -> throw new IllegalArgumentException("Race invalide");
+        };
+
+        TypeClasse typeClasse = switch (classe) {
+            case 1 -> TypeClasse.CLERC;
+            case 2 -> TypeClasse.GUERRIER;
+            case 3 -> TypeClasse.MAGICIEN;
+            case 4 -> TypeClasse.ROUBLARD;
+            default -> throw new IllegalArgumentException("Classe invalide");
+        };
+
+
 
         int[] position = this.m_interact.demanderPositionCarte("Choisissez la position du joueur",
                 'A', d.getLettreMax(),
@@ -694,11 +713,11 @@ public class Jeu {
         boolean peutSePlacer;
         Personnage p;
         if (position[0] == -1 || position[1] == -1) {
-            p = this.m_creation.creerPersonnageAleatoire(nom, race, classe, d);
+            p = this.m_creation.creerPersonnageAleatoire(nom, typeRace, typeClasse, d);
             peutSePlacer = mdj.positionnerEntite(d, p);
             verificationPlacementjoueur(p, d, peutSePlacer);
         } else {
-            p = new Personnage(nom, race, classe, position[0], position[1]);
+            p = new Personnage(nom, typeRace, typeClasse, position[0], position[1]);
             peutSePlacer = mdj.positionnerEntite(d, p);
             while (!peutSePlacer) {
                 position = this.m_interact.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du joueur",

@@ -4,6 +4,8 @@ import des.Des;
 import donjons.Donjon;
 import placable.entites.monstres.Monstre;
 import placable.entites.personnages.Personnage;
+import placable.entites.personnages.enums.TypeClasse;
+import placable.entites.personnages.enums.TypeRace;
 import placable.equipements.Equipement;
 import placable.equipements.armes.*;
 import placable.equipements.armures.CotteDeMailles;
@@ -54,7 +56,7 @@ public class Creation {
         int y = des.lancerDes(1, d.getHauteur() - 1);
         return new Obstacle(x, y);
     }
-    public Personnage creerPersonnageAleatoire(String nom, int race, int classe, Donjon d){
+    public Personnage creerPersonnageAleatoire(String nom, TypeRace race, TypeClasse classe, Donjon d){
         Des des = new Des();
         int x = des.lancerDes(1, d.getLargeur() - 1);
         int y = des.lancerDes(1, d.getHauteur() - 1);
