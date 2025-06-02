@@ -21,6 +21,7 @@ public abstract class Entite implements Placable {
 
     protected int scoreInitiative;
 
+
     @Override
     public void setLocation(int x, int y){
         this.m_positionX = x;

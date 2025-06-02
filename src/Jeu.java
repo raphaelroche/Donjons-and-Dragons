@@ -8,6 +8,8 @@ import placable.Placable;
 import placable.entites.Entite;
 import placable.entites.monstres.Monstre;
 import placable.entites.personnages.*;
+import placable.entites.personnages.enums.TypeClasse;
+import placable.entites.personnages.enums.TypeRace;
 import placable.equipements.Equipement;
 import placable.equipements.armes.*;
 import placable.equipements.armures.*;
@@ -52,7 +54,6 @@ public class Jeu {
         scanner.nextLine();
 
         int i;
-        finirpartie:
         for (i = 0; i < 3; i ++) {
             System.out.println("================================== DONJON " + (i+1) + " ===================================");
 
@@ -85,11 +86,14 @@ public class Jeu {
             System.out.println();
             int partie = deroulePartie(d);
             System.out.println("============================== FIN DU DONJON " + (i+1) + " =================================\n\n");
+            for(Personnage p : this.m_joueur){
+                p.setPv(p.getPvMax());
+            }
             this.m_monstresEnVie.clear();
             this.m_entites.clear();
             this.m_joueursEnVie.clear();
             if(partie == 1){
-                break finirpartie;
+                break;
             }
 
         }
@@ -685,6 +689,23 @@ public class Jeu {
                 1, 4);
         scanner.nextLine();
 
+        TypeRace typeRace = switch (race) {
+            case 1 -> TypeRace.HUMAIN;
+            case 2 -> TypeRace.NAIN;
+            case 3 -> TypeRace.ELFE;
+            case 4 -> TypeRace.HALFELIN;
+            default -> throw new IllegalArgumentException("Race invalide");
+        };
+
+        TypeClasse typeClasse = switch (classe) {
+            case 1 -> TypeClasse.CLERC;
+            case 2 -> TypeClasse.GUERRIER;
+            case 3 -> TypeClasse.MAGICIEN;
+            case 4 -> TypeClasse.ROUBLARD;
+            default -> throw new IllegalArgumentException("Classe invalide");
+        };
+
+
 
         int[] position = this.m_interact.demanderPositionCarte("Choisissez la position du joueur",
                 'A', d.getLettreMax(),
@@ -694,11 +715,11 @@ public class Jeu {
         boolean peutSePlacer;
         Personnage p;
         if (position[0] == -1 || position[1] == -1) {
-            p = this.m_creation.creerPersonnageAleatoire(nom, race, classe, d);
+            p = this.m_creation.creerPersonnageAleatoire(nom, typeRace, typeClasse, d);
             peutSePlacer = mdj.positionnerEntite(d, p);
             verificationPlacementjoueur(p, d, peutSePlacer);
         } else {
-            p = new Personnage(nom, race, classe, position[0], position[1]);
+            p = new Personnage(nom, typeRace, typeClasse, position[0], position[1]);
             peutSePlacer = mdj.positionnerEntite(d, p);
             while (!peutSePlacer) {
                 position = this.m_interact.demanderPositionCarte("Il y a un élément sur cette case, rechoisissez la position du joueur",
@@ -779,7 +800,7 @@ public class Jeu {
         switch (choix) {
 
             case 1: {
-                m = this.m_creation.creerMonstreAleatoire(d);
+                m = this.m_creation.creerMonstreAleatoire(d, m_monstresEnVie.size());
                 boolean peutSePlacer = mdj.positionnerEntite(d, m);
                 while (!peutSePlacer) {
                     m.setLocation(m_des.lancerDes(1, d.getHauteur() - 1),
@@ -833,7 +854,7 @@ public class Jeu {
 
                 int posX = 0;
                 int posY = 0;
-                m = new Monstre(espece, portee, pv,vitesse, attaque, armure, force, dexterite, initiative, posX, posY);
+                m = new Monstre(espece, portee, pv,vitesse, attaque, armure,this.m_monstresEnVie.size(), force, dexterite, initiative, posX, posY);
                 boolean peutSePlacer = false;
                 if(position[0] == -1 || position[1] == -1){
                     while(!peutSePlacer){
