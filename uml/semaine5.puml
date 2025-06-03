@@ -47,6 +47,64 @@ left to right direction
       }
     }
 
+    package exception{
+        class ArmureException <<exception>>
+        {
+            +<<create>> ArmureException()
+        }
+
+        class CaseTropLointaineException <<exception>>
+        {
+            +<<create>> CaseTropLointaineException()
+        }
+
+        class PorteeException <<exception>>
+       {
+          +<<create>> PorteeException()
+       }
+
+
+    }
+
+
+    package sorts{
+        class ArmeMagique{
+         +lancerSort (c : ContextSort) : Boolean
+        }
+        class BoogieWoogie{
+         +lancerSort (c : ContextSort) : Boolean
+        }
+        class ContextSort{
+
+            + ContextSort(cible1 : Entite, cible2 : Entite)
+            + ContextSort(cible : Entite)
+            + ContextSort(armes : Armes)
+
+            + setPV(pv : int) : void
+
+            + getXcible1() : Integer
+            + getYcible1() : Integer
+            + getXcible2() : Integer
+            + getYcible2() : Integer
+
+            + setCible1(x : int, y : Integer)
+            + setCible2(x : int, y : Integer)
+
+            + setArme(b : boolean)
+
+        }
+        class Guerison{
+            -m_efficacite : Integer
+
+            +<<create>> Guerison()
+            +lancerSort (c : ContextSort) : Boolean
+            +getEfficacite() : Integer
+        }
+        abstract class Sort <<abstract>>{
+           +abstract lancerSort(c : ContextSort) : Boolean
+        }
+    }
+
     package placable
     {
       interface Placable
