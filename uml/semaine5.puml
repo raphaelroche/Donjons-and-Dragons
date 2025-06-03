@@ -101,7 +101,7 @@ left to right direction
             +getEfficacite() : Integer
         }
         abstract class Sort <<abstract>>{
-           +abstract lancerSort(c : ContextSort) : Boolean
+           +{abstract} lancerSort(c : ContextSort) : Boolean
         }
     }
 
@@ -109,10 +109,10 @@ left to right direction
     {
       interface Placable
       {
-        + setLocation(x : Integer, y : Integer)
-        + getPositionX() : Integer
-        + getPositionY() : Integer
-        + getNomAffiche() : String
+        + {abstract}setLocation(x : Integer, y : Integer)
+        + {abstract}getPositionX() : Integer
+        + {abstract}getPositionY() : Integer
+        + {abstract}getNomAffiche() : String
         + estObstacle() : Boolean
         + estEntite() : Boolean
         + estEquipement() : Boolean
