@@ -247,172 +247,167 @@ left to right direction
               + <<create>> Halfelin()
               + initialiser(p : Personnage)
             }
-
-
-
-        }
-
-      }
-
-      package equipements
-      {
-        abstract class Equipement <<abstract>>
-        {
-          # m_nom : String
-          # m_positionX : Integer
-          # m_positionY : Integer
-          # m_nomAffiche : String
-
-          + <<create>> Equipement()
-          + setLocation(x : Integer, y : Integer)
-          + getNomEquipement() : String
-          + getNomAffiche() : String
-          + getPositionX() : Integer
-          + getPositionY() : Integer
-          + estEquipement() : Boolean
-        }
-
-        package armes
-        {
-          abstract class CAC <<abstract>>
-          {
-            + <<create>> CAC()
-            + <<create>> CAC(x : Integer, y : Integer)
-          }
-
-          abstract class Distance <<abstract>>
-          {
-            + <<create>> Distance(portee : Integer)
-            + <<create>> Distance(portee : Integer, x : Integer, y : Integer)
-          }
-
-          abstract class Guerre <<abstract>>
-          {
-            + <<create>> Guerre()
-            + <<create>> Guerre(x : Integer, y : Integer)
-            + determinerDegat()
-          }
-
-          abstract class Courantes <<abstract>>
-          {
-            + <<create>> Courantes()
-            + <<create>> Courantes(x : Integer, y : Integer)
-            + determinerDegat()
-          }
-
-          abstract class Armes <<abstract>>
-          {
-            # m_degats : Integer
-            # m_portee : Integer
-            # des : Des
-            # m_changeStat : Boolean
-
-            + <<create>> Armes(portee : Integer)
-            + <<create>> Armes(portee : Integer, x : Integer, y : Integer)
-            + getPortee() : Integer
-            + {abstract} determinerDegat()
-            + getDegats() : Integer
-            + getChangeStat() : Boolean
-          }
-
-          class Arbalete
-          {
-            + <<create>> Arbalete()
-            + <<create>> Arbalete(x : Integer, y : Integer)
-            + determinerDegat()
-          }
-
-          class Arc
-          {
-            + <<create>> Arc()
-            + <<create>> Arc(x : Integer, y : Integer)
-            + determinerDegat()
-          }
-
-          class Baton
-          {
-            + <<create>> Baton()
-            + <<create>> Baton(x : Integer, y : Integer)
-          }
-
-          class EpeeLongue
-          {
-            + <<create>> EpeeLongue()
-            + <<create>> EpeeLongue(x : Integer, y : Integer)
-          }
-
-          class Fronde
-          {
-            + <<create>> Fronde()
-            + <<create>> Fronde(x : Integer, y : Integer)
-            + determinerDegat()
-          }
-
-          class Masse
-          {
-            + <<create>> Masse()
-            + <<create>> Masse(x : Integer, y : Integer)
-          }
-
-          class Rapiere
-          {
-            + <<create>> Rapiere()
-            + <<create>> Rapiere(x : Integer, y : Integer)
-          }
-        }
-
-        package armures
-        {
-          abstract class Armures <<abstract>>
-          {
-            # m_classe : Integer
-            # m_changeStat : Boolean
-            # des : Des
-
-            + <<create>> Armures(classe : Integer)
-            + <<create>> Armures(classe : Integer, x : Integer, y : Integer)
-            + getClasseArmure() : Integer
-            + getChangeStat() : Boolean
-          }
-
-          abstract class Lourdes <<abstract>>
-          {
-            + <<create>> Lourdes(classe : Integer)
-            + <<create>> Lourdes(classe : Integer, x : Integer, y : Integer)
-          }
-
-          abstract class Legeres <<abstract>>
-          {
-            + <<create>> Legeres(classe : Integer)
-            + <<create>> Legeres(classe : Integer, x : Integer, y : Integer)
-          }
-
-          class CotteDeMailles
-          {
-            + <<create>> CotteDeMailles()
-            + <<create>> CotteDeMailles(x : Integer, y : Integer)
-          }
-
-          class DemiPlatte
-          {
-            + <<create>> DemiPlatte()
-            + <<create>> DemiPlatte(x : Integer, y : Integer)
-          }
-
-          class Ecailles
-          {
-            + <<create>> Ecailles()
-            + <<create>> Ecailles(x : Integer, y : Integer)
-          }
-
-          class Harnois
-          {
-            + <<create>> Harnois()
-            + <<create>> Harnois(x : Integer, y : Integer)
-          }
         }
       }
     }
+    package equipements
+          {
+            abstract class Equipement <<abstract>>
+            {
+              # m_nom : String
+              # m_positionX : Integer
+              # m_positionY : Integer
+              # m_nomAffiche : String
+
+              + <<create>> Equipement()
+              + setLocation(x : Integer, y : Integer)
+              + getNomEquipement() : String
+              + getNomAffiche() : String
+              + getPositionX() : Integer
+              + getPositionY() : Integer
+              + estEquipement() : Boolean
+            }
+
+            package armes
+            {
+              abstract class CAC <<abstract>>
+              {
+                + <<create>> CAC()
+                + <<create>> CAC(x : Integer, y : Integer)
+              }
+
+              abstract class Distance <<abstract>>
+              {
+                + <<create>> Distance(portee : Integer)
+                + <<create>> Distance(portee : Integer, x : Integer, y : Integer)
+              }
+
+              abstract class Guerre <<abstract>>
+              {
+                + <<create>> Guerre()
+                + <<create>> Guerre(x : Integer, y : Integer)
+                + determinerDegat()
+              }
+
+              abstract class Courantes <<abstract>>
+              {
+                + <<create>> Courantes()
+                + <<create>> Courantes(x : Integer, y : Integer)
+                + determinerDegat()
+              }
+
+              abstract class Armes <<abstract>>
+              {
+                # m_degats : Integer
+                # m_portee : Integer
+                # des : Des
+                # m_changeStat : Boolean
+
+                + <<create>> Armes(portee : Integer)
+                + <<create>> Armes(portee : Integer, x : Integer, y : Integer)
+                + getPortee() : Integer
+                + {abstract} determinerDegat()
+                + getDegats() : Integer
+                + getChangeStat() : Boolean
+              }
+
+              class Arbalete
+              {
+                + <<create>> Arbalete()
+                + <<create>> Arbalete(x : Integer, y : Integer)
+                + determinerDegat()
+              }
+
+              class Arc
+              {
+                + <<create>> Arc()
+                + <<create>> Arc(x : Integer, y : Integer)
+                + determinerDegat()
+              }
+
+              class Baton
+              {
+                + <<create>> Baton()
+                + <<create>> Baton(x : Integer, y : Integer)
+              }
+
+              class EpeeLongue
+              {
+                + <<create>> EpeeLongue()
+                + <<create>> EpeeLongue(x : Integer, y : Integer)
+              }
+
+              class Fronde
+              {
+                + <<create>> Fronde()
+                + <<create>> Fronde(x : Integer, y : Integer)
+                + determinerDegat()
+              }
+
+              class Masse
+              {
+                + <<create>> Masse()
+                + <<create>> Masse(x : Integer, y : Integer)
+              }
+
+              class Rapiere
+              {
+                + <<create>> Rapiere()
+                + <<create>> Rapiere(x : Integer, y : Integer)
+              }
+            }
+
+            package armures
+            {
+              abstract class Armures <<abstract>>
+              {
+                # m_classe : Integer
+                # m_changeStat : Boolean
+                # des : Des
+
+                + <<create>> Armures(classe : Integer)
+                + <<create>> Armures(classe : Integer, x : Integer, y : Integer)
+                + getClasseArmure() : Integer
+                + getChangeStat() : Boolean
+              }
+
+              abstract class Lourdes <<abstract>>
+              {
+                + <<create>> Lourdes(classe : Integer)
+                + <<create>> Lourdes(classe : Integer, x : Integer, y : Integer)
+              }
+
+              abstract class Legeres <<abstract>>
+              {
+                + <<create>> Legeres(classe : Integer)
+                + <<create>> Legeres(classe : Integer, x : Integer, y : Integer)
+              }
+
+              class CotteDeMailles
+              {
+                + <<create>> CotteDeMailles()
+                + <<create>> CotteDeMailles(x : Integer, y : Integer)
+              }
+
+              class DemiPlatte
+              {
+                + <<create>> DemiPlatte()
+                + <<create>> DemiPlatte(x : Integer, y : Integer)
+              }
+
+              class Ecailles
+              {
+                + <<create>> Ecailles()
+                + <<create>> Ecailles(x : Integer, y : Integer)
+              }
+
+              class Harnois
+              {
+                + <<create>> Harnois()
+                + <<create>> Harnois(x : Integer, y : Integer)
+              }
+            }
+          }
 
     package obstacle
     {
@@ -435,18 +430,24 @@ left to right direction
 
 
 
-    package utils {
-      class Utils {
-        - des : Des
-
-        + <<create>> Utils()
-        + demanderChoix(scanner : Scanner, message : String, min : Integer, max : Integer) : Integer
-        + demanderChoixOuParDefaut(message : String, min : Integer, max : Integer, valeurParDefaut : Integer, scanner : Scanner) : Integer
-        + demanderPositionCarte(message : String, minLettre : Char, maxLettre : Char, minNumero : Integer, maxNumero : Integer, scanner : Scanner) : int[*]
+    package affichage {
+      class Creation {
         + creerMonstreAleatoire(d : Donjon) : Monstre
         + creerEquipementAleatoire(d : Donjon) : Equipement
         + creerObstacleAleatoire(d : Donjon) : Obstacle
         + creerPersonnageAleatoire(nom : String, race : Integer, classe : Integer, d : Donjon) : Personnage
+      }
+      class InteractionUtilisateur
+      {
+        - m_alphabet : char[]
+        + <<create>> InteractionUtilisateur()
+        + afficherDonjon(d : Donjon)
+        + separerParLigne(d : Donjon)
+        + demanderChoix(scanner : Scanner, message : String, min : Integer, max : Integer) : Integer
+        + demanderChoixOuParDefaut(message : String, min : Integer, max : Integer, valeurParDefaut : Integer, scanner : Scanner) : Integer
+        + demanderPositionCarte(message : String, minLettre : char, maxLettre : char, minNumero : Integer, maxNumero : Integer, scanner : Scanner) : Integer[]
+        + demanderPositionObligatoire(message : String, minLettre : char, maxLettre : char, minNumero : Integer, maxNumero : Integer, scanner : Scanner) : Integer[]
+        - position(minLettre : char, maxLettre : char, minNumero : Integer, maxNumero : Integer, position : Integer[], alphabet : String, input : String) : Boolean
       }
     }
 
