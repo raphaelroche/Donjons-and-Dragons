@@ -1,4 +1,2 @@
 - créer classe case
-- créer classe affichage et mettre afficherDonjon dedans
 - mettre seDeplacer dans donjon
-- changer race classe de int à type (dans constructeur)

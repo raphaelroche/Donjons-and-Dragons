@@ -49,7 +49,6 @@ left to right direction
 
     package placable
     {
-
       interface Placable
       {
         + setLocation(x : Integer, y : Integer)
@@ -208,7 +207,6 @@ left to right direction
               + <<create>> Roublard()
               + initialiser(p : Personnage)
             }
-
           }
 
           package races
@@ -250,7 +248,7 @@ left to right direction
               + initialiser(p : Personnage)
             }
 
-          }
+
 
         }
 
@@ -258,7 +256,6 @@ left to right direction
 
       package equipements
       {
-
         abstract class Equipement <<abstract>>
         {
           # m_nom : String
@@ -414,28 +411,27 @@ left to right direction
             + <<create>> Harnois(x : Integer, y : Integer)
           }
         }
-
       }
-
-      package obstacle
-      {
-        class Obstacle
-        {
-          - m_positionX : Integer
-          - m_positionY : Integer
-          - m_nomAffiche : String
-          - des : Des
-
-          + <<create>> Obstacle(x : Integer, y : Integer)
-          + setLocation(x : Integer, y : Integer)
-          + getNomAffiche() : String
-          + getPositionX() : Integer
-          + getPositionY() : Integer
-          + estObstacle() : Boolean
-        }
-      }
-
     }
+
+    package obstacle
+    {
+      class Obstacle
+      {
+        - m_positionX : Integer
+        - m_positionY : Integer
+        - m_nomAffiche : String
+        - des : Des
+
+        + <<create>> Obstacle(x : Integer, y : Integer)
+        + setLocation(x : Integer, y : Integer)
+        + getNomAffiche() : String
+        + getPositionX() : Integer
+        + getPositionY() : Integer
+        + estObstacle() : Boolean
+      }
+    }
+  }
 
 
 
@@ -480,201 +476,13 @@ left to right direction
     class Main {
       + main(args : String[])
     }
+' RELATIONS
+' implemente interface
+CaseVide ..|> placable.Placable
+Entite ..|> placable.Placable
+Equipement ..|> placable.Placable
+Obstacle ..|> placable.Placable
 
 
-
-' -------------------- RELATIONS --------------------
-
-CaseVide ..|> Placable
-Entite ..|> Placable
-Monstre --|> Entite
-Personnage --|> Entite
-
-Clerc --|> Classe
-Guerrier --|> Classe
-Magicien --|> Classe
-Roublard --|> Classe
-
-Humain --|> Race
-Nain --|> Race
-Elfe --|> Race
-Halfelin --|> Race
-
-MaitreDuJeu .> Donjon : <<use>>
-MaitreDuJeu .> Obstacle : <<use>>
-MaitreDuJeu .> Entite : <<use>>
-MaitreDuJeu .> Equipement : <<use>>
-
-Donjon .> Placable : <<use>>
-Donjon .> CaseVide : <<instantiate>>
-Donjon .> Monstre : <<use>>
-Donjon .> ArrayList : <<use>>
-
-CaseVide .> Des : <<use>>
-Entite .> Donjon : <<use>>
-Entite .> Equipement : <<use>>
-Entite .> Obstacle : <<use>>
-Entite .> ArrayList : <<use>>
-
-Monstre .> Des : <<use>>
-Monstre .> Personnage : <<use>>
-Monstre .> ArrayList : <<use>>
-
-Classe .> Personnage : <<use>>
-Race .> Personnage : <<use>>
-
-Personnage .> Des : <<use>>
-Personnage .> Monstre : <<use>>
-Personnage .> Equipement : <<use>>
-Personnage .> Armes : <<use>>
-Personnage .> Armures : <<use>>
-Personnage .> Classe : <<use>>
-Personnage .> Race : <<use>>
-
-Equipement ..|> Placable
-Equipement .> Des : <<use>>
-Equipement .> Donjon : <<use>>
-
-
-CAC --|> Armes
-
-
-
-Distance --|> Armes
-
-
-
-Guerre --|> CAC
-CAC --|> Armes
-Guerre .> Des : <<use>>
-
-
-
-Courantes --|> CAC
-CAC --|> Armes
-Courantes .> Des : <<use>>
-
-
-
-Arbalete --|> Distance
-Distance --|> Armes
-Arbalete .> Des : <<use>>
-
-
-
-Arc --|> Distance
-Distance --|> Armes
-Arc .> Des : <<use>>
-
-
-Armes --|> Equipement
-Armes .> Des : <<use>>
-
-
-
-Baton --|> Courantes
-Courantes --|> CAC
-CAC --|> Armes
-
-
-
-EpeeLongue --|> Guerre
-Guerre --|> CAC
-CAC --|> Armes
-
-
-
-Fronde --|> Distance
-Distance --|> Armes
-Fronde .> Des : <<use>>
-
-
-
-Masse --|> Courantes
-Courantes --|> CAC
-CAC --|> Armes
-
-
-
-Rapiere --|> Guerre
-Guerre --|> CAC
-CAC --|> Armes
-
-
-
-
-Armures --|> Equipement
-Armures .> Des : <<use>>
-
-
-Lourdes --|> Armures
-
-
-
-Legeres --|> Armures
-
-
-
-CotteDeMailles --|> Lourdes
-Lourdes --|> Armures
-CotteDeMailles .> Donjon : <<use>>
-CotteDeMailles .> Des : <<use>>
-
-
-
-DemiPlatte --|> Legeres
-Legeres --|> Armures
-DemiPlatte .> Donjon : <<use>>
-DemiPlatte .> Des : <<use>>
-
-
-
-Ecailles --|> Legeres
-Legeres --|> Armures
-Ecailles .> Donjon : <<use>>
-Ecailles .> Des : <<use>>
-
-
-Harnois --|> Lourdes
-Lourdes --|> Armures
-Harnois .> Donjon : <<use>>
-Harnois .> Des : <<use>>
-
-
-Obstacle ..|> Placable
-Obstacle .> Des : <<use>>
-
-
-Utils .> Des : <<use>>
-Utils .> Scanner : <<use>>
-Utils .> Donjon : <<use>>
-Utils .> Monstre : <<create>>
-Utils .> Equipement : <<create>>
-Utils .> Obstacle : <<create>>
-Utils .> Personnage : <<create>>
-
-
-Jeu .> Personnage : <<use>>
-Jeu .> Monstre : <<use>>
-Jeu .> Donjon : <<use>>
-Jeu .> MaitreDuJeu : <<use>>
-Jeu .> Utils : <<use>>
-Jeu .> Des : <<use>>
-Jeu .> Scanner : <<use>>
-Jeu .> Equipement : <<use>>
-Jeu .> Obstacle : <<use>>
-Jeu .> Arbalete : <<create>>
-Jeu .> Arc : <<create>>
-Jeu .> Baton : <<create>>
-Jeu .> EpeeLongue : <<create>>
-Jeu .> Fronde : <<create>>
-Jeu .> Masse : <<create>>
-Jeu .> Rapiere : <<create>>
-Jeu .> CotteDeMailles : <<create>>
-Jeu .> DemiPlatte : <<create>>
-Jeu .> Ecailles : <<create>>
-Jeu .> Harnois : <<create>>
-
-Main .> Jeu : <<instantiate>>
 
 @enduml
