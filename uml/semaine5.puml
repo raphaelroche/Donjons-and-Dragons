@@ -6,21 +6,21 @@ skinparam style strictuml
 hide empty members
 left to right direction
 
-    package des {
-      class Des {
+package des {
+    class Des {
         + lancerDes(nbDes : Integer, nbFaces : Integer) : Integer
-      }
     }
+}
 
-    package donjons {
-      class Donjon {
+package donjons {
+    class Donjon {
         - m_alphabet : String[*]
         - m_carte : Placable[*][*]
         - m_hauteur : Integer
         - m_largeur : Integer
         - m_casevide : CaseVide
         - m_listeMonstre : Monstre[*]
-
+        
         + <<create>> Donjon()
         + Donjon(hauteur : Integer, largeur : Integer)
         + afficherDonjon()
@@ -34,81 +34,84 @@ left to right direction
         + getLettreMax() : String
         + separer()
         + getListeMonstre() : Monstre[*]
-      }
     }
+}
 
-    package maitredujeu {
-      class MaitreDuJeu {
+package maitredujeu {
+    class MaitreDuJeu {
         + <<create>> MaitreDuJeu()
         + creerDonjon(d : Donjon, longueur : Integer, largeur : Integer)
         + positionnerObstacle(d : Donjon, o : Obstacle) : Boolean
         + positionnerEntite(d : Donjon, e : Entite) : Boolean
         + positionnerEquipement(d : Donjon, e : Equipement) : Boolean
-      }
     }
+}
 
-    package exception{
-        class ArmureException <<exception>>
-        {
-            +<<create>> ArmureException()
-        }
-
-        class CaseTropLointaineException <<exception>>
-        {
-            +<<create>> CaseTropLointaineException()
-        }
-
-        class PorteeException <<exception>>
-       {
-          +<<create>> PorteeException()
-       }
-
-
-    }
-
-
-    package sorts{
-        class ArmeMagique{
-         +lancerSort (c : ContextSort) : Boolean
-        }
-        class BoogieWoogie{
-         +lancerSort (c : ContextSort) : Boolean
-        }
-        class ContextSort{
-
-            + ContextSort(cible1 : Entite, cible2 : Entite)
-            + ContextSort(cible : Entite)
-            + ContextSort(armes : Armes)
-
-            + setPV(pv : int) : void
-
-            + getXcible1() : Integer
-            + getYcible1() : Integer
-            + getXcible2() : Integer
-            + getYcible2() : Integer
-
-            + setCible1(x : int, y : Integer)
-            + setCible2(x : int, y : Integer)
-
-            + setArme(b : boolean)
-
-        }
-        class Guerison{
-            -m_efficacite : Integer
-
-            +<<create>> Guerison()
-            +lancerSort (c : ContextSort) : Boolean
-            +getEfficacite() : Integer
-        }
-        abstract class Sort <<abstract>>{
-           +{abstract} lancerSort(c : ContextSort) : Boolean
-        }
-    }
-
-    package placable
+package exception{
+    class ArmureException <<exception>>
     {
-      interface Placable
-      {
+        +<<create>> ArmureException()
+    }
+    
+    class CaseTropLointaineException <<exception>>
+    {
+        +<<create>> CaseTropLointaineException()
+    }
+    
+    class PorteeException <<exception>>
+    {
+        +<<create>> PorteeException()
+    }
+}
+
+
+package sorts{
+    class ArmeMagique
+    {
+        +lancerSort (c : ContextSort) : Boolean
+    }
+    class BoogieWoogie
+    {
+        +lancerSort (c : ContextSort) : Boolean
+    }
+    class ContextSort
+    {
+        
+        + ContextSort(cible1 : Entite, cible2 : Entite)
+        + ContextSort(cible : Entite)
+        + ContextSort(armes : Armes)
+        
+        + setPV(pv : int) : void
+        
+        + getXcible1() : Integer
+        + getYcible1() : Integer
+        + getXcible2() : Integer
+        + getYcible2() : Integer
+        
+        + setCible1(x : int, y : Integer)
+        + setCible2(x : int, y : Integer)
+        
+        + setArme(b : boolean)
+        
+    }
+    class Guerison
+    {
+        -m_efficacite : Integer
+        
+        +<<create>> Guerison()
+        +lancerSort (c : ContextSort) : Boolean
+        +getEfficacite() : Integer
+    }
+    abstract class Sort <<abstract>>
+    {
+        +{abstract} lancerSort(c : ContextSort) : Boolean
+    }
+}
+
+package placable
+{
+    interface Placable <<interface>>
+    {
         + {abstract}setLocation(x : Integer, y : Integer)
         + {abstract}getPositionX() : Integer
         + {abstract}getPositionY() : Integer
@@ -117,386 +120,410 @@ left to right direction
         + estEntite() : Boolean
         + estEquipement() : Boolean
         + estCaseVide() : Boolean
-      }
-
-      class CaseVide
-      {
+    }
+    
+    class CaseVide implements placable.Placable
+    {
         - m_positionX : Integer
         - m_positionY : Integer
         - m_nomAffiche : String
         - des : Des
-
+        
         + <<create>> CaseVide(x : Integer, y : Integer)
         + setLocation(x : Integer, y : Integer)
         + getNomAffiche() : String
         + getPositionX() : Integer
         + getPositionY() : Integer
         + estCaseVide() : Boolean
-      }
-
-      package entites
-      {
-
-        abstract class Entite <<abstract>>
+    }
+    
+    package entites
+    {
+        
+        abstract class Entite <<abstract>> implements placable.Placable
         {
-          # m_pv : Integer
-          # m_pvMax : Integer
-          # m_force : Integer
-          # m_dexterite : Integer
-          # m_initiative : Integer
-          # m_positionX : Integer
-          # m_positionY : Integer
-          # m_vitesse : Integer
-          # m_nomAffiche : String
-
-          + setLocation(x : Integer, y : Integer)
-          + getPositionX() : Integer
-          + getPositionY() : Integer
-          + getNomAffiche() : String
-          + seDeplacer(direction : Integer, d : Donjon)
-          + getPv() : Integer
-          + getForce() : Integer
-          + getDexterite() : Integer
-          + getInitiative() : Integer
-          + setPv(pv : Integer)
-          + setForce(force : Integer)
-          + setDexterite(dexterite : Integer)
-          + setInitiative(initiative : Integer)
-          + ajusterPv(valeur : Integer)
-          + ajusterForce(valeur : Integer)
-          + ajusterDexterite(valeur : Integer)
-          + ajusterInitiative(valeur : Integer)
-          + equals(obj : Object) : Boolean
-          + estEntite() : Boolean
-          + {static} contientObstacle(liste : Placable[*]) : Boolean
-          + {static} contientEquipement(liste : Placable[*]) : Boolean
+            # m_pv : Integer
+            # m_pvMax : Integer
+            # m_force : Integer
+            # m_dexterite : Integer
+            # m_initiative : Integer
+            # m_positionX : Integer
+            # m_positionY : Integer
+            # m_vitesse : Integer
+            # m_nomAffiche : String
+            
+            + setLocation(x : Integer, y : Integer)
+            + getPositionX() : Integer
+            + getPositionY() : Integer
+            + getNomAffiche() : String
+            + seDeplacer(direction : Integer, d : Donjon)
+            + getPv() : Integer
+            + getForce() : Integer
+            + getDexterite() : Integer
+            + getInitiative() : Integer
+            + setPv(pv : Integer)
+            + setForce(force : Integer)
+            + setDexterite(dexterite : Integer)
+            + setInitiative(initiative : Integer)
+            + ajusterPv(valeur : Integer)
+            + ajusterForce(valeur : Integer)
+            + ajusterDexterite(valeur : Integer)
+            + ajusterInitiative(valeur : Integer)
+            + equals(obj : Object) : Boolean
+            + estEntite() : Boolean
+            + {static} contientObstacle(liste : Placable[*]) : Boolean
+            + {static} contientEquipement(liste : Placable[*]) : Boolean
         }
-
+        
         package monstres
         {
-
-          class Monstre
-          {
-            - m_espece : String
-            - m_numero : Integer
-            - m_nomAttaque : String
-            - m_portee : Integer
-            - m_degats : Integer
-            - m_classeArmure : Integer
-            - des : Des
-            - {static} monstres : Monstre[*]
-
-            + <<create>> Monstre(espece : String)
-            + Monstre(espece : String, portee : Integer, pv : Integer, nomattaque : String, classeArmure : Integer, force : Integer, dexterite : Integer, initiative : Integer, x : Integer, y : Integer)
-            + getclasseArmure() : Integer
-            + ajusterPv(valeur : Integer)
-            + attaquer(cible : Personnage, carte : String[*][*]) : Boolean
-            + getEspece() : String
-          }
-
+            
+            class Monstre extends placable.entites.Entite
+            {
+                - m_espece : String
+                - m_numero : Integer
+                - m_nomAttaque : String
+                - m_portee : Integer
+                - m_degats : Integer
+                - m_classeArmure : Integer
+                - des : Des
+                - {static} monstres : Monstre[*]
+                
+                + <<create>> Monstre(espece : String)
+                + Monstre(espece : String, portee : Integer, pv : Integer, nomattaque : String, classeArmure : Integer, force : Integer, dexterite : Integer, initiative : Integer, x : Integer, y : Integer)
+                + getclasseArmure() : Integer
+                + ajusterPv(valeur : Integer)
+                + attaquer(cible : Personnage, carte : String[*][*]) : Boolean
+                + getEspece() : String
+            }
+            
         }
-
+        
         package personnages
         {
-
-          class Personnage
-          {
-            # m_nom : String
-            - m_race : Race
-            - m_classe : Classe
-            - des : Des
-            - m_inventaire : Equipement[*]
-            - m_armeEquipee : Armes[*]
-            - m_armureEquipee : Armures[*]
-
-            + <<create>> Personnage(nom : String, race : Integer, classe : Integer, x : Integer, y : Integer)
-            + attribuerRaceClasse(race : Integer, classe : Integer)
-            + attaquer(cible : Monstre) : Boolean
-            + sEquiperArmure(a : Armures)
-            + sEquiperArme(a : Armes)
-            + ramasserEquipement(e : Equipement, carte : Placable[*][*]) : Boolean
-            + getNom() : String
-            + getArmeEquipee() : Armes
-            + getClasseArmure() : Integer
-            + getRace() : Race
-            + getNomRace() : String
-            + getClasse() : Classe
-            + getNomClasse() : String
-            + getVitesse() : Integer
-            + setVitesse(vitesse : Integer)
-            + ajusterVitesse(valeur : Integer)
-            + ajouterEquipementInventaire(e : Equipement)
-            + afficherInventaire() : String
-            + toString() : String
-          }
-
-          package classes
-          {
-
-            abstract class Classe <<abstract>>
+            class Personnage extends placable.entites.Entite
             {
-              # m_nomClasse : String
-              # m_pv : Integer
-
-              + {abstract} initialiser(p : Personnage)
-              + getNom() : String
+                # m_nom : String
+                - m_race : Race
+                - m_classe : Classe
+                - des : Des
+                - m_inventaire : Equipement[*]
+                - m_armeEquipee : Armes[*]
+                - m_armureEquipee : Armures[*]
+                
+                + <<create>> Personnage(nom : String, race : Integer, classe : Integer, x : Integer, y : Integer)
+                + attribuerRaceClasse(race : Integer, classe : Integer)
+                + attaquer(cible : Monstre) : Boolean
+                + sEquiperArmure(a : Armures)
+                + sEquiperArme(a : Armes)
+                + ramasserEquipement(e : Equipement, carte : Placable[*][*]) : Boolean
+                + getNom() : String
+                + getArmeEquipee() : Armes
+                + getClasseArmure() : Integer
+                + getRace() : Race
+                + getNomRace() : String
+                + getClasse() : Classe
+                + getNomClasse() : String
+                + getVitesse() : Integer
+                + setVitesse(vitesse : Integer)
+                + ajusterVitesse(valeur : Integer)
+                + ajouterEquipementInventaire(e : Equipement)
+                + afficherInventaire() : String
+                + toString() : String
             }
 
-            class Clerc
+            package enums
             {
-              + <<create>> Clerc()
-              + initialiser(p : Personnage)
+                enum TypeClasse <<enumerate>>
+                {
+                    CLERC
+                    GUERRIER
+                    MAGICIEN
+                    ROUBLARD
+                }
+                enum TypeRace <<enumerate>>
+                {
+                    HALFELIN
+                    ELFE
+                    HUMAIN
+                    NAIN
+                }
             }
-
-            class Guerrier
+            
+            package classes
             {
-              + <<create>> Guerrier()
-              + initialiser(p : Personnage)
+                
+                abstract class Classe <<abstract>>
+                {
+                    # m_nomClasse : String
+                    # m_pv : Integer
+                    
+                    + {abstract} initialiser(p : Personnage)
+                    + getNom() : String
+                }
+                
+                class Clerc extends placable.entites.personnages.classes.Classe
+                {
+                    + <<create>> Clerc()
+                    + initialiser(p : Personnage)
+                }
+                
+                class Guerrier extends placable.entites.personnages.classes.Classe
+                {
+                    + <<create>> Guerrier()
+                    + initialiser(p : Personnage)
+                }
+                
+                class Magicien extends placable.entites.personnages.classes.Classe
+                {
+                    + <<create>> Magicien()
+                    + initialiser(p : Personnage)
+                }
+                
+                class Roublard extends placable.entites.personnages.classes.Classe
+                {
+                    + <<create>> Roublard()
+                    + initialiser(p : Personnage)
+                }
             }
-
-            class Magicien
+            
+            package races
             {
-              + <<create>> Magicien()
-              + initialiser(p : Personnage)
-            }
-
-            class Roublard
-            {
-              + <<create>> Roublard()
-              + initialiser(p : Personnage)
-            }
-          }
-
-          package races
-          {
-
-            abstract class Race <<abstract>>
-            {
-              # m_dexterite : Integer
-              # m_vitesse : Integer
-              # m_force : Integer
-              # m_initiative : Integer
-              # m_nomRace : String
-
-              + {abstract} initialiser(p : Personnage)
-              + getNom() : String
-            }
-
-            class Nain
-            {
-              + <<create>> Nain()
-              + initialiser(p : Personnage)
-            }
-
-            class Humain
-            {
-              + <<create>> Humain()
-              + initialiser(p : Personnage)
-            }
-
-            class Elfe
-            {
-              + <<create>> Elfe()
-              + initialiser(p : Personnage)
-            }
-
-            class Halfelin
-            {
-              + <<create>> Halfelin()
-              + initialiser(p : Personnage)
+                
+                abstract class Race <<abstract>>
+                {
+                    # m_dexterite : Integer
+                    # m_vitesse : Integer
+                    # m_force : Integer
+                    # m_initiative : Integer
+                    # m_nomRace : String
+                    
+                    + {abstract} initialiser(p : Personnage)
+                    + getNom() : String
+                }
+                
+                class Nain extends placable.entites.personnages.races.Race
+                {
+                    + <<create>> Nain()
+                    + initialiser(p : Personnage)
+                }
+                
+                class Humain extends placable.entites.personnages.races.Race
+                {
+                    + <<create>> Humain()
+                    + initialiser(p : Personnage)
+                }
+                
+                class Elfe extends placable.entites.personnages.races.Race
+                {
+                    + <<create>> Elfe()
+                    + initialiser(p : Personnage)
+                }
+                
+                class Halfelin extends placable.entites.personnages.races.Race
+                {
+                    + <<create>> Halfelin()
+                    + initialiser(p : Personnage)
+                }
             }
         }
-      }
     }
     package equipements
-          {
-            abstract class Equipement <<abstract>>
+    {
+        abstract class Equipement <<abstract>>
+        {
+            # m_nom : String
+            # m_positionX : Integer
+            # m_positionY : Integer
+            # m_nomAffiche : String
+            
+            + <<create>> Equipement()
+            + setLocation(x : Integer, y : Integer)
+            + getNomEquipement() : String
+            + getNomAffiche() : String
+            + getPositionX() : Integer
+            + getPositionY() : Integer
+            + estEquipement() : Boolean
+        }
+        
+        package armes
+        {
+            abstract class Armes <<abstract>>
             {
-              # m_nom : String
-              # m_positionX : Integer
-              # m_positionY : Integer
-              # m_nomAffiche : String
-
-              + <<create>> Equipement()
-              + setLocation(x : Integer, y : Integer)
-              + getNomEquipement() : String
-              + getNomAffiche() : String
-              + getPositionX() : Integer
-              + getPositionY() : Integer
-              + estEquipement() : Boolean
-            }
-
-            package armes
-            {
-              abstract class CAC <<abstract>>
-              {
-                + <<create>> CAC()
-                + <<create>> CAC(x : Integer, y : Integer)
-              }
-
-              abstract class Distance <<abstract>>
-              {
-                + <<create>> Distance(portee : Integer)
-                + <<create>> Distance(portee : Integer, x : Integer, y : Integer)
-              }
-
-              abstract class Guerre <<abstract>>
-              {
-                + <<create>> Guerre()
-                + <<create>> Guerre(x : Integer, y : Integer)
-                + determinerDegat()
-              }
-
-              abstract class Courantes <<abstract>>
-              {
-                + <<create>> Courantes()
-                + <<create>> Courantes(x : Integer, y : Integer)
-                + determinerDegat()
-              }
-
-              abstract class Armes <<abstract>>
-              {
                 # m_degats : Integer
                 # m_portee : Integer
                 # des : Des
                 # m_changeStat : Boolean
-
+                
                 + <<create>> Armes(portee : Integer)
                 + <<create>> Armes(portee : Integer, x : Integer, y : Integer)
                 + getPortee() : Integer
                 + {abstract} determinerDegat()
                 + getDegats() : Integer
                 + getChangeStat() : Boolean
-              }
-
-              class Arbalete
-              {
+            }
+            
+            abstract class CAC <<abstract>> extends placable.equipements.armes.Armes
+            {
+                + <<create>> CAC()
+                + <<create>> CAC(x : Integer, y : Integer)
+            }
+            
+            abstract class Distance <<abstract>> extends placable.equipements.armes.Armes
+            {
+                + <<create>> Distance(portee : Integer)
+                + <<create>> Distance(portee : Integer, x : Integer, y : Integer)
+            }
+            
+            abstract class Guerre <<abstract>> extends placable.equipements.armes.CAC
+            {
+                + <<create>> Guerre()
+                + <<create>> Guerre(x : Integer, y : Integer)
+                + determinerDegat()
+            }
+            
+            abstract class Courantes <<abstract>> extends placable.equipements.armes.CAC
+            {
+                + <<create>> Courantes()
+                + <<create>> Courantes(x : Integer, y : Integer)
+                + determinerDegat()
+            }
+            
+            class Arbalete extends placable.equipements.armes.Distance
+            {
                 + <<create>> Arbalete()
                 + <<create>> Arbalete(x : Integer, y : Integer)
                 + determinerDegat()
-              }
-
-              class Arc
-              {
+            }
+            
+            class Arc extends placable.equipements.armes.Distance
+            {
                 + <<create>> Arc()
                 + <<create>> Arc(x : Integer, y : Integer)
                 + determinerDegat()
-              }
-
-              class Baton
-              {
+            }
+            
+            class Baton extends placable.equipements.armes.Courantes
+            {
                 + <<create>> Baton()
                 + <<create>> Baton(x : Integer, y : Integer)
-              }
-
-              class EpeeLongue
-              {
+            }
+            
+            class EpeeLongue extends placable.equipements.armes.Guerre
+            {
                 + <<create>> EpeeLongue()
                 + <<create>> EpeeLongue(x : Integer, y : Integer)
-              }
-
-              class Fronde
-              {
+            }
+            
+            class EpeeDeuxMain extends placable.equipements.armes.Guerre
+            {
+                + <<create>> EpeeDeuxMain()
+                + <<create>> EpeeDeuxMain(x : Integer, y : Integer)
+                + determinerDegat()
+            }
+            
+            class Fronde extends placable.equipements.armes.Distance
+            {
                 + <<create>> Fronde()
                 + <<create>> Fronde(x : Integer, y : Integer)
                 + determinerDegat()
-              }
-
-              class Masse
-              {
+            }
+            
+            class Masse extends placable.equipements.armes.Courantes
+            {
                 + <<create>> Masse()
                 + <<create>> Masse(x : Integer, y : Integer)
-              }
-
-              class Rapiere
-              {
+            }
+            
+            class Rapiere extends placable.equipements.armes.Guerre
+            {
                 + <<create>> Rapiere()
                 + <<create>> Rapiere(x : Integer, y : Integer)
-              }
             }
-
-            package armures
+        }
+        
+        package armures
+        {
+            abstract class Armures <<abstract>>
             {
-              abstract class Armures <<abstract>>
-              {
                 # m_classe : Integer
                 # m_changeStat : Boolean
                 # des : Des
-
+                
                 + <<create>> Armures(classe : Integer)
                 + <<create>> Armures(classe : Integer, x : Integer, y : Integer)
                 + getClasseArmure() : Integer
                 + getChangeStat() : Boolean
-              }
-
-              abstract class Lourdes <<abstract>>
-              {
+            }
+            
+            abstract class Lourdes <<abstract>> extends placable.equipements.armures.Armures
+            {
                 + <<create>> Lourdes(classe : Integer)
                 + <<create>> Lourdes(classe : Integer, x : Integer, y : Integer)
-              }
-
-              abstract class Legeres <<abstract>>
-              {
+            }
+            
+            abstract class Legeres <<abstract>> extends placable.equipements.armures.Armures
+            {
                 + <<create>> Legeres(classe : Integer)
                 + <<create>> Legeres(classe : Integer, x : Integer, y : Integer)
-              }
-
-              class CotteDeMailles
-              {
+            }
+            
+            class CotteDeMailles extends placable.equipements.armures.Lourdes
+            {
                 + <<create>> CotteDeMailles()
                 + <<create>> CotteDeMailles(x : Integer, y : Integer)
-              }
-
-              class DemiPlatte
-              {
+            }
+            
+            class DemiPlatte extends placable.equipements.armures.Legeres
+            {
                 + <<create>> DemiPlatte()
                 + <<create>> DemiPlatte(x : Integer, y : Integer)
-              }
-
-              class Ecailles
-              {
+            }
+            
+            class Ecailles extends placable.equipements.armures.Legeres
+            {
                 + <<create>> Ecailles()
                 + <<create>> Ecailles(x : Integer, y : Integer)
-              }
-
-              class Harnois
-              {
+            }
+            
+            class Harnois extends placable.equipements.armures.Lourdes
+            {
                 + <<create>> Harnois()
                 + <<create>> Harnois(x : Integer, y : Integer)
-              }
             }
-          }
-
+        }
+    }
+    
     package obstacle
     {
-      class Obstacle
-      {
-        - m_positionX : Integer
-        - m_positionY : Integer
-        - m_nomAffiche : String
-        - des : Des
-
-        + <<create>> Obstacle(x : Integer, y : Integer)
-        + setLocation(x : Integer, y : Integer)
-        + getNomAffiche() : String
-        + getPositionX() : Integer
-        + getPositionY() : Integer
-        + estObstacle() : Boolean
-      }
+        class Obstacle implements placable.Placable
+        {
+            - m_positionX : Integer
+            - m_positionY : Integer
+            - m_nomAffiche : String
+            - des : Des
+            
+            + <<create>> Obstacle(x : Integer, y : Integer)
+            + setLocation(x : Integer, y : Integer)
+            + getNomAffiche() : String
+            + getPositionX() : Integer
+            + getPositionY() : Integer
+            + estObstacle() : Boolean
+        }
     }
-  }
+}
 
 
 
-    package affichage {
-      class Creation {
+package affichage {
+    class Creation {
         + creerMonstreAleatoire(d : Donjon) : Monstre
         + creerEquipementAleatoire(d : Donjon) : Equipement
         + creerObstacleAleatoire(d : Donjon) : Obstacle
         + creerPersonnageAleatoire(nom : String, race : Integer, classe : Integer, d : Donjon) : Personnage
-      }
-      class InteractionUtilisateur
-      {
+    }
+    class InteractionUtilisateur
+    {
         - m_alphabet : char[]
         + <<create>> InteractionUtilisateur()
         + afficherDonjon(d : Donjon)
@@ -506,41 +533,35 @@ left to right direction
         + demanderPositionCarte(message : String, minLettre : char, maxLettre : char, minNumero : Integer, maxNumero : Integer, scanner : Scanner) : Integer[]
         + demanderPositionObligatoire(message : String, minLettre : char, maxLettre : char, minNumero : Integer, maxNumero : Integer, scanner : Scanner) : Integer[]
         - position(minLettre : char, maxLettre : char, minNumero : Integer, maxNumero : Integer, position : Integer[], alphabet : String, input : String) : Boolean
-      }
     }
+}
 
 
-    class Jeu {
-      - m_joueursEnVie : ArrayList<Personnage>
-      - m_utils : Utils
-      - m_nbJoueurs : int
-      - scanner : Scanner
-      - m_d1 : Donjon
-      - mdj : MaitreDuJeu
-      - m_des : Des
-      - alphabet : String[*]
-      - m_nbObstacle : int
-      - m_nbEquipements : int
+class Jeu {
+    - m_joueursEnVie : ArrayList<Personnage>
+    - m_utils : Utils
+    - m_nbJoueurs : int
+    - scanner : Scanner
+    - m_d1 : Donjon
+    - mdj : MaitreDuJeu
+    - m_des : Des
+    - alphabet : String[*]
+    - m_nbObstacle : int
+    - m_nbEquipements : int
+    
+    + <<create>> Jeu()
+    + demarrerJeu()
+    + initJoueur(nJoueur : int, d : Donjon) : Personnage
+    + creerObstacleAleatoire(i : int)
+    + initEquipementAleatoire(i : int)
+    + creerEquipement(type : int, i : int, x : int, y : int)
+    + afficherEntites()
+}
 
-      + <<create>> Jeu()
-      + demarrerJeu()
-      + initJoueur(nJoueur : int, d : Donjon) : Personnage
-      + creerObstacleAleatoire(i : int)
-      + initEquipementAleatoire(i : int)
-      + creerEquipement(type : int, i : int, x : int, y : int)
-      + afficherEntites()
-    }
 
-
-    class Main {
-      + main(args : String[])
-    }
-' RELATIONS
-' implemente interface
-CaseVide ..|> placable.Placable
-Entite ..|> placable.Placable
-Equipement ..|> placable.Placable
-Obstacle ..|> placable.Placable
+class Main {
+    + main(args : String[])
+}
 
 
 
