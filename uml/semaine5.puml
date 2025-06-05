@@ -330,7 +330,7 @@ package placable
     }
     package equipements
     {
-        abstract class Equipement <<abstract>>
+        abstract class Equipement <<abstract>> implements placable.Placable
         {
             # m_nom : String
             # m_positionX : Integer
