@@ -62,19 +62,23 @@ public class Personnage extends Entite {
         switch(race) {      //attribue la race
             case HUMAIN:
                 this.m_race = new Humain();
-                this.m_race.initialiser(this);
+                this.m_dexterite = this.m_race.getDexterite();
+                this.m_vitesse = this.m_race.getVitesse();
+                this.m_initiative = this.m_race.getInitiative();
+                this.m_force = this.m_race.getForce();
                 break;
             case NAIN:
                 this.m_race = new Nain();
-                this.m_race.initialiser(this);
+                this.m_force = this.m_race.getForce();
                 break;
             case ELFE:
                 this.m_race = new Elfe();
-                this.m_race.initialiser(this);
+                this.m_dexterite = this.m_race.getDexterite();
                 break;
             case HALFELIN:
                 this.m_race = new Halfelin();
-                this.m_race.initialiser(this);
+                this.m_dexterite = this.m_race.getDexterite();
+                this.m_vitesse = this.m_race.getVitesse();
                 break;
             default:
                 break;
@@ -82,7 +86,6 @@ public class Personnage extends Entite {
         switch(classe) {      //attribue la classe, et ajoute ses objets dans l'inventaire
             case CLERC:
                 this.m_classe = new Clerc();
-                this.m_classe.initialiser(this);
                 this.ajouterEquipementInventaire(new Masse());
                 this.ajouterEquipementInventaire(new Ecailles());
                 this.ajouterEquipementInventaire(new Arbalete());
@@ -90,14 +93,12 @@ public class Personnage extends Entite {
                 break;
             case GUERRIER:
                 this.m_classe = new Guerrier();
-                this.m_classe.initialiser(this);
                 this.ajouterEquipementInventaire(new CotteDeMailles());
                 this.ajouterEquipementInventaire(new EpeeLongue());
                 this.ajouterEquipementInventaire(new Arbalete());
                 break;
             case MAGICIEN:
                 this.m_classe = new Magicien();
-                this.m_classe.initialiser(this);
                 this.ajouterEquipementInventaire( new Baton());
                 this.ajouterEquipementInventaire( new Fronde());
                 this.m_sorts.add(new Guerison());
@@ -106,13 +107,14 @@ public class Personnage extends Entite {
                 break;
             case ROUBLARD:
                 this.m_classe = new Roublard();
-                this.m_classe.initialiser(this);
                 this.ajouterEquipementInventaire(new Rapiere());
                 this.ajouterEquipementInventaire(new Arc());
                 break;
             default:
                 break;
         }
+        this.m_pvMax = this.m_classe.getPv();
+        this.m_pv = this.m_pvMax;
     }
 
     @Override

@@ -4,13 +4,7 @@ import placable.entites.personnages.Personnage;
 
 public class Halfelin extends Race{
     public  Halfelin() {
-        this.m_dexterite = 4;
-        this.m_vitesse = 2;
-        this.m_nomRace = "Halfelin";
+       super(4,2,0,0,"Halfelin");
     }
-    @Override
-    public void initialiser(Personnage p){
-        p.ajusterDexterite(this.m_dexterite);
-        p.ajusterVitesse(this.m_vitesse);
-    }
+
 }

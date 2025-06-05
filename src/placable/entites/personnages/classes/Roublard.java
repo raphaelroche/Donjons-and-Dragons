@@ -4,11 +4,7 @@ import placable.entites.personnages.Personnage;
 
 public class Roublard extends Classe{
     public Roublard() {
-       this.m_pv = 16;
-       this.m_nomClasse = "Roublard";
+       super("Roublard",16);
     }
-    @Override
-    public void initialiser(Personnage p){
-        p.setPv(this.m_pv);
-    }
+
 }
