@@ -581,17 +581,6 @@ MaitreDuJeu .> Equipement : <<use>>
 
 Monstre .> Donjon : <<use>>
 
-Classe .> Personnage : <<use>>
-    Clerc .> Personnage : <<use>>
-    Roublard .> Personnage : <<use>>
-    Magicien .> Personnage : <<use>>
-    Guerrier .> Personnage : <<use>>
-
-Race .> Personnage : <<use>>
-    Elfe .> Personnage : <<use>>
-    Halfelin .> Personnage : <<use>>
-    Humain .> Personnage : <<use>>
-    Nain .> Personnage : <<use>>
 
 'Personnage .> TypeClasse : <<use>> ça casse tout
 'Personnage .> TypeRace : <<use>>
