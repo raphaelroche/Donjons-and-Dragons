@@ -164,7 +164,7 @@ public class Personnage extends Entite {
 
     public boolean enchanterArme(Armes a){
         boolean enchanter = false;
-        if(this.m_classe.estMagicien()){
+        if(this.m_classe.estMagicien() && !a.estEnchanter()){
             ContextSort armeAEnchanter = new ContextSort(a);
             enchanter = this.m_sorts.get(2).lancerSort(armeAEnchanter);
         }

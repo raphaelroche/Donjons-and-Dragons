@@ -602,15 +602,22 @@ public class Jeu {
                         1, nbArme);
                 scanner.nextLine();
                 if(a==nbArme && pChoisi.getArmeEquipee() !=null){
-                    enchanter = pChoisi.enchanterArme(pChoisi.getArmeEquipee());
+                    enchanter = p.enchanterArme(pChoisi.getArmeEquipee());
+                    if(enchanter){
+                        this.mdj.commenter(pChoisi.getArmeEquipee().getNomEquipement()+" de "+ pChoisi.getNom() +" otbtient un bonus de 1 dégat !");
+                    }
                 }
                 else{
-                    enchanter = pChoisi.enchanterArme((Armes)pChoisi.getInventaire().get(indexArme));
+                    enchanter = p.enchanterArme((Armes)pChoisi.getInventaire().get(indexArme));
+                    if(enchanter){
+                        this.mdj.commenter(pChoisi.getInventaire().get(indexArme).getNomEquipement()+" de "+ pChoisi.getNom() +" otbtient un bonus de 1 dégat !");
+                    }
                 }
-                if(enchanter){
-                    this.mdj.commenter("arme enchantée avec succès !");
+                if(!enchanter){
+                    this.mdj.commenter("Votre arme est déja enchanter !");
                 }
                break;
+
 
         }
     }
