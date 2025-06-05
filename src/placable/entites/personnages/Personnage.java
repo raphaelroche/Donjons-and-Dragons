@@ -49,12 +49,13 @@ public class Personnage extends Entite {
             this.m_nomAffiche = this.m_nom.substring(0,3);
         }
 
-        this.attribuerRaceClasse(race, classe); //utilise un int pour désigner
+
         des = new Des();
         this.m_force = 3 + des.lancerDes(4,4);
         this.m_dexterite = 3 + des.lancerDes(4,4);
         this.m_vitesse = 3 + des.lancerDes(4,4);
         this.m_initiative = 3 + des.lancerDes(4,4);
+        this.attribuerRaceClasse(race, classe); //utilise un int pour désigner
     }
 
 
@@ -62,23 +63,23 @@ public class Personnage extends Entite {
         switch(race) {      //attribue la race
             case HUMAIN:
                 this.m_race = new Humain();
-                this.m_dexterite = this.m_race.getDexterite();
-                this.m_vitesse = this.m_race.getVitesse();
-                this.m_initiative = this.m_race.getInitiative();
-                this.m_force = this.m_race.getForce();
+                this.ajusterDexterite(this.m_race.getDexterite());
+                this.ajusterVitesse(this.m_race.getVitesse());
+                this.ajusterInitiative(this.m_race.getInitiative());
+                this.ajusterForce(this.m_race.getForce());
                 break;
             case NAIN:
                 this.m_race = new Nain();
-                this.m_force = this.m_race.getForce();
+                this.ajusterForce(this.m_race.getForce());
                 break;
             case ELFE:
                 this.m_race = new Elfe();
-                this.m_dexterite = this.m_race.getDexterite();
+                this.ajusterDexterite(this.m_race.getDexterite());
                 break;
             case HALFELIN:
                 this.m_race = new Halfelin();
-                this.m_dexterite = this.m_race.getDexterite();
-                this.m_vitesse = this.m_race.getVitesse();
+                this.ajusterDexterite(this.m_race.getDexterite());
+                this.ajusterVitesse(this.m_race.getVitesse());
                 break;
             default:
                 break;
