@@ -348,7 +348,7 @@ package placable
         
         package armes
         {
-            abstract class Armes <<abstract>>
+            abstract class Armes <<abstract>> extends placable.equipements.Equipement
             {
                 # m_degats : Integer
                 # m_portee : Integer
@@ -444,7 +444,7 @@ package placable
         
         package armures
         {
-            abstract class Armures <<abstract>>
+            abstract class Armures <<abstract>> extends placable.equipements.Equipement
             {
                 # m_classe : Integer
                 # m_changeStat : Boolean
