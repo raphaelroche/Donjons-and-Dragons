@@ -76,7 +76,6 @@ package sorts{
     }
     class ContextSort
     {
-        
         + ContextSort(cible1 : Entite, cible2 : Entite)
         + ContextSort(cible : Entite)
         + ContextSort(armes : Armes)
@@ -557,12 +556,46 @@ class Jeu {
     + creerEquipement(type : int, i : int, x : int, y : int)
     + afficherEntites()
 }
-
-
 class Main {
     + main(args : String[])
 }
 
+' Relations
+' Associations simples
 
+Creation .> Donjon : <<use>>
+Creation .> TypeRace : <<use>>
+Creation .> TypeClasse : <<use>>
 
+InteractionUtilisateur .> Donjon : <<use>>
+
+Donjon .> Placable : <<use>>
+
+MaitreDuJeu .> Donjon : <<use>>
+MaitreDuJeu .> Obstacle : <<use>>
+MaitreDuJeu .> Entite : <<use>>
+MaitreDuJeu .> Equipement : <<use>>
+
+Monstre .> Donjon : <<use>>
+
+Classe .> Personnage : <<use>>
+    Clerc .> Personnage : <<use>>
+    Roublard .> Personnage : <<use>>
+    Magicien .> Personnage : <<use>>
+    Guerrier .> Personnage : <<use>>
+
+Race .> Personnage : <<use>>
+    Elfe .> Personnage : <<use>>
+    Halfelin .> Personnage : <<use>>
+    Humain .> Personnage : <<use>>
+    Nain .> Personnage : <<use>>
+
+'Personnage .> TypeClasse : <<use>> ça casse tout
+'Personnage .> TypeRace : <<use>>
+Personnage .> Donjon : <<use>>
+Personnage .> Armes : <<use>>
+Personnage .> Equipement : <<use>>
+
+Entite .> Donjon : <<use>>
+Entite .> Placable : <<use>>
 @enduml
