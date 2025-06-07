@@ -113,7 +113,7 @@ public class Monstre extends Entite {
                     if(this.m_degats > cible.getClasseArmure()){
                         cible.ajusterPv(-(this.m_degats));
                         if(cible.getPv()<=0){
-                            tuerCible(d, x-1, y-1);
+                            tuerCible(d, cible);
                         }
                         return true;
                     }

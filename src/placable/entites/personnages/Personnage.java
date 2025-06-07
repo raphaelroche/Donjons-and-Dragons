@@ -200,7 +200,7 @@ public class Personnage extends Entite {
                             this.m_armeEquipee.determinerDegat();
                             cible.ajusterPv(-(this.m_armeEquipee.getDegats()));
                             if(cible.getPv()<=0){
-                                tuerCible(d, x-1, y-1);
+                                tuerCible(d, cible);
                             }
                             return true;
                         }

@@ -59,21 +59,19 @@ public class Jeu {
 
 
             Donjon d = initDonjon();
-
+            if(i == 0){
             for (int j = 0; j < this.m_nbJoueurs; j++) {
-                if(i == 0){
-                    Personnage p = initJoueur(j + 1, d);
-                    this.m_joueur.add(p);
-                    System.out.println("================================================================================");
 
+                 Personnage p = initJoueur(j + 1, d);
+                 this.m_joueur.add(p);
+                 System.out.println("================================================================================");
                 }
-                else{
-                    for(Personnage p : this.m_joueur){
-                        placerPersonnage(p, d);
-                        this.demanderEquipement(p);
-                    }
+            }
+            else{
+                for(Personnage p : this.m_joueur){
+                    placerPersonnage(p, d);
+                    this.demanderEquipement(p);
                 }
-
             }
             this.m_joueursEnVie.addAll(this.m_joueur);
             this.m_entites.addAll(this.m_joueur);
@@ -166,7 +164,7 @@ public class Jeu {
         System.out.print("\n");
         this.m_entites.sort((e1, e2) ->
                 Integer.compare(e2.getScoreInitiative(), e1.getScoreInitiative()));
-        quitterwhile:
+
         while(this.m_joueursEnVie.size() == this.m_nbJoueurs && !this.m_monstresEnVie.isEmpty()) {
             for(Entite e : this.m_entites) {
                 if((e.estMonstre() && this.m_monstresEnVie.contains((Monstre)e)) || (e.estPerso() && this.m_joueursEnVie.contains((Personnage)e))) {
@@ -176,23 +174,22 @@ public class Jeu {
                         this.mdj.commenter("ACTION "+(i+1)+"/3 DE "+e.getIdentificationEntite());
                         System.out.println("\n");
                         int choix = demanderAction(e, d, (i+1));
+
+                        mdjIntervenir(d);
                         if(this.m_joueursEnVie.size() != this.m_nbJoueurs){
-                            mdj.commenter("Vous avez perdu !");
+                            mdj.commenter("Vous avez perdu, un de vos allié a été éliminé !");
                             return 1;
                         }
                         if(this.m_monstresEnVie.isEmpty()){
-                            mdj.commenter("Vous avez gagné !");
-                            break quitterwhile;
+                            mdj.commenter("Vous avez gagné, Tout les monstres sont morts !");
+                            return 0;
                         }
-
-                        mdjIntervenir(d);
                         if(choix == 0){
                             i--;
                         }
                         if(choix == 1) {
                             break;
                         }
-
                     }
                 }
             }
@@ -238,6 +235,7 @@ public class Jeu {
                     System.out.println("vous avez infligé " + degat + " degat  à "+ m.getIdentificationEntite());
                     if(m.getPv()<=0){
                         this.m_monstresEnVie.remove(m);
+                        this.mdj.tuerCible(d,m);
                     }
                     System.out.println(m.getIdentificationEntite() + " : "+ m.getPv()+"/"+m.getPvMax());
                 }
@@ -248,6 +246,7 @@ public class Jeu {
                     System.out.println("vous avez infligé " + degat + " degat  à "+ p.getIdentificationEntite());
                     if(p.getPv()<=0){
                         this.m_joueursEnVie.remove(p);
+                        this.mdj.tuerCible(d,p);
                     }
                     System.out.println(p.getIdentificationEntite() + " : "+ p.getPv()+"/"+p.getPvMax());
                 }
@@ -322,12 +321,11 @@ public class Jeu {
                         }
                     }
                 }
-
-
                 break;
         }
         this.m_interact.afficherDonjon(d);
     }
+
 
     private Personnage choisirPerso(StringBuilder deplacer, int f) {
         for(Personnage p : this.m_joueursEnVie){
@@ -626,7 +624,7 @@ public class Jeu {
 
 
     public void placerPersonnage(Personnage p, Donjon d) {
-        int[] position = this.m_interact.demanderPositionCarte("Choisissez la position du joueur",
+        int[] position = this.m_interact.demanderPositionCarte("Choisissez la position de "+p.getNom(),
                 'A', d.getLettreMax(),
                 1, d.getHauteur(),
                 scanner);

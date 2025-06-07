@@ -3,6 +3,7 @@ package placable.entites;
 import des.Des;
 import donjons.Donjon;
 import exception.CaseTtropLointaineException;
+import maitredujeu.MaitreDuJeu;
 import placable.Placable;
 
 import java.util.ArrayList;
@@ -72,16 +73,8 @@ public abstract class Entite implements Placable {
         return etrePlace;
 
     }
-    public void tuerCible(Donjon d, int x, int y){
-        ArrayList<Placable> caseCible = d.getCarte()[x][y];
-        if(caseCible.get(1) == null){
-
-            d.positionnerEmplacementVide(x, y);
-        }
-        else{
-            d.decalerAGauche(caseCible);
-        }
-
+    public void tuerCible(Donjon d, Entite e){
+        MaitreDuJeu.tuerCible(d, e);
     }
     public void scorePourCommencer(){
         Des des = new Des();
