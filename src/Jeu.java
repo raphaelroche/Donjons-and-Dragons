@@ -173,17 +173,21 @@ public class Jeu {
                         System.out.println("\n");
                         this.mdj.commenter("ACTION "+(i+1)+"/3 DE "+e.getIdentificationEntite());
                         System.out.println("\n");
+
                         int choix = demanderAction(e, d, (i+1));
 
+                        int verif = verifierFinDonjon();
+                        if(verif == 0 || verif == 1){
+                            return verif;
+                        }
+
                         mdjIntervenir(d);
-                        if(this.m_joueursEnVie.size() != this.m_nbJoueurs){
-                            mdj.commenter("Vous avez perdu, un de vos allié a été éliminé !");
-                            return 1;
+
+                        verif = verifierFinDonjon();
+                        if(verif == 0 || verif == 1){
+                            return verif;
                         }
-                        if(this.m_monstresEnVie.isEmpty()){
-                            mdj.commenter("Vous avez gagné, Tout les monstres sont morts !");
-                            return 0;
-                        }
+
                         if(choix == 0){
                             i--;
                         }
@@ -195,6 +199,17 @@ public class Jeu {
             }
         }
         return 0;
+    }
+    public int verifierFinDonjon(){
+        if(this.m_joueursEnVie.size() != this.m_nbJoueurs){
+            mdj.commenter("Vous avez perdu, un de vos allié a été éliminé !");
+            return 1;
+        }
+        if(this.m_monstresEnVie.isEmpty()){
+            mdj.commenter("Vous avez gagné, Tous les monstres sont morts !");
+            return 0;
+        }
+        return 2;// tout va bien la partie continue
     }
 
     public void mdjIntervenir(Donjon d){
@@ -233,25 +248,28 @@ public class Jeu {
 
                     m.ajusterPv(-(degat));
                     System.out.println("vous avez infligé " + degat + " degat  à "+ m.getIdentificationEntite());
+                    System.out.println(m.getIdentificationEntite() + " : "+ m.getPv()+"/"+m.getPvMax());
                     if(m.getPv()<=0){
                         this.m_monstresEnVie.remove(m);
-                        this.mdj.tuerCible(d,m);
+                        MaitreDuJeu.tuerCible(d,m);
+                        System.out.println(m.getIdentificationEntite()+" EST MORT !");
                     }
-                    System.out.println(m.getIdentificationEntite() + " : "+ m.getPv()+"/"+m.getPvMax());
                 }
                 else if(choix == 2){
                     chx.append("A quelle personnage voulez vous infliger des dégats : ");
                     Personnage p = choisirPerso(chx, i);
                     p.ajusterPv(-(degat));
                     System.out.println("vous avez infligé " + degat + " degat  à "+ p.getIdentificationEntite());
-                    if(p.getPv()<=0){
-                        this.m_joueursEnVie.remove(p);
-                        this.mdj.tuerCible(d,p);
-                    }
                     System.out.println(p.getIdentificationEntite() + " : "+ p.getPv()+"/"+p.getPvMax());
+                    if(p.getPv()<=0) {
+                        this.m_joueursEnVie.remove(p);
+                        MaitreDuJeu.tuerCible(d, p);
+                        System.out.println(p.getIdentificationEntite() + " EST MORT !");
+                    }
                 }
                 break;
             case 2:
+                boolean placerE = false;
                 int posX = 0;
                 int posY = 0;
                 int[] position;
@@ -265,28 +283,40 @@ public class Jeu {
                 if(choixEntiteADeplace == 1){
                     deplacer.append("Quelle monstre voulez vous deplacer : ");
                     Monstre m = choisirCible(deplacer, f);
-                    position = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le monstre ? :",
-                            'A', d.getLettreMax(),
-                            1, d.getHauteur(),
-                            scanner);
-
                     posX = m.getPositionX();
                     posY = m.getPositionY();
-                    m.setLocation(position[0]-1, position[1]-1);
-                    this.mdj.positionnerEntite(d, m);
+                    while(!placerE){
+                        position = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le monstre ? :",
+                                'A', d.getLettreMax(),
+                                1, d.getHauteur(),
+                                scanner);
+                        m.setLocation(position[0]-1, position[1]-1);
+                        placerE =this.mdj.positionnerEntite(d, m);
+                        if(!placerE){
+                            this.mdj.commenter("Cette case est déja occupée, veuillez choisir une case libre.");
+                        }
+                    }
+
+
                 }
                 else if(choixEntiteADeplace == 2) {
                     deplacer.append("Quelle personnage voulez vous deplacer : ");
                     Personnage p =choisirPerso(deplacer, f);
-
-                    position = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le personnage ? :",
-                            'A', d.getLettreMax(),
-                            1, d.getHauteur(),
-                            scanner);
                     posX = p.getPositionX();
                     posY = p.getPositionY();
-                    p.setLocation(position[0]-1, position[1]-1);
-                    this.mdj.positionnerEntite(d, p);
+                    while(!placerE){
+                        position = this.m_interact.demanderPositionCarteObligatoire("Sur quelle case voulez vous deplacer le personnage ? :",
+                                'A', d.getLettreMax(),
+                                1, d.getHauteur(),
+                                scanner);
+
+                        p.setLocation(position[0]-1, position[1]-1);
+                        placerE = this.mdj.positionnerEntite(d, p);
+                        if(!placerE){
+                            this.mdj.commenter("Cette case est déja occupée, veuillez choisir une case libre.");
+                        }
+                    }
+
                 }
                 ArrayList<Placable> caseContenue = d.getCarte()[posX][posY];
                 if(caseContenue.size() >1 && caseContenue.get(1) != null && caseContenue.get(1).estEquipement()){
@@ -325,7 +355,6 @@ public class Jeu {
         }
         this.m_interact.afficherDonjon(d);
     }
-
 
     private Personnage choisirPerso(StringBuilder deplacer, int f) {
         for(Personnage p : this.m_joueursEnVie){
@@ -399,7 +428,7 @@ public class Jeu {
                 this.mdj.commenter(comm);
                 break;
             case 1:
-                this.mdj.commenter("Vous avez passer votre tour !");
+                this.mdj.commenter("Vous avez passé votre tour !");
 
                 break;
             case 2:
@@ -416,7 +445,7 @@ public class Jeu {
                             this.mdj.commenter("Cette case est deja occupée");
                         }
                     }catch(CaseTtropLointaineException ex){
-                        this.mdj.commenter(ex.getMessage()+" vous pouvez seulement vous deplacer de "+e.getVitesse()/3 + " case au maximum");
+                        this.mdj.commenter(ex.getMessage()+" vous pouvez seulement vous deplacer de "+e.getVitesse()/3 + " cases au maximum");
                     }
                 }
                 this.mdj.commenter("Deplacement effectué !");
@@ -436,22 +465,22 @@ public class Jeu {
                         try{
                             boolean attaque = e.attaquer(position[0],position[1], d);
                             if(!attaque){
-                                this.mdj.commenter("Impossible d'attaquer, vous vous tromper de cible ou n'avez pas d'arme equipée !");
+                                this.mdj.commenter("Impossible d'attaquer, vous vous trompez de cible ou n'avez pas d'arme equipée !");
                                 redemander = true;
                             }
                             else{
 
                                 int degat = e.getDegats();
                                 if(e.estMonstre()){
-                                    this.mdj.commenter("Vous lancer "+((Monstre)e).getNomAttaque()+" et infligé "+degat+" dégat à "+nom);
+                                    this.mdj.commenter("Vous lancer "+((Monstre)e).getNomAttaque()+" et infligé "+degat+" dégats à "+nom);
                                 }
                                 else {
-                                    this.mdj.commenter("Attaque reussi, vous avez infligé "+degat+" dégat à "+nom);
+                                    this.mdj.commenter("Attaque reussie, vous avez infligé "+degat+" dégats à "+nom);
                                 }
                                 System.out.println(cible.getIdentificationEntite() + " : "+ cible.getPv()+"/"+cible.getPvMax());
 
                                 if(d.getCarte()[position[0]-1][position[1]-1].getFirst().estCaseVide()){
-                                    this.mdj.commenter("Vous avez tuer "+nom);
+                                    this.mdj.commenter("Vous avez tué "+nom);
                                     if(cible.estPerso()){
                                         this.m_joueursEnVie.remove((Personnage) cible);
                                     }
@@ -494,7 +523,7 @@ public class Jeu {
             case 5:
                 boolean ramasser = ((Personnage)e).ramasserEquipement((Equipement)d.getCarte()[e.getPositionX()][e.getPositionY()].get(1), d.getCarte());
                 if(ramasser){
-                    this.mdj.commenter("vous avez ramasser "+((Personnage)e).getInventaire().getLast().getNomEquipement());
+                    this.mdj.commenter("vous avez ramassé "+((Personnage)e).getInventaire().getLast().getNomEquipement());
                 }
                 else{
                     this.mdj.commenter("vous ne vous trouver pas sur une case d'équipement !");
@@ -503,7 +532,7 @@ public class Jeu {
                 break;
             case 6:
                 int nb = 1;
-                StringBuilder sort = new StringBuilder("quelle sort voulez vous jeter \n1 - Guérison");
+                StringBuilder sort = new StringBuilder("quel sort voulez vous jeter \n1 - Guérison");
                 if(((Personnage) e).estMagicien()){
                     sort.append("\n2 - Boogie Woogie \n3 - Arme Magique");
                     nb = 3;
@@ -574,7 +603,7 @@ public class Jeu {
                 int nb = 1;
                 int nbArme = 0;
                 int indexArme = -1;
-               StringBuilder perso = new StringBuilder("Choisissez un personnage a qui vous aller enchanter une arme : ");
+               StringBuilder perso = new StringBuilder("Choisissez un personnage a qui vous allez enchanter une arme : ");
                for(Personnage per : this.m_joueursEnVie){
                    perso.append("\n").append(nb).append(" - ").append(per.getIdentificationEntite());
                    nb++;
@@ -604,17 +633,17 @@ public class Jeu {
                 if(a==nbArme && pChoisi.getArmeEquipee() !=null){
                     enchanter = p.enchanterArme(pChoisi.getArmeEquipee());
                     if(enchanter){
-                        this.mdj.commenter(pChoisi.getArmeEquipee().getNomEquipement()+" de "+ pChoisi.getNom() +" otbtient un bonus de 1 dégat !");
+                        this.mdj.commenter(pChoisi.getArmeEquipee().getNomEquipement()+" de "+ pChoisi.getNom() +" obtient un bonus de 1 dégat !");
                     }
                 }
                 else{
                     enchanter = p.enchanterArme((Armes)pChoisi.getInventaire().get(indexArme));
                     if(enchanter){
-                        this.mdj.commenter(pChoisi.getInventaire().get(indexArme).getNomEquipement()+" de "+ pChoisi.getNom() +" otbtient un bonus de 1 dégat !");
+                        this.mdj.commenter(pChoisi.getInventaire().get(indexArme).getNomEquipement()+" de "+ pChoisi.getNom() +" obtient un bonus de 1 dégat !");
                     }
                 }
                 if(!enchanter){
-                    this.mdj.commenter("Votre arme est déja enchanter !");
+                    this.mdj.commenter("Votre arme est déja enchantée !");
                 }
                break;
 
