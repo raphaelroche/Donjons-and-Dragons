@@ -2,6 +2,8 @@ package placable.entites.monstres;
 
 import des.Des;
 import donjons.Donjon;
+import exception.ArmureException;
+import exception.PorteeException;
 import placable.Placable;
 import placable.entites.Entite;
 import placable.entites.personnages.Personnage;
@@ -117,6 +119,12 @@ public class Monstre extends Entite {
                         }
                         return true;
                     }
+                    else{
+                        throw new ArmureException();
+                    }
+                }
+                else{
+                    throw new PorteeException();
                 }
             }
         }
