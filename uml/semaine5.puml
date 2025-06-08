@@ -257,35 +257,33 @@ package placable
                 {
                     # m_nomClasse : String
                     # m_pv : Integer
-                    + <<create>> Classe(pv : Integer, nomClasse : String)
-
+                    
+                    + {abstract} initialiser(p : Personnage)
                     + getNom() : String
-                    + getPV() : Integer
-
                 }
                 
                 class Clerc extends placable.entites.personnages.classes.Classe
                 {
                     + <<create>> Clerc()
-
+                    + initialiser(p : Personnage)
                 }
                 
                 class Guerrier extends placable.entites.personnages.classes.Classe
                 {
                     + <<create>> Guerrier()
-
+                    + initialiser(p : Personnage)
                 }
                 
                 class Magicien extends placable.entites.personnages.classes.Classe
                 {
                     + <<create>> Magicien()
-
+                    + initialiser(p : Personnage)
                 }
                 
                 class Roublard extends placable.entites.personnages.classes.Classe
                 {
                     + <<create>> Roublard()
-
+                    + initialiser(p : Personnage)
                 }
             }
             
@@ -299,34 +297,33 @@ package placable
                     # m_force : Integer
                     # m_initiative : Integer
                     # m_nomRace : String
-                    + <<create>> Race(dexterite : Integer, vitesse : Integer, force : Integer, initiative : Integer, nomRace : String)
-
+                    
+                    + {abstract} initialiser(p : Personnage)
                     + getNom() : String
-                    + getDexterite() : Integer
-                    + getVitesse() : Integer
-                    + getForce() : Integer
-                    + getInitiative() : Integer
                 }
                 
                 class Nain extends placable.entites.personnages.races.Race
                 {
                     + <<create>> Nain()
-
+                    + initialiser(p : Personnage)
                 }
                 
                 class Humain extends placable.entites.personnages.races.Race
                 {
                     + <<create>> Humain()
+                    + initialiser(p : Personnage)
                 }
                 
                 class Elfe extends placable.entites.personnages.races.Race
                 {
                     + <<create>> Elfe()
+                    + initialiser(p : Personnage)
                 }
                 
                 class Halfelin extends placable.entites.personnages.races.Race
                 {
                     + <<create>> Halfelin()
+                    + initialiser(p : Personnage)
                 }
             }
         }
@@ -568,15 +565,6 @@ class Main {
 
 
 
-<<<<<<< HEAD
-
-'Personnage .> TypeClasse : <<use>> ça casse tout
-'Personnage .> TypeRace : <<use>>
-Personnage .> Donjon : <<use>>
-Personnage .> Armes : <<use>>
-Personnage .> Equipement : <<use>>
-
-=======
 'relations
 Arbalete --|> Distance
 Arc --|> Distance
@@ -627,7 +615,6 @@ Elfe .> Personnage : <<use>>
 Entite ..|> Placable
 Entite .> CaseTtropLointaineException : <<use>>
 Entite .> Des : <<use>>
->>>>>>> 3439b62 (uml semaine 5)
 Entite .> Donjon : <<use>>
 Entite .> Placable : <<use>>
 EpeeDeuxMain --|> Guerre
