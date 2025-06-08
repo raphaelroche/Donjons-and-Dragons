@@ -568,7 +568,7 @@ class Main {
 
 
 
-
+<<<<<<< HEAD
 
 'Personnage .> TypeClasse : <<use>> ça casse tout
 'Personnage .> TypeRace : <<use>>
@@ -576,7 +576,7 @@ Personnage .> Donjon : <<use>>
 Personnage .> Armes : <<use>>
 Personnage .> Equipement : <<use>>
 
-
+=======
 'relations
 Arbalete --|> Distance
 Arc --|> Distance
@@ -627,7 +627,7 @@ Elfe .> Personnage : <<use>>
 Entite ..|> Placable
 Entite .> CaseTtropLointaineException : <<use>>
 Entite .> Des : <<use>>
-
+>>>>>>> 3439b62 (uml semaine 5)
 Entite .> Donjon : <<use>>
 Entite .> Placable : <<use>>
 EpeeDeuxMain --|> Guerre
