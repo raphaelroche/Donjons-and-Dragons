@@ -570,11 +570,7 @@ class Main {
 
 
 
-'Personnage .> TypeClasse : <<use>> ça casse tout
-'Personnage .> TypeRace : <<use>>
-Personnage .> Donjon : <<use>>
-Personnage .> Armes : <<use>>
-Personnage .> Equipement : <<use>>
+
 
 
 'relations
@@ -593,9 +589,7 @@ BoogieWoogie .> ContextSort : <<use>>
 CAC --|> Armes
 CaseTtropLointaineException --|> RuntimeException
 CaseVide ..|> Placable
-Classe .> Personnage : <<use>>
 Clerc --|> Classe
-Clerc .> Personnage : <<use>>
 ContextSort .> Armes : <<use>>
 ContextSort .> Entite : <<use>>
 CotteDeMailles --|> Lourdes
@@ -623,7 +617,6 @@ Donjon .> CaseVide : <<use>>
 Donjon .> Placable : <<use>>
 Ecailles --|> Legeres
 Elfe --|> Race
-Elfe .> Personnage : <<use>>
 Entite ..|> Placable
 Entite .> CaseTtropLointaineException : <<use>>
 Entite .> Des : <<use>>
@@ -639,12 +632,9 @@ Guerison .> ContextSort : <<use>>
 Guerison .> Des : <<use>>
 Guerre --|> CAC
 Guerrier --|> Classe
-Guerrier .> Personnage : <<use>>
 Halfelin --|> Race
-Halfelin .> Personnage : <<use>>
 Harnois --|> Lourdes
 Humain --|> Race
-Humain .> Personnage : <<use>>
 InteractionUtilisateur .> Donjon : <<use>>
 Jeu .> Arbalete : <<use>>
 Jeu .> Arc : <<use>>
@@ -673,7 +663,6 @@ Jeu .> Rapiere : <<use>>
 Legeres --|> Armures
 Lourdes --|> Armures
 Magicien --|> Classe
-Magicien .> Personnage : <<use>>
 Main .> Jeu : <<use>>
 MaitreDuJeu .> Donjon : <<use>>
 MaitreDuJeu .> Entite : <<use>>
@@ -684,7 +673,6 @@ Monstre --|> Entite
 Monstre .> Des : <<use>>
 Monstre .> Donjon : <<use>>
 Nain --|> Race
-Nain .> Personnage : <<use>>
 Obstacle ..|> Placable
 Personnage --|> Entite
 Personnage .> Arbalete : <<use>>
@@ -720,9 +708,7 @@ Personnage .> Roublard : <<use>>
 Personnage .> TypeClasse : <<use>>
 Personnage .> TypeRace : <<use>>
 PorteeException --|> RuntimeException
-Race .> Personnage : <<use>>
 Rapiere --|> Guerre
 Roublard --|> Classe
-Roublard .> Personnage : <<use>>
 Sort .> ContextSort : <<use>>
 @enduml
