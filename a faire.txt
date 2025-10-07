@@ -1,2 +1,0 @@
-- créer classe case
-- mettre seDeplacer dans donjon
